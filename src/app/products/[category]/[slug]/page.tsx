@@ -87,6 +87,9 @@ export default async function ProductPage({ params }: Params) {
             <ButtonLink href={enquiry} variant="light">Request product information</ButtonLink>
             <ButtonLink href={`/contact/?intent=customer&product=${encodeURIComponent(p.slug)}`} variant="outline-light">Contact sales</ButtonLink>
           </div>
+          <div className="mt-8 w-full max-w-[460px] rounded-lg bg-white p-4 text-text shadow-[0_30px_60px_-30px_rgb(4_30_60/0.7)] ring-1 ring-white/40 sm:p-5">
+            <ScanQR layout="row" size={104} title="Scan to open on your phone" path={productHref(p)} label={`${p.name}${p.cas ? ` · CAS ${p.cas}` : ""}`} fileName={`synthokem-${p.slug}-qr`} />
+          </div>
           </div>
           {(structure?.model3d || svg) && (
             <div className="relative hidden lg:col-span-5 lg:block">
@@ -178,11 +181,6 @@ export default async function ProductPage({ params }: Params) {
             {(svg || p.structureImage) && (
               <StructureViewer name={p.name} svg={svg} rasterSrc={p.structureImage} model3d={structure?.model3d} parentNote={structure?.model3dParent} cas={p.cas} />
             )}
-            <div className="rounded-lg bg-primary-tint p-6 ring-1 ring-border sm:p-7">
-              <p className="flex items-center gap-2 text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-accent-strong"><Icon name="arrowUpRight" size={14} /> Scan to open on your phone</p>
-              <p className="mt-2 text-sm leading-relaxed text-muted">Share this product page, or save the code for sample labels, brochures and trade-show stands.</p>
-              <div className="mt-5"><ScanQR path={productHref(p)} label={`${p.name}${p.cas ? ` · CAS ${p.cas}` : ""}`} fileName={`synthokem-${p.slug}-qr`} /></div>
-            </div>
             <div className="rounded-lg bg-primary p-7 text-white">
               <h2 className="font-display text-xl font-semibold">Documentation</h2>
               <ul className="mt-5 divide-y divide-white/10 border-y border-white/10">

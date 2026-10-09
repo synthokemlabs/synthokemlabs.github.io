@@ -13,7 +13,8 @@ const INK = "#0b2e4f";
  * domain the site is actually served from (no third-party redirect service in between).
  * Error correction "H" keeps it readable with the logo covering the centre.
  */
-export function ScanQR({ path, label, fileName, size = 176 }: { path: string; label: string; fileName: string; size?: number }) {
+export function ScanQR({ path, label, fileName, size = 176, layout = "stack", title }: { path: string; label: string; fileName: string; size?: number; layout?: "stack" | "row"; title?: string }) {
+  const row = layout === "row";
   const [svg, setSvg] = useState<string | null>(null);
   const [url, setUrl] = useState("");
   const [copied, setCopied] = useState(false);
@@ -61,8 +62,8 @@ export function ScanQR({ path, label, fileName, size = 176 }: { path: string; la
   }
 
   return (
-    <figure className="flex flex-col items-center">
-      <div className="relative rounded-lg bg-white p-3 shadow-[0_18px_40px_-26px_rgb(10_45_80/0.6)] ring-1 ring-border" style={{ width: size + 24, height: size + 24 }}>
+    <figure className={row ? "flex items-center gap-4 sm:gap-5" : "flex flex-col items-center"}>
+      <div className={`relative shrink-0 rounded-lg bg-white ring-1 ring-border ${row ? "p-2" : "p-3 shadow-[0_18px_40px_-26px_rgb(10_45_80/0.6)]"}`} style={{ width: size + (row ? 16 : 24), height: size + (row ? 16 : 24) }}>
         {svg ? (
           <div role="img" aria-label={`QR code: ${label}`} className="h-full w-full" dangerouslySetInnerHTML={{ __html: svg }} />
         ) : (
@@ -73,14 +74,15 @@ export function ScanQR({ path, label, fileName, size = 176 }: { path: string; la
           <LogoMark className="h-[72%] w-auto" />
         </span>
       </div>
-      <figcaption className="mt-4 w-full text-center">
-        <span className="block text-sm font-semibold text-primary-ink">{label}</span>
+      <figcaption className={row ? "min-w-0 text-left" : "mt-4 w-full text-center"}>
+        {title && <span className="flex items-center gap-1.5 text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-accent-strong"><Icon name="arrowUpRight" size={13} /> {title}</span>}
+        <span className={`block text-sm font-semibold text-primary-ink ${title ? "mt-1.5" : ""}`}>{label}</span>
         {url && <span className="mt-1 block truncate font-mono text-[0.7rem] text-muted" title={url}>{url.replace(/^https?:\/\//, "")}</span>}
-        <span className="mt-3 flex justify-center gap-2">
-          <button type="button" onClick={download} disabled={!svg} className="inline-flex min-h-10 cursor-pointer items-center gap-2 rounded-md px-3 text-sm font-semibold text-primary ring-1 ring-inset ring-border-strong transition-colors hover:bg-primary hover:text-white hover:ring-primary disabled:opacity-50">
+        <span className={`mt-3 flex flex-wrap gap-2 ${row ? "" : "justify-center"}`}>
+          <button type="button" onClick={download} disabled={!svg} className="inline-flex min-h-10 cursor-pointer whitespace-nowrap items-center gap-2 rounded-md px-3 text-sm font-semibold text-primary ring-1 ring-inset ring-border-strong transition-colors hover:bg-primary hover:text-white hover:ring-primary disabled:opacity-50">
             <Icon name="download" size={15} /> Save QR
           </button>
-          <button type="button" onClick={copy} disabled={!url} className="inline-flex min-h-10 cursor-pointer items-center gap-2 rounded-md px-3 text-sm font-semibold text-primary ring-1 ring-inset ring-border-strong transition-colors hover:bg-primary hover:text-white hover:ring-primary disabled:opacity-50">
+          <button type="button" onClick={copy} disabled={!url} className="inline-flex min-h-10 cursor-pointer whitespace-nowrap items-center gap-2 rounded-md px-3 text-sm font-semibold text-primary ring-1 ring-inset ring-border-strong transition-colors hover:bg-primary hover:text-white hover:ring-primary disabled:opacity-50">
             <Icon name={copied ? "check" : "copy"} size={15} /> {copied ? "Copied" : "Copy link"}
           </button>
           <span className="sr-only" role="status" aria-live="polite">{copied ? "Link copied" : ""}</span>
