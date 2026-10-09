@@ -87,8 +87,8 @@ export default async function ProductPage({ params }: Params) {
             <ButtonLink href={enquiry} variant="light">Request product information</ButtonLink>
             <ButtonLink href={`/contact/?intent=customer&product=${encodeURIComponent(p.slug)}`} variant="outline-light">Contact sales</ButtonLink>
           </div>
-          <div className="mt-8 w-full max-w-[460px] rounded-lg bg-white p-4 text-text shadow-[0_30px_60px_-30px_rgb(4_30_60/0.7)] ring-1 ring-white/40 sm:p-5">
-            <ScanQR layout="row" size={104} title="Scan to open on your phone" path={productHref(p)} label={`${p.name}${p.cas ? ` · CAS ${p.cas}` : ""}`} fileName={`synthokem-${p.slug}-qr`} />
+          <div className="mt-8 w-full max-w-[440px]">
+            <ScanQR layout="row" size={104} title="Scan to open on your phone" label={p.name} sub={p.cas ? `CAS ${p.cas}` : undefined} path={productHref(p)} fileName={`synthokem-${p.slug}-qr`} />
           </div>
           </div>
           {(structure?.model3d || svg) && (

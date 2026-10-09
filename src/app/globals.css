@@ -361,3 +361,69 @@ html.lenis-on body { overscroll-behavior: none; }
    ========================================================================== */
 .sky-band { background-color: var(--deep); background-image: linear-gradient(135deg, #0a4c8a 0%, #0b5597 42%, #1168ad 100%); }
 .sky-band-deep { background-color: var(--deep-2); background-image: linear-gradient(160deg, #0b5390 0%, #094273 100%); }
+
+/* ==========================================================================
+   QR card — frosted sky-blue glass, viewfinder corners, centre-out reveal, scan line
+   ========================================================================== */
+.qr-glass {
+  background-color: rgb(9 70 126 / 0.9);
+  background-image: linear-gradient(155deg, rgb(13 92 160 / 0.86) 0%, rgb(8 62 112 / 0.92) 100%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid rgb(255 255 255 / 0.18);
+  box-shadow: 0 30px 60px -32px rgb(3 25 50 / 0.75), inset 0 1px 0 rgb(255 255 255 / 0.14);
+  transition: transform 0.6s var(--ease-out), box-shadow 0.6s var(--ease-out), border-color 0.4s;
+}
+.qr-glass:hover { transform: translateY(-3px); border-color: rgb(255 255 255 / 0.3); box-shadow: 0 36px 70px -34px rgb(3 25 50 / 0.85), inset 0 1px 0 rgb(255 255 255 / 0.18); }
+
+.qr-frame { position: relative; padding: 12px; }
+.qr-corners { position: absolute; inset: 0; pointer-events: none; }
+.qr-in .qr-corners { animation: qr-breathe 3.2s ease-in-out 1.8s infinite; }
+@keyframes qr-breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.035); } }
+.qr-corner { position: absolute; width: 24%; height: 24%; border: 0 solid var(--accent); opacity: 0; transition: opacity 0.7s var(--ease-out) 0.35s, transform 0.9s var(--ease-out) 0.35s; }
+.qr-tl { top: 0; left: 0; border-top-width: 2.5px; border-left-width: 2.5px; border-top-left-radius: 11px; transform: translate(-10px, -10px); }
+.qr-tr { top: 0; right: 0; border-top-width: 2.5px; border-right-width: 2.5px; border-top-right-radius: 11px; transform: translate(10px, -10px); }
+.qr-bl { bottom: 0; left: 0; border-bottom-width: 2.5px; border-left-width: 2.5px; border-bottom-left-radius: 11px; transform: translate(-10px, 10px); }
+.qr-br { bottom: 0; right: 0; border-bottom-width: 2.5px; border-right-width: 2.5px; border-bottom-right-radius: 11px; transform: translate(10px, 10px); }
+.qr-in .qr-corner { opacity: 1; transform: none; }
+
+.qr-tile {
+  position: relative; height: 100%; width: 100%; overflow: hidden; border-radius: 9px; background: #fff; padding: 7px;
+  box-shadow: 0 12px 26px -14px rgb(3 25 50 / 0.65);
+  clip-path: circle(0% at 50% 50%);
+  transition: clip-path 1.15s cubic-bezier(0.65, 0, 0.35, 1) 0.1s, transform 0.6s var(--ease-out);
+}
+.qr-in .qr-tile { clip-path: circle(75% at 50% 50%); }
+.qr-card:hover .qr-tile { transform: scale(1.025); }
+
+/* Scanner sweep: bright leading edge with a soft sky tail */
+.qr-scan {
+  position: absolute; left: 0; right: 0; top: 0; height: 26%; pointer-events: none; opacity: 0;
+  background: linear-gradient(180deg, rgb(63 168 238 / 0) 0%, rgb(63 168 238 / 0.16) 65%, rgb(63 168 238 / 0.42) 100%);
+  border-bottom: 1.5px solid rgb(63 168 238 / 0.8);
+  transform: translateY(-110%);
+}
+.qr-in .qr-scan { animation: qr-scan 4.6s cubic-bezier(0.45, 0, 0.55, 1) 1.6s infinite; }
+@keyframes qr-scan {
+  0% { transform: translateY(-110%); opacity: 1; }
+  40% { transform: translateY(400%); opacity: 1; }
+  41%, 100% { transform: translateY(400%); opacity: 0; }
+}
+.qr-card:hover .qr-scan, .qr-card:focus-within .qr-scan { animation-play-state: paused; visibility: hidden; }
+
+.qr-action {
+  display: inline-flex; align-items: center; gap: 0.4rem; min-height: 2.25rem; padding: 0 0.75rem; border-radius: 6px;
+  font-size: 0.8rem; font-weight: 600; color: #fff; cursor: pointer; white-space: nowrap;
+  background: rgb(255 255 255 / 0.08); box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.24);
+  transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s var(--ease-out);
+}
+.qr-action:hover { background: rgb(255 255 255 / 0.18); box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.5); }
+.qr-action:active { transform: translateY(1px); }
+.qr-action:disabled { opacity: 0.5; cursor: default; }
+
+@media (prefers-reduced-motion: reduce) {
+  .qr-tile { clip-path: none; }
+  .qr-corner { opacity: 1; transform: none; }
+  .qr-corners { animation: none !important; }
+  .qr-scan { display: none; }
+}

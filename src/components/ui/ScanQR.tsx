@@ -5,40 +5,60 @@ import QRCode from "qrcode";
 import { LogoMark } from "./Logo";
 import { Icon } from "./Icon";
 
-const INK = "#0b2e4f";
+/** Deep sky blue modules: on-brand, and 7.7:1 against white so phone cameras read it instantly. */
+const INK = "#0c5591";
 
 /**
- * Scannable QR code for a page or file on this site, with the Synthokem mark at its centre.
+ * Scannable QR code for a page or file on this site, presented as a frosted sky-blue panel with
+ * camera-viewfinder corners. On entering view the code opens from its centre and the corners slide
+ * in; a soft scan line then sweeps it every few seconds (paused on hover, off for reduced motion).
+ *
  * The address is built from the page's own origin at runtime, so the code always points at the
- * domain the site is actually served from (no third-party redirect service in between).
- * Error correction "H" keeps it readable with the logo covering the centre.
+ * domain the site is served from. Error correction "H" keeps it readable with the mark in the centre.
  */
-export function ScanQR({ path, label, fileName, size = 176, layout = "stack", title }: { path: string; label: string; fileName: string; size?: number; layout?: "stack" | "row"; title?: string }) {
-  const row = layout === "row";
+export function ScanQR({
+  path, label, sub, title, fileName, size = 156, layout = "stack",
+}: {
+  path: string; label: string; sub?: string; title?: string; fileName: string; size?: number;
+  /** stack: code above text · row: code beside text · auto: row on small screens, stack from lg up */
+  layout?: "stack" | "row" | "auto";
+}) {
   const [svg, setSvg] = useState<string | null>(null);
   const [url, setUrl] = useState("");
   const [copied, setCopied] = useState(false);
+  const [inView, setInView] = useState(false);
   const markRef = useRef<HTMLSpanElement>(null);
+  const figRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const href = new URL(path, window.location.origin).href;
     setUrl(href);
     QRCode.toString(href, { type: "svg", errorCorrectionLevel: "H", margin: 0, color: { dark: INK, light: "#ffffff00" } })
-      .then((s) => setSvg(s.replace("<svg ", `<svg role="presentation" focusable="false" width="100%" height="100%" `)))
+      .then((s) => setSvg(s.replace("<svg ", `<svg role="presentation" focusable="false" width="100%" height="100%" shape-rendering="crispEdges" `)))
       .catch(() => setSvg(null));
   }, [path]);
 
+  // Play the reveal when the card scrolls into view (with a fallback so it never stays hidden)
+  useEffect(() => {
+    const el = figRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setInView(true); io.disconnect(); } }, { threshold: 0.35 });
+    io.observe(el);
+    const t = setTimeout(() => setInView(true), 2500);
+    return () => { io.disconnect(); clearTimeout(t); };
+  }, []);
+
   // Print-ready PNG: QR at 1024px with the mark composited in the centre
   async function download() {
-    const size = 1024, pad = 64;
+    const px = 1024, pad = 64;
     const canvas = document.createElement("canvas");
-    canvas.width = canvas.height = size + pad * 2;
+    canvas.width = canvas.height = px + pad * 2;
     const ctx = canvas.getContext("2d")!;
     ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, canvas.width, canvas.height);
     const qr = document.createElement("canvas");
-    await QRCode.toCanvas(qr, url, { errorCorrectionLevel: "H", margin: 0, width: size, color: { dark: INK, light: "#ffffff" } });
+    await QRCode.toCanvas(qr, url, { errorCorrectionLevel: "H", margin: 0, width: px, color: { dark: INK, light: "#ffffff" } });
     ctx.drawImage(qr, pad, pad);
-    const tile = size * 0.22, cx = canvas.width / 2;
+    const tile = px * 0.22, cx = canvas.width / 2;
     ctx.fillStyle = "#ffffff";
     ctx.beginPath(); ctx.roundRect(cx - tile / 2, cx - tile / 2, tile, tile, tile * 0.18); ctx.fill();
     const svgEl = markRef.current?.querySelector("svg");
@@ -61,29 +81,42 @@ export function ScanQR({ path, label, fileName, size = 176, layout = "stack", ti
     setTimeout(() => setCopied(false), 1800);
   }
 
+  const shape =
+    layout === "row" ? "flex-row items-center text-left"
+    : layout === "auto" ? "flex-row items-center text-left lg:flex-col lg:items-center lg:text-center"
+    : "flex-col items-center text-center";
+  const actionsAlign = layout === "stack" ? "justify-center" : layout === "auto" ? "lg:justify-center" : "";
+
   return (
-    <figure className={row ? "flex items-center gap-4 sm:gap-5" : "flex flex-col items-center"}>
-      <div className={`relative shrink-0 rounded-lg bg-white ring-1 ring-border ${row ? "p-2" : "p-3 shadow-[0_18px_40px_-26px_rgb(10_45_80/0.6)]"}`} style={{ width: size + (row ? 16 : 24), height: size + (row ? 16 : 24) }}>
-        {svg ? (
-          <div role="img" aria-label={`QR code: ${label}`} className="h-full w-full" dangerouslySetInnerHTML={{ __html: svg }} />
-        ) : (
-          <div aria-hidden="true" className="grid h-full w-full place-items-center rounded bg-surface text-xs text-muted">QR code</div>
-        )}
-        {/* Synthokem mark on a white tile at the centre (covered modules are recovered by error correction) */}
-        <span ref={markRef} aria-hidden="true" className="absolute left-1/2 top-1/2 grid -translate-x-1/2 -translate-y-1/2 place-items-center rounded-md bg-white" style={{ width: size * 0.24, height: size * 0.24 }}>
-          <LogoMark className="h-[72%] w-auto" />
+    <figure ref={figRef} className={`qr-card qr-glass group flex gap-5 rounded-xl p-4 sm:p-5 ${shape} ${inView ? "qr-in" : ""}`}>
+      <div className="qr-frame shrink-0" style={{ width: size + 24, height: size + 24 }}>
+        {/* Viewfinder corners */}
+        <span className="qr-corners" aria-hidden="true">
+          <span className="qr-corner qr-tl" /><span className="qr-corner qr-tr" /><span className="qr-corner qr-bl" /><span className="qr-corner qr-br" />
         </span>
+        <div className="qr-tile">
+          {svg ? (
+            <div role="img" aria-label={`QR code: ${label}${sub ? `, ${sub}` : ""}`} className="h-full w-full" dangerouslySetInnerHTML={{ __html: svg }} />
+          ) : (
+            <div aria-hidden="true" className="h-full w-full rounded bg-surface" />
+          )}
+          {/* Synthokem mark on a white tile at the centre (covered modules are recovered by error correction) */}
+          <span ref={markRef} aria-hidden="true" className="absolute left-1/2 top-1/2 grid -translate-x-1/2 -translate-y-1/2 place-items-center rounded-md bg-white" style={{ width: size * 0.24, height: size * 0.24 }}>
+            <LogoMark className="h-[72%] w-auto" />
+          </span>
+          <span className="qr-scan" aria-hidden="true" />
+        </div>
       </div>
-      <figcaption className={row ? "min-w-0 text-left" : "mt-4 w-full text-center"}>
-        {title && <span className="flex items-center gap-1.5 text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-accent-strong"><Icon name="arrowUpRight" size={13} /> {title}</span>}
-        <span className={`block text-sm font-semibold text-primary-ink ${title ? "mt-1.5" : ""}`}>{label}</span>
-        {url && <span className="mt-1 block truncate font-mono text-[0.7rem] text-muted" title={url}>{url.replace(/^https?:\/\//, "")}</span>}
-        <span className={`mt-3 flex flex-wrap gap-2 ${row ? "" : "justify-center"}`}>
-          <button type="button" onClick={download} disabled={!svg} className="inline-flex min-h-10 cursor-pointer whitespace-nowrap items-center gap-2 rounded-md px-3 text-sm font-semibold text-primary ring-1 ring-inset ring-border-strong transition-colors hover:bg-primary hover:text-white hover:ring-primary disabled:opacity-50">
-            <Icon name="download" size={15} /> Save QR
+      <figcaption className="min-w-0">
+        {title && <span className="block text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-accent-soft">{title}</span>}
+        <span className={`block font-display text-[1.02rem] font-semibold leading-snug text-white ${title ? "mt-1.5" : ""}`}>{label}</span>
+        {sub && <span className="mt-0.5 block font-mono text-xs text-on-dark-muted">{sub}</span>}
+        <span className={`mt-3 flex flex-wrap gap-1.5 ${actionsAlign}`}>
+          <button type="button" onClick={download} disabled={!svg} className="qr-action">
+            <Icon name="download" size={14} /> Save QR
           </button>
-          <button type="button" onClick={copy} disabled={!url} className="inline-flex min-h-10 cursor-pointer whitespace-nowrap items-center gap-2 rounded-md px-3 text-sm font-semibold text-primary ring-1 ring-inset ring-border-strong transition-colors hover:bg-primary hover:text-white hover:ring-primary disabled:opacity-50">
-            <Icon name={copied ? "check" : "copy"} size={15} /> {copied ? "Copied" : "Copy link"}
+          <button type="button" onClick={copy} disabled={!url} className="qr-action">
+            <Icon name={copied ? "check" : "copy"} size={14} /> {copied ? "Copied" : "Copy link"}
           </button>
           <span className="sr-only" role="status" aria-live="polite">{copied ? "Link copied" : ""}</span>
         </span>
