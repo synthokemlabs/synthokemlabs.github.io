@@ -67,7 +67,7 @@ export function StructureViewer({
             ) : null}
           </div>
         ) : (
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,#123f6b_0%,#071b30_70%)]">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,#1b7cc6_0%,#0c5591_70%)]">
             <Molecule3D model={model3d!} label={`Interactive 3D model of ${name}`} />
             <p className="pointer-events-none absolute bottom-3 left-4 flex items-center gap-2 text-[0.72rem] text-on-dark-muted">
               <Icon name="globe" size={13} /> Drag to rotate{parentNote ? " · parent molecule shown" : ""}

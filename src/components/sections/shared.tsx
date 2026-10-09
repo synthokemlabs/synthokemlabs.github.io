@@ -37,7 +37,7 @@ export function ProcessChain({ tone = "dark" }: { tone?: "dark" | "light" }) {
       <span aria-hidden="true" className={`absolute left-[19px] top-0 h-full w-px md:left-0 md:top-[19px] md:h-px md:w-full ${dark ? "bg-white/15" : "bg-border"}`} />
       {PROCESS_STEPS.map((s, i) => (
         <Reveal as="li" key={s.title} delay={i * 90} className="relative grid grid-cols-[40px_1fr] gap-5 md:block">
-          <span className={`relative z-10 grid h-10 w-10 place-items-center rounded-full font-mono text-xs ${dark ? "bg-primary-ink text-accent ring-1 ring-accent/60" : "bg-white text-primary ring-1 ring-primary/40"}`}>
+          <span className={`relative z-10 grid h-10 w-10 place-items-center rounded-full font-mono text-xs ${dark ? "bg-deep text-accent-soft ring-1 ring-accent/60" : "bg-white text-primary ring-1 ring-primary/40"}`}>
             0{i + 1}
           </span>
           <div className="md:mt-7">

@@ -36,13 +36,13 @@ export function PageHero({
   eyebrow, title, lede, crumbs, image, children, size = "md",
 }: { eyebrow: string; title: ReactNode; lede?: ReactNode; crumbs: Crumb[]; image?: string; children?: ReactNode; size?: "sm" | "md" }) {
   return (
-    <section className="hero-play on-dark relative isolate overflow-hidden bg-primary-ink text-white">
+    <section className="hero-play on-dark relative isolate overflow-hidden bg-deep text-white">
       {image ? (
         <>
           <Parallax speed={0.15} className="absolute inset-0 -z-20">
             <Img name={image} priority sizes="100vw" className="ken-burns h-full w-full object-cover" alt="" />
           </Parallax>
-          <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(100deg,rgb(7_27_48/0.95)_0%,rgb(10_45_80/0.84)_45%,rgb(13_59_102/0.5)_100%)]" />
+          <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(100deg,rgb(11_74_128/0.94)_0%,rgb(15_98_166/0.84)_45%,rgb(33_130_205/0.55)_100%)]" />
         </>
       ) : (
         <>

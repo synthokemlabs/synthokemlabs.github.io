@@ -8,7 +8,7 @@ import { ButtonLink, Container } from "@/components/ui/primitives";
 export function Footer() {
   const hq = LOCATIONS[0];
   return (
-    <footer className="on-dark relative overflow-hidden bg-primary-ink text-on-dark">
+    <footer className="on-dark relative overflow-hidden bg-deep-2 text-on-dark">
       <div aria-hidden="true" className="grid-paper-dark pointer-events-none absolute inset-0 opacity-60" />
       <Container className="relative">
         {/* CTA */}

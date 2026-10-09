@@ -48,7 +48,7 @@ export function QuickLinks({ heading }: { heading: ReactNode }) {
     <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
       <div className="lg:col-span-5">
         {heading}
-        <Reveal variant="image" delay={150} className="relative mt-12 hidden aspect-[4/3] overflow-hidden rounded-lg bg-primary-ink lg:block">
+        <Reveal variant="image" delay={150} className="relative mt-12 hidden aspect-[4/3] overflow-hidden rounded-lg bg-deep lg:block">
           <div ref={frameRef} className="absolute inset-0" aria-hidden="true">
             {PATHS.map((p, i) => (
               // eslint-disable-next-line @next/next/no-img-element
@@ -60,7 +60,7 @@ export function QuickLinks({ heading }: { heading: ReactNode }) {
                 className={`qpeek absolute inset-0 h-full w-full object-cover ${i === active ? "is-current" : ""}`}
               />
             ))}
-            <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-primary-ink/80 to-transparent px-5 pb-4 pt-12 text-sm font-medium text-white">
+            <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-deep/80 to-transparent px-5 pb-4 pt-12 text-sm font-medium text-white">
               <span className="font-mono text-xs text-on-dark-muted">{String(active + 1).padStart(2, "0")}</span>
               <span className="ml-3">{PATHS[active].title}</span>
             </span>

@@ -31,10 +31,10 @@ export function Logo({ tone = "dark", className = "" }: { tone?: "dark" | "light
   const light = tone === "light";
   return (
     <span className={`inline-flex items-center gap-3 ${className}`}>
-      <LogoMark className="h-9 w-auto shrink-0" tone={light ? "light" : "brand"} />
+      <LogoMark className="h-10 w-auto shrink-0" tone={light ? "light" : "brand"} />
       <span className="flex flex-col leading-none">
-        <span className={`font-display text-[1.06rem] font-bold tracking-[0.06em] ${light ? "text-white" : "text-primary"}`}>SYNTHOKEM</span>
-        <span className={`mt-1 font-mono text-[0.62rem] tracking-[0.32em] ${light ? "text-on-dark-muted" : "text-muted"}`}>LABS PVT. LTD.</span>
+        <span className={`whitespace-nowrap font-display text-[1.08rem] font-bold tracking-[0.04em] ${light ? "text-white" : "text-primary-ink"}`}>SYNTHOKEM LABS</span>
+        <span className={`mt-1.5 whitespace-nowrap text-[0.64rem] font-medium tracking-[0.3em] ${light ? "text-on-dark-muted" : "text-muted"}`}>PRIVATE LIMITED</span>
       </span>
     </span>
   );
