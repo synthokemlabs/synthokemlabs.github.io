@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PageHero } from "@/components/layout/PageHero";
 import { ProductCatalogue } from "@/components/products/ProductCatalogue";
+import { ProductListQR } from "@/components/products/ProductListQR";
 import { ButtonLink, Container, JsonLd } from "@/components/ui/primitives";
 import { Icon } from "@/components/ui/Icon";
 import { CATEGORIES, getCategory, productHref, productsIn } from "@/data/products";
@@ -38,7 +39,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
 
   return (
     <>
-      <PageHero eyebrow="Products" title={c.name} lede={c.summary} crumbs={[{ name: "Products", href: "/products/" }, { name: c.shortName, href: `/products/${c.slug}/` }]} image={HERO_IMAGE[c.slug]} size="sm" />
+      <PageHero eyebrow="Products" title={c.name} lede={c.summary} crumbs={[{ name: "Products", href: "/products/" }, { name: c.shortName, href: `/products/${c.slug}/` }]} image={HERO_IMAGE[c.slug]} size="sm" aside={<ProductListQR />} />
 
       <section className="py-16 lg:py-20">
         <Container className="grid grid-cols-1 gap-10 lg:grid-cols-12">
