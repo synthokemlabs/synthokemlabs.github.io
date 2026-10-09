@@ -91,7 +91,7 @@ export default function QualityPage() {
           <ul className="divide-y divide-border self-start rounded-lg bg-white ring-1 ring-border lg:col-span-7">
             <li>
               <a href={SITE.productListPdf} target="_blank" rel="noopener" className="group flex min-h-20 items-center justify-between gap-4 px-6 py-4 hover:bg-primary-tint/40">
-                <span className="flex items-center gap-4"><Icon name="file" size={22} className="text-accent-strong" /><span><span className="block font-semibold text-primary-ink">Product List 2026</span><span className="font-mono text-xs text-muted">PDF · grades, CAS numbers and regulatory status</span></span></span>
+                <span className="flex items-center gap-4"><Icon name="file" size={22} className="text-accent-strong" /><span><span className="block font-semibold text-primary-ink">Product List</span><span className="font-mono text-xs text-muted">PDF · grades, CAS numbers and regulatory status</span></span></span>
                 <Icon name="download" size={18} className="text-primary" />
               </a>
             </li>

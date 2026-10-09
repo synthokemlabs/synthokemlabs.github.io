@@ -1,6 +1,6 @@
 /**
  * Company facts. Every value here is taken from the existing synthokemlabs.com
- * website or the company's "Product List 2026" PDF. Do not add claims that the
+ * website or the company's current "Product List" PDF. Do not add claims that the
  * company has not approved.
  */
 export const SITE = {
@@ -17,8 +17,10 @@ export const SITE = {
   responseTime: "Our team will contact you within 3 business days.",
   people: "300+",
   facilitiesCount: 3,
-  productListPdf: "/documents/synthokem-product-list-2026.pdf",
-  productListLabel: "Product List 2026 (PDF, 210 KB)",
+  productListPdf: "/documents/synthokem-product-list.pdf",
+  productListName: "Synthokem Product List",
+  productListSize: "250 KB",
+  productListLabel: "Synthokem Product List (PDF, 250 KB)",
 } as const;
 
 export type Location = {

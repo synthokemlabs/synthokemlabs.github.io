@@ -3,6 +3,7 @@ import { PageHero } from "@/components/layout/PageHero";
 import { ProductCatalogue, RecentlyViewed } from "@/components/products/ProductCatalogue";
 import { ButtonLink, Container } from "@/components/ui/primitives";
 import { Icon } from "@/components/ui/Icon";
+import { ScanQR } from "@/components/ui/ScanQR";
 import { CATEGORIES, PRODUCTS, productsIn } from "@/data/products";
 import { SITE } from "@/data/site";
 import { pageMetadata } from "@/lib/seo";
@@ -23,6 +24,12 @@ export default function ProductsPage() {
         crumbs={[{ name: "Products", href: "/products/" }]}
         image="lab-precision"
         size="sm"
+        aside={
+          <div className="w-full max-w-[300px] rounded-lg bg-white/95 p-5 text-text shadow-[0_30px_60px_-30px_rgb(4_30_60/0.7)] ring-1 ring-white/40">
+            <p className="flex items-center gap-2 text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-accent-strong"><Icon name="download" size={14} /> Scan for the product list</p>
+            <div className="mt-4"><ScanQR path={SITE.productListPdf} label={`${SITE.productListName} (PDF · ${SITE.productListSize})`} fileName="synthokem-product-list-qr" size={168} /></div>
+          </div>
+        }
       >
         <ul className="flex flex-wrap gap-2">
           {CATEGORIES.map((c) => (
@@ -46,7 +53,7 @@ export default function ProductsPage() {
         <Container className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12">
           <div className="lg:col-span-7">
             <p className="eyebrow text-accent-strong">Downloads</p>
-            <h2 className="display-md mt-4 text-primary-ink">The complete Product List 2026 — with pharmacopoeial grades and regulatory status.</h2>
+            <h2 className="display-md mt-4 text-primary-ink">The complete Product List — with pharmacopoeial grades, CAS numbers and regulatory status.</h2>
           </div>
           <div className="flex flex-wrap gap-3 lg:col-span-5 lg:justify-end">
             <ButtonLink href={SITE.productListPdf} icon="download">Download PDF</ButtonLink>

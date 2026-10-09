@@ -33,8 +33,8 @@ export function Breadcrumbs({ items, tone = "light" }: { items: Crumb[]; tone?: 
 
 /** Dark editorial page header. With `image`, a real Synthokem photograph sits behind a petrol-blue wash. */
 export function PageHero({
-  eyebrow, title, lede, crumbs, image, children, size = "md",
-}: { eyebrow: string; title: ReactNode; lede?: ReactNode; crumbs: Crumb[]; image?: string; children?: ReactNode; size?: "sm" | "md" }) {
+  eyebrow, title, lede, crumbs, image, children, aside, size = "md",
+}: { eyebrow: string; title: ReactNode; lede?: ReactNode; crumbs: Crumb[]; image?: string; children?: ReactNode; aside?: ReactNode; size?: "sm" | "md" }) {
   return (
     <section className="hero-play on-dark relative isolate overflow-hidden sky-band text-white">
       {image ? (
@@ -49,7 +49,8 @@ export function PageHero({
           <div aria-hidden="true" className="grid-paper-dark absolute inset-0 -z-10" />
         </>
       )}
-      <Container className={size === "sm" ? "pb-14 pt-36 lg:pb-20 lg:pt-40" : "pb-20 pt-40 lg:pb-28 lg:pt-48"}>
+      <Container className={`${size === "sm" ? "pb-14 pt-36 lg:pb-20 lg:pt-40" : "pb-20 pt-40 lg:pb-28 lg:pt-48"} ${aside ? "grid grid-cols-1 items-end gap-10 lg:grid-cols-12" : ""}`}>
+        <div className={aside ? "lg:col-span-8" : ""}>
         <div className="hero-in"><Breadcrumbs items={crumbs} /></div>
         <p className="hero-in mt-10 flex items-center gap-4 text-[0.78rem] font-semibold uppercase tracking-[0.18em] text-on-dark-muted" style={{ "--d": "80ms" } as CSSProperties}><span aria-hidden="true" className="h-px w-10 bg-accent" />{eyebrow}</p>
         <h1 className={`mt-5 max-w-4xl font-display text-white xl:max-w-3xl ${size === "sm" ? "display-lg" : "display-xl"}`}>
@@ -57,6 +58,8 @@ export function PageHero({
         </h1>
         {lede && <p className="lede hero-in mt-6 max-w-2xl text-on-dark-muted" style={{ "--d": "420ms" } as CSSProperties}>{lede}</p>}
         {children && <div className="hero-in mt-10" style={{ "--d": "540ms" } as CSSProperties}>{children}</div>}
+        </div>
+        {aside && <div className="hero-in lg:col-span-4 lg:justify-self-end" style={{ "--d": "620ms" } as CSSProperties}>{aside}</div>}
       </Container>
     </section>
   );

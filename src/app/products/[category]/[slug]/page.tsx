@@ -4,6 +4,7 @@ import { Breadcrumbs } from "@/components/layout/PageHero";
 import { ProductName, TrackRecentlyViewed } from "@/components/products/ProductCatalogue";
 import { ViewTransition } from "react";
 import { ProductStickyBar } from "@/components/products/ProductStickyBar";
+import { ScanQR } from "@/components/ui/ScanQR";
 import { readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { Molecule3D } from "@/components/molecules/Molecule3D";
@@ -148,8 +149,8 @@ export default async function ProductPage({ params }: Params) {
             </dl>
             <p className="mt-5 flex items-start gap-2 text-sm text-muted">
               <Icon name="file" size={16} className="mt-0.5 shrink-0" />
-              {p.source === "product-list-2026"
-                ? "Information as published in the Synthokem Product List 2026. Contact us for current specifications and documentation."
+              {p.source === "product-list"
+                ? "Information as published in the current Synthokem Product List. Contact us for current specifications and documentation."
                 : "Information as listed in the Synthokem product table. Contact us to confirm current availability and specifications."}
             </p>
             {structure && (
@@ -177,12 +178,17 @@ export default async function ProductPage({ params }: Params) {
             {(svg || p.structureImage) && (
               <StructureViewer name={p.name} svg={svg} rasterSrc={p.structureImage} model3d={structure?.model3d} parentNote={structure?.model3dParent} cas={p.cas} />
             )}
+            <div className="rounded-lg bg-primary-tint p-6 ring-1 ring-border sm:p-7">
+              <p className="flex items-center gap-2 text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-accent-strong"><Icon name="arrowUpRight" size={14} /> Scan to open on your phone</p>
+              <p className="mt-2 text-sm leading-relaxed text-muted">Share this product page, or save the code for sample labels, brochures and trade-show stands.</p>
+              <div className="mt-5"><ScanQR path={productHref(p)} label={`${p.name}${p.cas ? ` · CAS ${p.cas}` : ""}`} fileName={`synthokem-${p.slug}-qr`} /></div>
+            </div>
             <div className="rounded-lg bg-primary p-7 text-white">
               <h2 className="font-display text-xl font-semibold">Documentation</h2>
               <ul className="mt-5 divide-y divide-white/10 border-y border-white/10">
                 <li>
                   <a href={SITE.productListPdf} className="group flex min-h-14 items-center justify-between gap-4 py-3" target="_blank" rel="noopener">
-                    <span><span className="block font-medium">Product List 2026</span><span className="font-mono text-xs text-on-dark-muted">PDF · 210 KB</span></span>
+                    <span><span className="block font-medium">Product List</span><span className="font-mono text-xs text-on-dark-muted">PDF · {SITE.productListSize}</span></span>
                     <Icon name="download" size={18} className="text-accent-soft" />
                   </a>
                 </li>

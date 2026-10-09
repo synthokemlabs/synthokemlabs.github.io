@@ -35,7 +35,7 @@ export const MAIN_NAV: NavItem[] = [
       })),
       { label: "Search all products", href: "/products/", description: "By name or CAS number", icon: "search" },
     ],
-    footer: { label: "Download Product List 2026 (PDF)", href: SITE.productListPdf, external: true },
+    footer: { label: "Download Product List (PDF)", href: SITE.productListPdf, external: true },
   },
   {
     label: "Capabilities",
