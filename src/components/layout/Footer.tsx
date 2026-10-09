@@ -1,15 +1,17 @@
 import Link from "next/link";
 import { FOOTER_NAV, LEGAL_NAV } from "@/data/navigation";
 import { LOCATIONS, SITE } from "@/data/site";
-import { Logo } from "@/components/ui/Logo";
+import { Logo, LogoMark } from "@/components/ui/Logo";
 import { Icon } from "@/components/ui/Icon";
 import { ButtonLink, Container } from "@/components/ui/primitives";
 
 export function Footer() {
   const hq = LOCATIONS[0];
   return (
-    <footer className="on-dark relative overflow-hidden bg-deep-2 text-on-dark">
+    <footer className="on-dark sky-band-deep relative overflow-hidden text-on-dark">
       <div aria-hidden="true" className="grid-paper-dark pointer-events-none absolute inset-0 opacity-60" />
+      {/* Brand watermark: the Synthokem mark, very faint, bleeding off the right edge */}
+      <LogoMark tone="light" className="pointer-events-none absolute -right-24 -top-16 hidden h-[460px] w-auto opacity-[0.05] lg:block" />
       <Container className="relative">
         {/* CTA */}
         <div className="flex flex-col gap-8 border-b border-white/10 py-16 md:flex-row md:items-end md:justify-between lg:py-20">

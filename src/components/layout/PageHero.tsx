@@ -36,13 +36,13 @@ export function PageHero({
   eyebrow, title, lede, crumbs, image, children, size = "md",
 }: { eyebrow: string; title: ReactNode; lede?: ReactNode; crumbs: Crumb[]; image?: string; children?: ReactNode; size?: "sm" | "md" }) {
   return (
-    <section className="hero-play on-dark relative isolate overflow-hidden bg-deep text-white">
+    <section className="hero-play on-dark relative isolate overflow-hidden sky-band text-white">
       {image ? (
         <>
           <Parallax speed={0.15} className="absolute inset-0 -z-20">
             <Img name={image} priority sizes="100vw" className="ken-burns h-full w-full object-cover" alt="" />
           </Parallax>
-          <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(100deg,rgb(11_74_128/0.94)_0%,rgb(15_98_166/0.84)_45%,rgb(33_130_205/0.55)_100%)]" />
+          <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgb(8_64_118/0.93)_0%,rgb(12_88_155/0.88)_100%)] xl:bg-[linear-gradient(100deg,rgb(8_64_118/0.95)_0%,rgb(12_88_155/0.86)_45%,rgb(30_128_200/0.55)_76%,rgb(63_168_238/0.32)_100%)]" />
         </>
       ) : (
         <>
@@ -52,7 +52,7 @@ export function PageHero({
       <Container className={size === "sm" ? "pb-14 pt-36 lg:pb-20 lg:pt-40" : "pb-20 pt-40 lg:pb-28 lg:pt-48"}>
         <div className="hero-in"><Breadcrumbs items={crumbs} /></div>
         <p className="hero-in mt-10 flex items-center gap-4 text-[0.78rem] font-semibold uppercase tracking-[0.18em] text-on-dark-muted" style={{ "--d": "80ms" } as CSSProperties}><span aria-hidden="true" className="h-px w-10 bg-accent" />{eyebrow}</p>
-        <h1 className={`mt-5 max-w-4xl font-display text-white ${size === "sm" ? "display-lg" : "display-xl"}`}>
+        <h1 className={`mt-5 max-w-4xl font-display text-white xl:max-w-3xl ${size === "sm" ? "display-lg" : "display-xl"}`}>
           {typeof title === "string" ? <SplitWords text={title} base={120} /> : title}
         </h1>
         {lede && <p className="lede hero-in mt-6 max-w-2xl text-on-dark-muted" style={{ "--d": "420ms" } as CSSProperties}>{lede}</p>}

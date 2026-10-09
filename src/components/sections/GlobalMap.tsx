@@ -58,7 +58,7 @@ export function GlobalMap({ tone = "dark" }: { tone?: "dark" | "light" }) {
                 key={c.name}
                 d={arc(c.lon, c.lat)}
                 fill="none"
-                stroke={dark ? "#3fa8ee" : "#0a7682"}
+                stroke={dark ? "#3fa8ee" : "#2a8fd8"}
                 strokeWidth={hover === c.name ? 0.7 : 0.35}
                 strokeOpacity={hover && hover !== c.name ? 0.15 : 0.7}
                 pathLength={1}

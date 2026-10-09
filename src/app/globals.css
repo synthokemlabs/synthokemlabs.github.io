@@ -12,8 +12,8 @@
   --primary-tint: #e3f1fc;   /* pale sky wash */
   --deep: #0f62a6;           /* sky-azure sections: hero, page headers, feature bands (white 6.3:1) */
   --deep-2: #0c5591;         /* slightly deeper sky for the footer (white 7.7:1) */
-  --secondary: #0a7682;      /* teal — text-safe on white (5.3:1) */
-  --secondary-tint: #e3f5f6;
+  --secondary: #0874b6;      /* sky-cyan — text-safe on white (5.0:1) */
+  --secondary-tint: #e3f2fc;
   --accent: #3fa8ee;         /* logo blue — highlights, on dark surfaces */
   --accent-soft: #d2eafc;    /* small labels on sky surfaces (4.7:1 on --primary, 5.1:1 on --deep) */
   --accent-strong: #0b66ad;  /* blue text & links on light (6.0:1) */
@@ -354,3 +354,10 @@ html.lenis-on body { overscroll-behavior: none; }
   ::view-transition-old(*), ::view-transition-new(*), ::view-transition-group(*) { animation-duration: 0s !important; animation-delay: 0s !important; }
   .rule-draw::before { transform: none; }
 }
+
+/* ==========================================================================
+   Sky bands — blue sections get depth from a diagonal deep-azure → sky gradient.
+   Every stop keeps white (≥5.8:1) and soft text (≥4.7:1) readable.
+   ========================================================================== */
+.sky-band { background-color: var(--deep); background-image: linear-gradient(135deg, #0a4c8a 0%, #0b5597 42%, #1168ad 100%); }
+.sky-band-deep { background-color: var(--deep-2); background-image: linear-gradient(160deg, #0b5390 0%, #094273 100%); }

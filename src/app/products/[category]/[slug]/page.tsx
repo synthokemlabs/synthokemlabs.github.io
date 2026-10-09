@@ -54,7 +54,7 @@ export default async function ProductPage({ params }: Params) {
     <>
       <TrackRecentlyViewed category={p.category} slug={p.slug} />
       <ProductStickyBar name={p.name} cas={p.cas} enquiryHref={enquiry} />
-      <section data-product-hero className="on-dark relative isolate overflow-hidden bg-deep text-white">
+      <section data-product-hero className="on-dark relative isolate overflow-hidden sky-band text-white">
         <div aria-hidden="true" className="grid-paper-dark absolute inset-0 -z-10" />
         <Container className="grid grid-cols-1 items-center gap-10 pb-14 pt-36 lg:grid-cols-12 lg:pb-20 lg:pt-40">
           <div className="lg:col-span-7">
