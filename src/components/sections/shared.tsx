@@ -23,7 +23,7 @@ export function ApprovalsGrid({ limit }: { limit?: number }) {
 }
 
 export const PROCESS_STEPS = [
-  { title: "Facility", body: "Integrated manufacturing facilities spread across three locations in Telangana and Andhra Pradesh." },
+  { title: "Facility", body: "Two integrated manufacturing units, in Telangana and Andhra Pradesh." },
   { title: "Technology", body: "World-class equipment, latest technologies and operational frameworks across all manufacturing units." },
   { title: "Process", body: "A wide range of APIs and intermediates, having handled varied process reactions and high reactor volumes." },
   { title: "Quality", body: "Excellent manufacturing, laboratory and documentation practices, consistently meeting Ph. Eur., USP and other standards." },
@@ -75,11 +75,11 @@ export function SpecialisationGrid() {
 
 export function FacilityCards() {
   return (
-    <ul className="grid grid-cols-1 gap-px overflow-hidden rounded-lg bg-border ring-1 ring-border lg:grid-cols-3">
+    <ul className="grid grid-cols-1 gap-px overflow-hidden rounded-lg bg-border ring-1 ring-border lg:grid-cols-2">
       {FACILITIES.map((f, i) => (
         <Reveal as="li" key={f.id} delay={i * 80} className="flex flex-col bg-white p-7 sm:p-9">
           <div className="flex items-baseline justify-between">
-            <span className="font-display text-5xl font-semibold tracking-tight text-primary/90">{["I", "II", "III"][i]}</span>
+            <span className="font-display text-5xl font-semibold tracking-tight text-primary/90">{f.name.replace(/^Unit\s+/, "")}</span>
             <span className="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">{f.name}</span>
           </div>
           <p className="mt-6 flex items-start gap-2 text-sm font-medium text-accent-strong"><Icon name="pin" size={16} className="mt-0.5 shrink-0" />{f.location}</p>

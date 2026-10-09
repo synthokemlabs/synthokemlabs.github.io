@@ -70,7 +70,7 @@ export default function ContactPage() {
 
       <section id="map" className="pb-20 lg:pb-28" aria-labelledby="map-title">
         <Container>
-          <h2 id="map-title" className="eyebrow mb-5 text-muted">Corporate office & Unit II — Pashamylaram, Telangana</h2>
+          <h2 id="map-title" className="eyebrow mb-5 text-muted">Corporate office, R&D unit & Unit II — Pashamylaram, Telangana</h2>
           <MapFacade src={hq.mapEmbed!} title="Map showing Synthokem Labs, Pashamylaram" directions={hq.directions} />
         </Container>
       </section>

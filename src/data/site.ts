@@ -16,7 +16,8 @@ export const SITE = {
   hours: "Monday to Saturday, 9:00 am – 5:30 pm",
   responseTime: "Our team will contact you within 3 business days.",
   people: "300+",
-  facilitiesCount: 3,
+  /** Manufacturing units listed on the current Product List cover (Unit II, Unit III). */
+  facilitiesCount: 2,
   productListPdf: "/documents/synthokem-product-list.pdf",
   productListName: "Synthokem Product List",
   productListSize: "250 KB",
@@ -36,8 +37,8 @@ export type Location = {
 export const LOCATIONS: Location[] = [
   {
     id: "corporate-office",
-    name: "Corporate Office & Unit II",
-    role: "Registered office and manufacturing",
+    name: "Corporate Office, R&D Unit & Unit II",
+    role: "Corporate office, R&D and manufacturing",
     lines: [
       "Plot No. 222–224 & 235–237, Phase-II",
       "IDA Pashamylaram, Patancheru (Mandal)",

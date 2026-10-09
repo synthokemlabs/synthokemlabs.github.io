@@ -88,7 +88,7 @@ export default function HomePage() {
           <dl className="hero-in grid grid-cols-2 border-t border-white/15 lg:grid-cols-4" style={d(1000)} aria-label="Synthokem at a glance">
             {[
               { v: <Counter value={1978} />, l: "Year established" },
-              { v: <Counter value={3} />, l: "Manufacturing units" },
+              { v: <Counter value={SITE.facilitiesCount} />, l: "Manufacturing units" },
               { v: <Counter value={300} suffix="+" />, l: "Skilled people" },
               { v: <Counter value={COUNTRIES.length} />, l: "Countries served" },
             ].map((s, i) => (
@@ -113,7 +113,7 @@ export default function HomePage() {
             <Reveal variant="image" delay={120} className="zoom-parent relative mt-6 aspect-[16/10] overflow-hidden rounded-lg bg-deep lg:aspect-[4/5]">
               <Img name="facility-aerial" sizes="(min-width:1024px) 32vw, 100vw" className="zoom-img absolute inset-0 h-full w-full object-cover" />
               <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-deep/90 via-deep/45 to-transparent px-5 pb-5 pt-20 text-white">
-                <span className="block font-mono text-xs text-on-dark-muted">Three units · Telangana &amp; Andhra Pradesh</span>
+                <span className="block font-mono text-xs text-on-dark-muted">Two units · Telangana &amp; Andhra Pradesh</span>
                 <span className="mt-1.5 block font-display text-lg font-semibold leading-snug">Manufacturing in India since 1978</span>
               </span>
             </Reveal>

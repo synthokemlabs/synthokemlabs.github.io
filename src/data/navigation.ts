@@ -41,7 +41,7 @@ export const MAIN_NAV: NavItem[] = [
     label: "Capabilities",
     href: "/capabilities/",
     items: [
-      { label: "Manufacturing", href: "/capabilities/manufacturing/", description: "Three integrated units", icon: "factory" },
+      { label: "Manufacturing", href: "/capabilities/manufacturing/", description: "Two integrated units", icon: "factory" },
       { label: "Specialisation", href: "/capabilities/", description: "Reaction chemistries & R&D", icon: "flask" },
       { label: "Quality systems", href: "/quality/", description: "QC, QA and commitment", icon: "shield" },
       { label: "Regulatory affairs", href: "/quality/regulatory-affairs/", description: "DMFs, CEPs and approvals", icon: "file" },

@@ -85,7 +85,7 @@ export function Timeline() {
             <div className="relative pb-2 pl-6 pt-6 sm:pl-12">
               <span aria-hidden="true" className="absolute -left-[6px] top-[2.1rem] h-3 w-3 rounded-full bg-primary sm:top-[2.6rem]" />
               <p className="max-w-xl text-[1.05rem] leading-relaxed text-text">
-                From a single unit with 10 employees to three manufacturing facilities and over 300 people — serving customers across 40 countries.
+                From a single unit with 10 employees to two manufacturing units and over 300 people — serving customers across 40 countries.
               </p>
             </div>
           </li>

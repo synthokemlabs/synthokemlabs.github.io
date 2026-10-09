@@ -9,7 +9,7 @@ import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
   title: "Manufacturing — Integrated API & Intermediate Facilities",
-  description: "Three integrated manufacturing facilities in Telangana and Andhra Pradesh with high-end machinery, USFDA-inspected and WHO-GMP certified units, ISO 14001 and OHSAS 18001 systems.",
+  description: "Two integrated manufacturing units in Telangana and Andhra Pradesh with high-end machinery, USFDA-inspected and WHO-GMP certified units, ISO 14001 and OHSAS 18001 systems.",
   path: "/capabilities/manufacturing/",
 });
 
@@ -18,7 +18,7 @@ const GALLERY = ["reactor-operator", "cleanroom-processing", "qc-analyst", "ware
 export default function ManufacturingPage() {
   return (
     <>
-      <PageHero eyebrow="Manufacturing" title="Advanced machinery. Latest technologies. Proven processes." lede="Delivering our value proposition throughout the lifecycle of the project, through integrated manufacturing facilities spread across three locations." crumbs={[{ name: "Capabilities", href: "/capabilities/" }, { name: "Manufacturing", href: "/capabilities/manufacturing/" }]} image="cleanroom-processing" />
+      <PageHero eyebrow="Manufacturing" title="Advanced machinery. Latest technologies. Proven processes." lede="Delivering our value proposition throughout the lifecycle of the project, through two integrated manufacturing units in Telangana and Andhra Pradesh." crumbs={[{ name: "Capabilities", href: "/capabilities/" }, { name: "Manufacturing", href: "/capabilities/manufacturing/" }]} image="cleanroom-processing" />
       <PageNav items={[{ id: "philosophy", label: "Philosophy" }, { id: "process", label: "How we work" }, { id: "units", label: "Units" }, { id: "inside", label: "Inside" }, { id: "safety", label: "Safety" }]} />
 
       <section id="philosophy" className="py-20 lg:py-28">
@@ -43,7 +43,7 @@ export default function ManufacturingPage() {
 
       <section id="units" className="py-20 lg:py-28">
         <Container>
-          <SectionHeading eyebrow="Manufacturing units" title="Three facilities across two states." lede="Units in Telangana and Andhra Pradesh, supported by our corporate office at Pashamylaram." />
+          <SectionHeading eyebrow="Manufacturing units" title="Two manufacturing units across two states." lede="Unit II in Telangana and Unit III in Andhra Pradesh, supported by our corporate office and R&D unit at Pashamylaram." />
           <div className="mt-14"><FacilitiesNetwork /></div>
           <div className="mt-14"><FacilityCards /></div>
         </Container>

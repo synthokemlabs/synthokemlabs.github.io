@@ -82,25 +82,18 @@ export interface Facility {
 }
 export const FACILITIES: Facility[] = [
   {
-    id: "unit-i",
-    name: "Unit I",
-    location: "Location details available on request",
-    summary: "Synthokem's first manufacturing unit and the home of its longest-standing regulatory record.",
-    highlights: ["USFDA facility approval since 2005", "Korean FDA certificate for Methocarbamol (2012)", "EU Written Confirmation (2013)", "COFEPRIS approval (2016)", "Kosher certification for Guaifenesin"],
-  },
-  {
     id: "unit-ii",
     name: "Unit II",
-    location: "IDA Pashamylaram, Sangareddy, Telangana",
-    summary: "Acquired in 2004 and in operation since 2010, co-located with the corporate office.",
+    location: "IDA Pashamylaram, Patancheru, Sanga Reddy, Telangana",
+    summary: "Acquired in 2004 and in operation since 2010, on the same site as the corporate office and R&D unit.",
     highlights: ["USFDA inspection completed (2018)", "WHO-GMP & EU Written Confirmation (2016)", "CEP for Guaifenesin (2019)", "ISO 9001, ISO 14001 and OHSAS 18001 by DNV GL"],
   },
   {
     id: "unit-iii",
     name: "Unit III",
-    location: "JN Pharmacity, Parawada, Andhra Pradesh",
+    location: "JN Pharmacity, Parawada, Anakapalli, Andhra Pradesh",
     summary: "Synthokem's manufacturing presence in Andhra Pradesh, within JN Pharmacity.",
-    highlights: ["Plot No. 75, JN Pharmacity, Thanam", "Parawada, Anakapalli – 531019"],
+    highlights: ["Plot No. 75, JN Pharmacity, Thanam", "Parawada – 531019, Anakapalli"],
   },
 ];
 
@@ -175,7 +168,7 @@ export const OVERVIEW = [
   "The company is recognised for its strengths in manufacturing and distribution of a wide range of products and capabilities in R&D, with an aim to provide accessible and affordable pharmaceutical products to people in need.",
   "Over the decades, Synthokem Labs has leveraged its core expertise in evolving process chemistry, advanced capabilities, backward integration and stringent quality standards to build a portfolio of products across the value chain and enhance its competitiveness.",
   "Having been successfully audited and recognised by global regulatory authorities, Synthokem Labs is an integral part of the Indian pharmaceutical industry, delivering differentiated, high-quality products consistently.",
-  "Our strength lies in our people — over 300 skilled and unskilled individuals across three manufacturing facilities and the corporate office. Founded and managed by an experienced team of professionals with technical expertise and decades of industry experience, we foster a culture of sustainable growth through education, inclusion, empowerment and innovation.",
+  "Our strength lies in our people — over 300 skilled and unskilled individuals across two manufacturing units and the corporate office and R&D unit. Founded and managed by an experienced team of professionals with technical expertise and decades of industry experience, we foster a culture of sustainable growth through education, inclusion, empowerment and innovation.",
 ];
 
 export const PHILOSOPHY = [

@@ -6,11 +6,12 @@ import { Counter, Reveal } from "@/components/ui/client";
 import { Img } from "@/components/ui/Img";
 import { Icon } from "@/components/ui/Icon";
 import { CHAIRPERSON, COMMITMENTS, COUNTRIES, MISSION, OVERVIEW, PHILOSOPHY, VISION } from "@/data/company";
+import { SITE } from "@/data/site";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
   title: "About Synthokem Labs — API Manufacturer Since 1978",
-  description: "Synthokem Labs is a privately held manufacturer of APIs and drug intermediates, established in 1978, with three manufacturing facilities in Telangana and Andhra Pradesh and over 300 people.",
+  description: "Synthokem Labs is a privately held manufacturer of APIs and drug intermediates, established in 1978, with two manufacturing units in Telangana and Andhra Pradesh and over 300 people.",
   path: "/about/",
 });
 
@@ -28,7 +29,7 @@ export default function AboutPage() {
             <dl className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-lg bg-border ring-1 ring-border">
               {[
                 { v: <Counter value={1978} />, l: "Year established" },
-                { v: <Counter value={3} />, l: "Manufacturing facilities" },
+                { v: <Counter value={SITE.facilitiesCount} />, l: "Manufacturing units" },
                 { v: <Counter value={300} suffix="+" />, l: "People" },
                 { v: <Counter value={COUNTRIES.length} />, l: "Countries" },
               ].map((s, i) => (
@@ -113,7 +114,7 @@ export default function AboutPage() {
         <Container>
           <ul className="grid grid-cols-1 gap-px overflow-hidden rounded-lg bg-border ring-1 ring-border md:grid-cols-3">
             {[
-              { href: "/about/journey/", t: "Our journey", d: "From a single unit with 10 employees in 1978 to three facilities today.", icon: "history" as const },
+              { href: "/about/journey/", t: "Our journey", d: "From a single unit with 10 employees in 1978 to two manufacturing units today.", icon: "history" as const },
               { href: "/about/global-presence/", t: "Global presence", d: `${COUNTRIES.length} countries across Europe, Asia-Pacific, the Middle East & Africa and the Americas.`, icon: "globe" as const },
               { href: "/quality/regulatory-affairs/", t: "Regulatory affairs", d: "Audited and recognised by global regulatory authorities.", icon: "shield" as const },
             ].map((x) => (
