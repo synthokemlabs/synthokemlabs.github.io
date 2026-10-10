@@ -136,5 +136,8 @@ export const STRUCTURE_INDEX: Record<string, { formula?: string; mw?: string }> 
  "timolol-maleate": {
   "formula": "C17H28N4O7S",
   "mw": "432.5"
- }
+ },
+ "calcium-polycarbophil": {},
+ "hydroxypropyl-beta-cyclodextrin": {},
+ "sulfobutylether-beta-cyclodextrin-sodium": {}
 };

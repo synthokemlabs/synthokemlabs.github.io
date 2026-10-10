@@ -96,7 +96,7 @@ export default async function ProductPage({ params }: Params) {
             <div className="relative hidden lg:col-span-5 lg:block">
               <div className="relative aspect-square">
                 {model3d ? (
-                  <Molecule3D model={model3d} label={`Rotating 3D model of ${representative ? `a representative segment of ${p.name}` : p.name}`} hydrogens={false} variant="line" speed={0.9} follow />
+                  <Molecule3D model={model3d} label={`Rotating 3D model of ${representative ? `${representative.label.toLowerCase()} of ${p.name}` : p.name}`} hydrogens={false} variant="line" speed={0.9} follow />
                 ) : (
                   // is-visible sits on the wrapper: the draw-in styles key off an ancestor of .mol-draw
                   <div className="is-visible absolute inset-0 grid grid-cols-[minmax(0,1fr)] grid-rows-[minmax(0,1fr)] place-items-center p-10">
@@ -105,7 +105,7 @@ export default async function ProductPage({ params }: Params) {
                 )}
               </div>
               {casMatched && <p className="mt-2 flex justify-between border-t border-white/15 pt-4 font-mono text-sm text-on-dark-muted"><span className="text-white">{formatFormula(structure!.formula)}</span><span>{structure!.mw} g/mol</span></p>}
-              {representative && <p className="mt-2 flex justify-between gap-4 border-t border-white/15 pt-4 font-mono text-sm text-on-dark-muted"><span className="text-white">Representative segment</span><span>Cross-linked polymer</span></p>}
+              {representative && <p className="mt-2 flex justify-between gap-4 border-t border-white/15 pt-4 font-mono text-sm text-on-dark-muted"><span className="text-white">{representative.label}</span><span>{representative.caption}</span></p>}
             </div>
           )}
         </Container>
@@ -184,7 +184,7 @@ export default async function ProductPage({ params }: Params) {
 
           <aside className="space-y-6 lg:col-span-5">
             {(svg || p.structureImage) && (
-              <StructureViewer name={p.name} svg={svg} rasterSrc={p.structureImage} model3d={model3d} parentNote={structure?.model3dParent} computed3d={structure?.model3dSource === "computed"} representative={!!representative?.model3d} cas={p.cas} />
+              <StructureViewer name={p.name} svg={svg} rasterSrc={p.structureImage} model3d={model3d} parentNote={structure?.model3dParent} computed3d={structure?.model3dSource === "computed"} representative={representative?.model3d ? { label: representative.label, note: representative.note } : undefined} cas={p.cas} />
             )}
             <div className="rounded-lg bg-primary p-7 text-white">
               <h2 className="font-display text-xl font-semibold">Documentation</h2>

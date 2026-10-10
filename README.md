@@ -96,8 +96,10 @@ node scripts/fetch-structures.mjs        # PubChem lookups by CAS → src/data/s
 node scripts/fetch-structures-extra.mjs  # name-based fallbacks
 node scripts/add-structures.mjs <slug>…  # add/refresh only the named products (leaves all others untouched)
 node scripts/render-structures.mjs       # RDKit → public/structures/svg/*.svg + structure-index.ts
+python scripts/representative-structures.py  # polymer / cyclodextrins: representative structure, 2D layout and wording
+                                         # → src/data/representative-structures.json
 python scripts/compute-3d.py <slug>…     # computed 3D (RDKit) where PubChem has none: bisbentiamine, sodium-stearyl-fumarate,
-                                         # and calcium-polycarbophil (representative segment, src/data/representative-structures.json)
+                                         # calcium-polycarbophil, hydroxypropyl- and sulfobutylether-beta-cyclodextrin(-sodium)
 ```
 
 **Company review:** please confirm that every structure matches the material you supply, especially salt and hydrate forms.

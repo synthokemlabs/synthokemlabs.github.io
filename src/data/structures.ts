@@ -22,7 +22,22 @@ export interface StructureRecord {
 export const STRUCTURES = raw as unknown as Record<string, StructureRecord>;
 export const getStructure = (slug: string): StructureRecord | undefined => STRUCTURES[slug];
 
-/** Polymers have no single structure: a computed 3D model of a representative segment (scripts/compute-3d.py). */
-export interface RepresentativeStructure { smiles: string; description: string; model3d?: Model3D }
+/**
+ * Products that are not a single molecule (a cross-linked polymer, substituted cyclodextrins): a representative
+ * structure with its own wording (scripts/representative-structures.py), computed 3D (scripts/compute-3d.py)
+ * and a fixed-layout 2D drawing (scripts/render-structures.mjs).
+ */
+export interface RepresentativeStructure {
+  smiles: string;
+  description: string;
+  /** e.g. "Representative segment", "Example molecule" */
+  label: string;
+  /** shown after "Drag to rotate · " in the 3D view */
+  note: string;
+  /** hero caption beside the label, e.g. "Cross-linked polymer" */
+  caption: string;
+  depiction?: { molblock: string; legend?: string; attachments?: boolean };
+  model3d?: Model3D;
+}
 const REPRESENTATIVE = representative as unknown as Record<string, RepresentativeStructure>;
 export const getRepresentative = (slug: string): RepresentativeStructure | undefined => REPRESENTATIVE[slug];

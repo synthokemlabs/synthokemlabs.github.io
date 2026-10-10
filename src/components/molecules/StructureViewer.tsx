@@ -13,8 +13,8 @@ export function StructureViewer({
   name, svg, rasterSrc, model3d, parentNote, computed3d, representative, cas,
 }: {
   name: string; svg?: string; rasterSrc?: string; model3d?: Model3D; parentNote?: boolean; computed3d?: boolean;
-  /** model3d is a representative segment of a polymer, not the whole substance */
-  representative?: boolean; cas?: string;
+  /** model3d stands in for a substance that is not a single molecule; label/note say so */
+  representative?: { label: string; note: string }; cas?: string;
 }) {
   const [mode, setMode] = useState<"2d" | "3d">("2d");
   const [drawKey, setDrawKey] = useState(0);
@@ -74,12 +74,12 @@ export function StructureViewer({
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,#1b7cc6_0%,#0c5591_70%)]">
             <Molecule3D model={model3d!} label={`Interactive 3D model of ${name}`} />
             <p className="pointer-events-none absolute bottom-3 left-4 flex items-center gap-2 text-[0.72rem] text-on-dark-muted">
-              <Icon name="globe" size={13} /> Drag to rotate{representative ? " · representative segment, acid form" : parentNote ? " · parent molecule shown" : ""}
+              <Icon name="globe" size={13} /> Drag to rotate{representative ? ` · ${representative.note}` : parentNote ? " · parent molecule shown" : ""}
             </p>
           </div>
         )}
       </div>
-      {cas && <div className="flex items-center justify-between border-t border-border bg-surface px-4 py-2.5 font-mono text-xs text-muted"><span>CAS {cas}</span><span>{mode === "3d" ? (representative ? "Representative segment · computed (RDKit)" : computed3d ? "3D conformer · computed (RDKit)" : "3D conformer · PubChem") : "2D depiction"}</span></div>}
+      {cas && <div className="flex items-center justify-between border-t border-border bg-surface px-4 py-2.5 font-mono text-xs text-muted"><span>CAS {cas}</span><span>{mode === "3d" ? (representative ? `${representative.label} · computed (RDKit)` : computed3d ? "3D conformer · computed (RDKit)" : "3D conformer · PubChem") : "2D depiction"}</span></div>}
     </figure>
   );
 }
