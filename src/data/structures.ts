@@ -15,6 +15,8 @@ export interface StructureRecord {
   matchedBy?: "name";
   model3d?: Model3D;
   model3dParent?: boolean;
+  /** "computed": PubChem has no 3D record, so the conformer was generated with RDKit (scripts/compute-3d.py) */
+  model3dSource?: "computed";
 }
 export const STRUCTURES = raw as unknown as Record<string, StructureRecord>;
 export const getStructure = (slug: string): StructureRecord | undefined => STRUCTURES[slug];

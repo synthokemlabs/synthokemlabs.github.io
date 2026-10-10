@@ -180,7 +180,7 @@ export default async function ProductPage({ params }: Params) {
 
           <aside className="space-y-6 lg:col-span-5">
             {(svg || p.structureImage) && (
-              <StructureViewer name={p.name} svg={svg} rasterSrc={p.structureImage} model3d={structure?.model3d} parentNote={structure?.model3dParent} cas={p.cas} />
+              <StructureViewer name={p.name} svg={svg} rasterSrc={p.structureImage} model3d={structure?.model3d} parentNote={structure?.model3dParent} computed3d={structure?.model3dSource === "computed"} cas={p.cas} />
             )}
             <div className="rounded-lg bg-primary p-7 text-white">
               <h2 className="font-display text-xl font-semibold">Documentation</h2>

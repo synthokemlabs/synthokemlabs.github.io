@@ -10,8 +10,8 @@ import { structureMaxSize } from "@/lib/chem";
  * with an optional interactive 3D ball-and-stick model.
  */
 export function StructureViewer({
-  name, svg, rasterSrc, model3d, parentNote, cas,
-}: { name: string; svg?: string; rasterSrc?: string; model3d?: Model3D; parentNote?: boolean; cas?: string }) {
+  name, svg, rasterSrc, model3d, parentNote, computed3d, cas,
+}: { name: string; svg?: string; rasterSrc?: string; model3d?: Model3D; parentNote?: boolean; computed3d?: boolean; cas?: string }) {
   const [mode, setMode] = useState<"2d" | "3d">("2d");
   const [drawKey, setDrawKey] = useState(0);
   const wrapRef = useRef<HTMLDivElement>(null);
@@ -75,7 +75,7 @@ export function StructureViewer({
           </div>
         )}
       </div>
-      {cas && <div className="flex items-center justify-between border-t border-border bg-surface px-4 py-2.5 font-mono text-xs text-muted"><span>CAS {cas}</span><span>{mode === "3d" ? "3D conformer · PubChem" : "2D depiction"}</span></div>}
+      {cas && <div className="flex items-center justify-between border-t border-border bg-surface px-4 py-2.5 font-mono text-xs text-muted"><span>CAS {cas}</span><span>{mode === "3d" ? (computed3d ? "3D conformer · computed (RDKit)" : "3D conformer · PubChem") : "2D depiction"}</span></div>}
     </figure>
   );
 }
