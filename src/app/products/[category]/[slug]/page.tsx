@@ -4,7 +4,7 @@ import { Breadcrumbs } from "@/components/layout/PageHero";
 import { ProductName, TrackRecentlyViewed } from "@/components/products/ProductCatalogue";
 import { ViewTransition } from "react";
 import { ProductStickyBar } from "@/components/products/ProductStickyBar";
-import { ScanQR } from "@/components/ui/ScanQR";
+import { ProductListQR } from "@/components/products/ProductListQR";
 import { readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { Molecule3D } from "@/components/molecules/Molecule3D";
@@ -87,9 +87,7 @@ export default async function ProductPage({ params }: Params) {
             <ButtonLink href={enquiry} variant="light">Request product information</ButtonLink>
             <ButtonLink href={`/contact/?intent=customer&product=${encodeURIComponent(p.slug)}`} variant="outline-light">Contact sales</ButtonLink>
           </div>
-          <div className="mt-8 w-full max-w-[440px]">
-            <ScanQR layout="row" size={104} title="Scan to open on your phone" label={p.name} sub={p.cas ? `CAS ${p.cas}` : undefined} path={productHref(p)} fileName={`synthokem-${p.slug}-qr`} />
-          </div>
+          <ProductListQR layout="row" size={104} className="mt-8 w-full max-w-[440px]" />
           </div>
           {(structure?.model3d || svg) && (
             <div className="relative hidden lg:col-span-5 lg:block">

@@ -100,7 +100,7 @@ node scripts/render-structures.mjs       # RDKit → public/structures/svg/*.svg
 
 **Company review:** please confirm that every structure matches the material you supply, especially salt and hydrate forms.
 
-**QR codes:** product pages and the Products page show QR codes generated in the browser from the site's own address (`src/components/ui/ScanQR.tsx`), so they always point at the domain the site is served from. The QR printed on the PDF cover (qrfy.io/9E6LCQkppJ) currently redirects to an "invalid" page and should be re-issued by the company.
+**QR codes:** product pages and the Products pages show the QR printed on the Product List cover (`public/images/product-list-qr.png`, extracted unchanged from the PDF; `SITE.productListQr`). It encodes `https://qrfy.io/9E6LCQkppJ`, whose destination is managed on qrfy.io: as of 10 Oct 2026 that link redirects to qrfy's "invalid" page, so it must be reactivated there (pointing at the Product List PDF) for both the PDF and the website codes to open the list. If the QR is ever re-issued, replace the PNG and the two `SITE` entries.
 
 ## 7. Design system
 

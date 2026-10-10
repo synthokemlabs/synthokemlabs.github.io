@@ -22,6 +22,9 @@ export const SITE = {
   productListName: "Synthokem Product List",
   productListSize: "250 KB",
   productListLabel: "Synthokem Product List (PDF, 250 KB)",
+  /** The QR printed on the Product List cover, extracted unchanged from the PDF. Its destination is managed by the company on qrfy.io. */
+  productListQr: "/images/product-list-qr.png",
+  productListQrLink: "https://qrfy.io/9E6LCQkppJ",
 } as const;
 
 export type Location = {
