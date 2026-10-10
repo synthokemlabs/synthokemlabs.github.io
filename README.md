@@ -58,7 +58,7 @@ Legacy URLs (`about.html`, `our_products.html`, …) redirect via `public/_redir
 
 ## 4. Enquiry forms — integration point
 
-Forms work without a backend. With no endpoint set, they **do not pretend to send anything**: they prepare a pre-filled email to info@synthokemlabs.com and say so. To deliver submissions directly, set an endpoint at build time:
+Forms work without a backend. With no endpoint set, they **do not pretend to send anything**: they prepare a pre-filled email to hr@synthokemlabs.com and say so. To deliver submissions directly, set an endpoint at build time:
 
 ```bash
 NEXT_PUBLIC_ENQUIRY_ENDPOINT=https://your-crm-or-function/enquiries npm run build

@@ -13,7 +13,7 @@ import { SITE } from "@/data/site";
  * optional attachment) and should return 2xx on success.
  *
  * Until an endpoint is configured, the form does NOT pretend to send anything:
- * it prepares a pre-filled email to info@synthokemlabs.com and tells the user so.
+ * it prepares a pre-filled email to hr@synthokemlabs.com and tells the user so.
  */
 export const ENQUIRY_ENDPOINT = process.env.NEXT_PUBLIC_ENQUIRY_ENDPOINT ?? "";
 
