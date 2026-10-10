@@ -9,7 +9,7 @@ import { readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { Molecule3D } from "@/components/molecules/Molecule3D";
 import { StructureViewer } from "@/components/molecules/StructureViewer";
-import { getStructure } from "@/data/structures";
+import { getRepresentative, getStructure } from "@/data/structures";
 import { formatFormula, structureMaxSize } from "@/lib/chem";
 import { Badge, ButtonLink, Container, JsonLd, SpecRow } from "@/components/ui/primitives";
 import { CopyButton } from "@/components/ui/client";
@@ -50,6 +50,9 @@ export default async function ProductPage({ params }: Params) {
   const svgFile = join(process.cwd(), "public", "structures", "svg", `${p.slug}.svg`);
   const svg = existsSync(svgFile) ? readFileSync(svgFile, "utf8") : undefined;
   const casMatched = structure && !structure.matchedBy;
+  // Polymers (e.g. Calcium Polycarbophil): 3D of a representative segment, labelled as such
+  const representative = structure ? undefined : getRepresentative(p.slug);
+  const model3d = structure?.model3d ?? representative?.model3d;
 
   return (
     <>
@@ -89,11 +92,11 @@ export default async function ProductPage({ params }: Params) {
           </div>
           <ProductListQR layout="row" size={104} className="mt-8 w-full max-w-[440px]" />
           </div>
-          {(structure?.model3d || svg) && (
+          {(model3d || svg) && (
             <div className="relative hidden lg:col-span-5 lg:block">
               <div className="relative aspect-square">
-                {structure?.model3d ? (
-                  <Molecule3D model={structure.model3d} label={`Rotating 3D model of ${p.name}`} hydrogens={false} variant="line" speed={0.9} follow />
+                {model3d ? (
+                  <Molecule3D model={model3d} label={`Rotating 3D model of ${representative ? `a representative segment of ${p.name}` : p.name}`} hydrogens={false} variant="line" speed={0.9} follow />
                 ) : (
                   // is-visible sits on the wrapper: the draw-in styles key off an ancestor of .mol-draw
                   <div className="is-visible absolute inset-0 grid grid-cols-[minmax(0,1fr)] grid-rows-[minmax(0,1fr)] place-items-center p-10">
@@ -102,6 +105,7 @@ export default async function ProductPage({ params }: Params) {
                 )}
               </div>
               {casMatched && <p className="mt-2 flex justify-between border-t border-white/15 pt-4 font-mono text-sm text-on-dark-muted"><span className="text-white">{formatFormula(structure!.formula)}</span><span>{structure!.mw} g/mol</span></p>}
+              {representative && <p className="mt-2 flex justify-between gap-4 border-t border-white/15 pt-4 font-mono text-sm text-on-dark-muted"><span className="text-white">Representative segment</span><span>Cross-linked polymer</span></p>}
             </div>
           )}
         </Container>
@@ -180,7 +184,7 @@ export default async function ProductPage({ params }: Params) {
 
           <aside className="space-y-6 lg:col-span-5">
             {(svg || p.structureImage) && (
-              <StructureViewer name={p.name} svg={svg} rasterSrc={p.structureImage} model3d={structure?.model3d} parentNote={structure?.model3dParent} computed3d={structure?.model3dSource === "computed"} cas={p.cas} />
+              <StructureViewer name={p.name} svg={svg} rasterSrc={p.structureImage} model3d={model3d} parentNote={structure?.model3dParent} computed3d={structure?.model3dSource === "computed"} representative={!!representative?.model3d} cas={p.cas} />
             )}
             <div className="rounded-lg bg-primary p-7 text-white">
               <h2 className="font-display text-xl font-semibold">Documentation</h2>

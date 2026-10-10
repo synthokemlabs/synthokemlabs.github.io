@@ -1,4 +1,5 @@
 import raw from "./structures.json";
+import representative from "./representative-structures.json";
 import type { Model3D } from "@/components/molecules/Molecule3D";
 
 /**
@@ -20,3 +21,8 @@ export interface StructureRecord {
 }
 export const STRUCTURES = raw as unknown as Record<string, StructureRecord>;
 export const getStructure = (slug: string): StructureRecord | undefined => STRUCTURES[slug];
+
+/** Polymers have no single structure: a computed 3D model of a representative segment (scripts/compute-3d.py). */
+export interface RepresentativeStructure { smiles: string; description: string; model3d?: Model3D }
+const REPRESENTATIVE = representative as unknown as Record<string, RepresentativeStructure>;
+export const getRepresentative = (slug: string): RepresentativeStructure | undefined => REPRESENTATIVE[slug];

@@ -7,8 +7,11 @@ with MMFF94 and keeps the lowest-energy of several conformers (fixed seed, so re
 Salts use the neutral parent molecule, as PubChem does. Entries are marked model3dSource: "computed"
 so the site labels them as computed rather than from PubChem.
 
+Polymers have no single structure: src/data/representative-structures.json holds the SMILES of a
+representative segment for them (e.g. Calcium Polycarbophil), and its model3d is written there.
+
 Usage (needs RDKit: pip install rdkit):
-  python scripts/compute-3d.py bisbentiamine sodium-stearyl-fumarate
+  python scripts/compute-3d.py bisbentiamine sodium-stearyl-fumarate calcium-polycarbophil
 """
 import json
 import sys
@@ -19,6 +22,7 @@ from rdkit.Chem import AllChem
 from rdkit.Chem.MolStandardize import rdMolStandardize
 
 DATA = Path(__file__).resolve().parent.parent / "src" / "data" / "structures.json"
+REPRESENTATIVE = DATA.with_name("representative-structures.json")
 
 
 def parent(smiles):
@@ -58,13 +62,17 @@ def js_numbers(x):
 
 
 data = json.loads(DATA.read_text(encoding="utf-8"))
+representative = json.loads(REPRESENTATIVE.read_text(encoding="utf-8"))
 for slug in sys.argv[1:]:
-    entry = data[slug]
+    rep = slug in representative and slug not in data
+    entry = representative[slug] if rep else data[slug]
     mol, is_parent = parent(entry["smiles"])
     entry["model3d"], energy = conformer(mol)
-    if is_parent:
-        entry["model3dParent"] = True
-    entry["model3dSource"] = "computed"
+    if not rep:
+        if is_parent:
+            entry["model3dParent"] = True
+        entry["model3dSource"] = "computed"
     heavy = sum(1 for a in entry["model3d"]["atoms"] if a[3] != "H")
-    print(f"{slug:28} {Chem.MolToSmiles(mol)[:60]:60} atoms {len(entry['model3d']['atoms'])} (heavy {heavy})  MMFF {energy:.1f} kcal/mol{'  parent' if is_parent else ''}")
+    print(f"{slug:28} {Chem.MolToSmiles(mol)[:60]:60} atoms {len(entry['model3d']['atoms'])} (heavy {heavy})  MMFF {energy:.1f} kcal/mol{'  parent' if is_parent else ''}{'  representative' if rep else ''}")
 DATA.write_text(json.dumps(js_numbers(data), ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+REPRESENTATIVE.write_text(json.dumps(js_numbers(representative), ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
