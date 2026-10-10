@@ -10,7 +10,7 @@ import { join } from "node:path";
 import { Molecule3D } from "@/components/molecules/Molecule3D";
 import { StructureViewer } from "@/components/molecules/StructureViewer";
 import { getStructure } from "@/data/structures";
-import { formatFormula } from "@/lib/chem";
+import { formatFormula, structureMaxSize } from "@/lib/chem";
 import { Badge, ButtonLink, Container, JsonLd, SpecRow } from "@/components/ui/primitives";
 import { CopyButton } from "@/components/ui/client";
 import { Icon } from "@/components/ui/Icon";
@@ -95,7 +95,10 @@ export default async function ProductPage({ params }: Params) {
                 {structure?.model3d ? (
                   <Molecule3D model={structure.model3d} label={`Rotating 3D model of ${p.name}`} hydrogens={false} variant="line" speed={0.9} follow />
                 ) : (
-                  <div className="mol-draw mol-on-dark is-visible grid h-full w-full place-items-center p-10" dangerouslySetInnerHTML={{ __html: svg! }} />
+                  // is-visible sits on the wrapper: the draw-in styles key off an ancestor of .mol-draw
+                  <div className="is-visible absolute inset-0 grid grid-cols-[minmax(0,1fr)] grid-rows-[minmax(0,1fr)] place-items-center p-10">
+                    <div className="mol-draw mol-on-dark h-full w-full" style={structureMaxSize(svg, 1.3)} role="img" aria-label={`2D chemical structure of ${p.name}`} dangerouslySetInnerHTML={{ __html: svg! }} />
+                  </div>
                 )}
               </div>
               {casMatched && <p className="mt-2 flex justify-between border-t border-white/15 pt-4 font-mono text-sm text-on-dark-muted"><span className="text-white">{formatFormula(structure!.formula)}</span><span>{structure!.mw} g/mol</span></p>}

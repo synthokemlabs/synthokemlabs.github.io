@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Molecule3D, type Model3D } from "./Molecule3D";
 import { Icon } from "@/components/ui/Icon";
+import { structureMaxSize } from "@/lib/chem";
 
 /**
  * Product-page structure panel: an inline 2D structure that draws itself bond by bond,
@@ -14,9 +15,7 @@ export function StructureViewer({
   const [mode, setMode] = useState<"2d" | "3d">("2d");
   const [drawKey, setDrawKey] = useState(0);
   const wrapRef = useRef<HTMLDivElement>(null);
-  // Cap the on-screen scale (~1.55 px per drawing unit) so small molecules aren't blown up
-  const vb = svg?.match(/viewBox='[\d.-]+ [\d.-]+ ([\d.]+) ([\d.]+)'/);
-  const maxStyle = vb ? { maxWidth: `${Math.round(+vb[1] * 1.55)}px`, maxHeight: `${Math.round(+vb[2] * 1.55)}px` } : undefined;
+  const maxStyle = structureMaxSize(svg);
 
   useEffect(() => {
     const el = wrapRef.current;
@@ -58,7 +57,8 @@ export function StructureViewer({
 
       <div ref={wrapRef} className="relative aspect-[4/3]">
         {mode === "2d" ? (
-          <div className="grid-paper absolute inset-0 grid place-items-center p-6">
+          // Fixed tracks so the drawing is sized by the panel, never by its own width-based height
+          <div className="grid-paper absolute inset-0 grid grid-cols-[minmax(0,1fr)] grid-rows-[minmax(0,1fr)] place-items-center p-6">
             {svg ? (
               <div key={drawKey} className="mol-draw h-full w-full" style={maxStyle} role="img" aria-label={`2D chemical structure of ${name}`} dangerouslySetInnerHTML={{ __html: svg }} />
             ) : rasterSrc ? (
