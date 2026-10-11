@@ -3,6 +3,7 @@ import { PageHero } from "@/components/layout/PageHero";
 import { ProductCatalogue, RecentlyViewed } from "@/components/products/ProductCatalogue";
 import { ButtonLink, Container } from "@/components/ui/primitives";
 import { Icon } from "@/components/ui/Icon";
+import { ProductListQR } from "@/components/products/ProductListQR";
 import { CATEGORIES, PRODUCTS, productsIn } from "@/data/products";
 import { SITE } from "@/data/site";
 import { pageMetadata } from "@/lib/seo";
@@ -23,6 +24,7 @@ export default function ProductsPage() {
         crumbs={[{ name: "Products", href: "/products/" }]}
         image="lab-precision"
         size="sm"
+        aside={<ProductListQR />}
       >
         <ul className="flex flex-wrap gap-2">
           {CATEGORIES.map((c) => (
@@ -46,7 +48,7 @@ export default function ProductsPage() {
         <Container className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12">
           <div className="lg:col-span-7">
             <p className="eyebrow text-accent-strong">Downloads</p>
-            <h2 className="display-md mt-4 text-primary-ink">The complete Product List 2026 — with pharmacopoeial grades and regulatory status.</h2>
+            <h2 className="display-md mt-4 text-primary-ink">The complete Product List — with pharmacopoeial grades, CAS numbers and regulatory status.</h2>
           </div>
           <div className="flex flex-wrap gap-3 lg:col-span-5 lg:justify-end">
             <ButtonLink href={SITE.productListPdf} icon="download">Download PDF</ButtonLink>

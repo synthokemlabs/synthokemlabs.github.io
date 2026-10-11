@@ -53,12 +53,12 @@ export default function HomePage() {
   return (
     <>
       {/* ───────────── HERO ───────────── */}
-      <section className="hero-play on-dark relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-primary-ink text-white" aria-labelledby="hero-title">
+      <section className="hero-play on-dark relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-deep text-white" aria-labelledby="hero-title">
         <Parallax speed={0.22} className="absolute inset-0 -z-20">
           <Img name="hero-cleanroom" priority sizes="100vw" className="ken-burns h-full w-full object-cover object-[72%_center]" alt="" />
         </Parallax>
-        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(100deg,rgb(7_27_48/0.96)_0%,rgb(10_45_80/0.9)_48%,rgb(7_27_48/0.82)_100%)]" />
-        <div aria-hidden="true" className="absolute inset-x-0 bottom-0 -z-10 h-1/3 bg-gradient-to-t from-primary-ink to-transparent" />
+        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgb(8_64_118/0.93)_0%,rgb(12_88_155/0.88)_100%)] lg:bg-[linear-gradient(100deg,rgb(8_64_118/0.95)_0%,rgb(12_88_155/0.86)_40%,rgb(30_128_200/0.6)_72%,rgb(63_168_238/0.38)_100%)]" />
+        <div aria-hidden="true" className="absolute inset-x-0 bottom-0 -z-10 h-1/2 bg-gradient-to-t from-[#0a4c8a] via-[#0a4c8a]/70 to-transparent" />
 
         <Container className="grid grid-cols-1 flex-1 items-center gap-12 pb-10 pt-32 lg:grid-cols-12 lg:pb-12">
           <div className="lg:col-span-7" data-hero-fade>
@@ -67,7 +67,7 @@ export default function HomePage() {
               API manufacturer · Hyderabad · Since 1978
             </p>
             <h1 id="hero-title" className="display-xl mt-8 max-w-[16ch] font-display text-white">
-              <SplitWords text="Performance and perfection, driven by chemistry." base={150} />
+              <SplitWords text="Performance and perfection, driven by chemistry." highlight="driven by chemistry." highlightClass="text-[#a9dcfb]" base={150} />
             </h1>
             <p className="lede hero-in mt-7 max-w-[36rem] text-on-dark-muted" style={d(650)}>
               We manufacture Active Pharmaceutical Ingredients and drug intermediates — with a global presence across {COUNTRIES.length} countries.
@@ -88,7 +88,7 @@ export default function HomePage() {
           <dl className="hero-in grid grid-cols-2 border-t border-white/15 lg:grid-cols-4" style={d(1000)} aria-label="Synthokem at a glance">
             {[
               { v: <Counter value={1978} />, l: "Year established" },
-              { v: <Counter value={3} />, l: "Manufacturing units" },
+              { v: <Counter value={SITE.facilitiesCount} />, l: "Manufacturing units" },
               { v: <Counter value={300} suffix="+" />, l: "Skilled people" },
               { v: <Counter value={COUNTRIES.length} />, l: "Countries served" },
             ].map((s, i) => (
@@ -110,10 +110,10 @@ export default function HomePage() {
               <p className="font-mono text-xs text-muted">Hyderabad · Est. 1978</p>
             </Reveal>
             {/* Site photograph: curtain reveal, then a gentle scroll drift (ScrollFX) */}
-            <Reveal variant="image" delay={120} className="zoom-parent relative mt-6 aspect-[16/10] overflow-hidden rounded-lg bg-primary-ink lg:aspect-[4/5]">
+            <Reveal variant="image" delay={120} className="zoom-parent relative mt-6 aspect-[16/10] overflow-hidden rounded-lg bg-deep lg:aspect-[4/5]">
               <Img name="facility-aerial" sizes="(min-width:1024px) 32vw, 100vw" className="zoom-img absolute inset-0 h-full w-full object-cover" />
-              <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-primary-ink/90 via-primary-ink/45 to-transparent px-5 pb-5 pt-20 text-white">
-                <span className="block font-mono text-xs text-on-dark-muted">Three units · Telangana &amp; Andhra Pradesh</span>
+              <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-deep/90 via-deep/45 to-transparent px-5 pb-5 pt-20 text-white">
+                <span className="block font-mono text-xs text-on-dark-muted">Two units · Telangana &amp; Andhra Pradesh</span>
                 <span className="mt-1.5 block font-display text-lg font-semibold leading-snug">Manufacturing in India since 1978</span>
               </span>
             </Reveal>
@@ -161,7 +161,7 @@ export default function HomePage() {
       </section>
 
       {/* ───────────── HOW WE WORK ───────────── */}
-      <section className="on-dark relative isolate overflow-x-clip bg-primary-ink py-24 text-white lg:py-32" aria-labelledby="chain-title">
+      <section className="on-dark relative isolate overflow-x-clip sky-band py-24 text-white lg:py-32" aria-labelledby="chain-title">
         <Container>
           <SectionHeading id="chain-title" tone="light" eyebrow="How we work" index="04" title="From molecule to market." lede="The Synthokem value chain, step by step — each stage links to the detail behind it." />
           <div className="mt-10 lg:mt-4"><ValueChain /></div>

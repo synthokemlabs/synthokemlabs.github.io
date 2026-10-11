@@ -23,7 +23,7 @@ export function ApprovalsGrid({ limit }: { limit?: number }) {
 }
 
 export const PROCESS_STEPS = [
-  { title: "Facility", body: "Integrated manufacturing facilities spread across three locations in Telangana and Andhra Pradesh." },
+  { title: "Facility", body: "Two integrated manufacturing units, in Telangana and Andhra Pradesh." },
   { title: "Technology", body: "World-class equipment, latest technologies and operational frameworks across all manufacturing units." },
   { title: "Process", body: "A wide range of APIs and intermediates, having handled varied process reactions and high reactor volumes." },
   { title: "Quality", body: "Excellent manufacturing, laboratory and documentation practices, consistently meeting Ph. Eur., USP and other standards." },
@@ -37,7 +37,7 @@ export function ProcessChain({ tone = "dark" }: { tone?: "dark" | "light" }) {
       <span aria-hidden="true" className={`absolute left-[19px] top-0 h-full w-px md:left-0 md:top-[19px] md:h-px md:w-full ${dark ? "bg-white/15" : "bg-border"}`} />
       {PROCESS_STEPS.map((s, i) => (
         <Reveal as="li" key={s.title} delay={i * 90} className="relative grid grid-cols-[40px_1fr] gap-5 md:block">
-          <span className={`relative z-10 grid h-10 w-10 place-items-center rounded-full font-mono text-xs ${dark ? "bg-primary-ink text-accent ring-1 ring-accent/60" : "bg-white text-primary ring-1 ring-primary/40"}`}>
+          <span className={`relative z-10 grid h-10 w-10 place-items-center rounded-full font-mono text-xs ${dark ? "bg-deep text-accent-soft ring-1 ring-accent/60" : "bg-white text-primary ring-1 ring-primary/40"}`}>
             0{i + 1}
           </span>
           <div className="md:mt-7">
@@ -75,11 +75,11 @@ export function SpecialisationGrid() {
 
 export function FacilityCards() {
   return (
-    <ul className="grid grid-cols-1 gap-px overflow-hidden rounded-lg bg-border ring-1 ring-border lg:grid-cols-3">
+    <ul className="grid grid-cols-1 gap-px overflow-hidden rounded-lg bg-border ring-1 ring-border lg:grid-cols-2">
       {FACILITIES.map((f, i) => (
         <Reveal as="li" key={f.id} delay={i * 80} className="flex flex-col bg-white p-7 sm:p-9">
           <div className="flex items-baseline justify-between">
-            <span className="font-display text-5xl font-semibold tracking-tight text-primary/90">{["I", "II", "III"][i]}</span>
+            <span className="font-display text-5xl font-semibold tracking-tight text-primary/90">{f.name.replace(/^Unit\s+/, "")}</span>
             <span className="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-muted">{f.name}</span>
           </div>
           <p className="mt-6 flex items-start gap-2 text-sm font-medium text-accent-strong"><Icon name="pin" size={16} className="mt-0.5 shrink-0" />{f.location}</p>

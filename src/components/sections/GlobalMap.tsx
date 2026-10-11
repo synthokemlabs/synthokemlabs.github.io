@@ -1,5 +1,6 @@
 "use client";
 
+import { asset } from "@/lib/asset";
 import { useMemo, useState } from "react";
 import { COUNTRIES, HUB, REGIONS, type Region } from "@/data/company";
 
@@ -50,7 +51,7 @@ export function GlobalMap({ tone = "dark" }: { tone?: "dark" | "light" }) {
 
       <div className="relative mt-8">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/images/world-dots.svg" alt="" aria-hidden="true" width={1440} height={552} className={`block h-auto w-full ${dark ? "opacity-[0.35]" : "opacity-70"}`} loading="lazy" />
+        <img src={asset("/images/world-dots.svg")} alt="" aria-hidden="true" width={1440} height={552} className={`block h-auto w-full ${dark ? "opacity-[0.35]" : "opacity-70"}`} loading="lazy" />
         <svg viewBox={`0 0 ${W} ${H}`} className="absolute inset-0 h-full w-full" role="img" aria-label={`Map showing Synthokem's presence in ${region === "All" ? `${COUNTRIES.length} countries` : region}`}>
           <g key={region}>
             {visible.map((c, i) => (
@@ -58,7 +59,7 @@ export function GlobalMap({ tone = "dark" }: { tone?: "dark" | "light" }) {
                 key={c.name}
                 d={arc(c.lon, c.lat)}
                 fill="none"
-                stroke={dark ? "#3fa8ee" : "#0a7682"}
+                stroke={dark ? "#3fa8ee" : "#2a8fd8"}
                 strokeWidth={hover === c.name ? 0.7 : 0.35}
                 strokeOpacity={hover && hover !== c.name ? 0.15 : 0.7}
                 pathLength={1}
@@ -76,7 +77,7 @@ export function GlobalMap({ tone = "dark" }: { tone?: "dark" | "light" }) {
                 cx={px(c.lon)}
                 cy={py(c.lat)}
                 r={hover === c.name ? 2.2 : 1.3}
-                fill={dark ? "#ffffff" : "#0d3b66"}
+                fill={dark ? "#ffffff" : "#0f62a6"}
                 opacity={on ? 1 : 0.2}
                 style={{ transition: "r .3s, opacity .4s" }}
               >
@@ -87,7 +88,7 @@ export function GlobalMap({ tone = "dark" }: { tone?: "dark" | "light" }) {
           <circle cx={px(HUB.lon)} cy={py(HUB.lat)} r="5" fill="none" stroke={dark ? "#3fa8ee" : "#0f69b4"} strokeWidth="0.5" className="molecule-node" />
           <circle cx={px(HUB.lon)} cy={py(HUB.lat)} r="2.4" fill={dark ? "#3fa8ee" : "#0f69b4"} />
         </svg>
-        <p className={`absolute -translate-x-1/2 rounded px-1.5 py-0.5 font-mono text-[0.62rem] uppercase tracking-[0.14em] sm:text-[0.7rem] ${dark ? "bg-primary-ink/85 text-accent" : "bg-surface/90 text-accent-strong"}`} style={{ left: `${(px(HUB.lon) / W) * 100}%`, top: `${(py(HUB.lat) / H) * 100 + 3.2}%` }}>
+        <p className={`absolute -translate-x-1/2 rounded px-1.5 py-0.5 font-mono text-[0.62rem] uppercase tracking-[0.14em] sm:text-[0.7rem] ${dark ? "bg-deep/85 text-accent-soft" : "bg-surface/90 text-accent-strong"}`} style={{ left: `${(px(HUB.lon) / W) * 100}%`, top: `${(py(HUB.lat) / H) * 100 + 3.2}%` }}>
           Hyderabad HQ
         </p>
       </div>
@@ -102,7 +103,7 @@ export function GlobalMap({ tone = "dark" }: { tone?: "dark" | "light" }) {
                   key={c.name}
                   onMouseEnter={() => setHover(c.name)}
                   onMouseLeave={() => setHover(null)}
-                  className={`text-[0.95rem] transition-colors ${dark ? "text-on-dark hover:text-accent" : "text-text hover:text-primary"}`}
+                  className={`text-[0.95rem] transition-colors ${dark ? "text-on-dark hover:text-accent-soft" : "text-text hover:text-primary"}`}
                 >
                   {c.name}
                 </li>

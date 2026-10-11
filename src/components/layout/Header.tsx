@@ -119,7 +119,7 @@ export function Header() {
                 if (!g.items) {
                   return (
                     <li key={g.label} data-nav={g.label} className="relative" onMouseEnter={() => { scheduleClose(); setHovered(g.label); }}>
-                      <Link href={g.href} aria-current={active ? "page" : undefined} className={`relative inline-flex min-h-11 items-center rounded-full px-4 text-[0.92rem] font-medium transition-colors ${active ? (solid ? "text-primary" : "text-white") : linkTone}`}>
+                      <Link href={g.href} aria-current={active ? "page" : undefined} className={`relative inline-flex min-h-11 items-center whitespace-nowrap rounded-full px-3 text-[0.92rem] font-medium xl:px-4 transition-colors ${active ? (solid ? "text-primary" : "text-white") : linkTone}`}>
                         {g.label}
                         {active && <span aria-hidden="true" className="absolute inset-x-4 bottom-1 h-[2px] rounded-full bg-accent" />}
                       </Link>
@@ -154,7 +154,7 @@ export function Header() {
                           requestAnimationFrame(focusFirst);
                         }
                       }}
-                      className={`relative inline-flex min-h-11 cursor-pointer items-center gap-1 rounded-full px-4 text-[0.92rem] font-medium transition-colors ${isOpen ? (solid ? "text-primary" : "text-white") : active ? (solid ? "text-primary" : "text-white") : linkTone}`}
+                      className={`relative inline-flex min-h-11 cursor-pointer items-center gap-1 whitespace-nowrap rounded-full px-3 text-[0.92rem] font-medium xl:px-4 transition-colors ${isOpen ? (solid ? "text-primary" : "text-white") : active ? (solid ? "text-primary" : "text-white") : linkTone}`}
                     >
                       {g.label}
                       <Icon name="chevronDown" size={15} className={`transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} />
@@ -179,7 +179,7 @@ export function Header() {
             </button>
             <Link
               href="/contact/"
-              className={`group hidden min-h-11 items-center gap-2 rounded-md px-5 text-[0.88rem] font-semibold transition-colors sm:inline-flex ${
+              className={`group hidden min-h-11 items-center gap-2 whitespace-nowrap rounded-md px-5 text-[0.88rem] font-semibold transition-colors sm:inline-flex ${
                 solid ? "bg-primary text-white hover:bg-accent-strong" : "bg-white text-primary-ink hover:bg-primary-tint"
               }`}
             >

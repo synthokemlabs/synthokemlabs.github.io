@@ -1,6 +1,8 @@
+import { asset } from "@/lib/asset";
+
 /**
  * Company facts. Every value here is taken from the existing synthokemlabs.com
- * website or the company's "Product List 2026" PDF. Do not add claims that the
+ * website or the company's current "Product List" PDF. Do not add claims that the
  * company has not approved.
  */
 export const SITE = {
@@ -12,13 +14,21 @@ export const SITE = {
   description:
     "Synthokem Labs is a manufacturer of Active Pharmaceutical Ingredients (APIs) and drug intermediates headquartered in Hyderabad, India, operating since 1978.",
   email: "info@synthokemlabs.com",
+  /** Used only on the Careers page and its application form. */
+  careersEmail: "hr@synthokemlabs.com",
   phone: { display: "+91 8455 224180", href: "tel:+918455224180" },
   hours: "Monday to Saturday, 9:00 am – 5:30 pm",
   responseTime: "Our team will contact you within 3 business days.",
   people: "300+",
-  facilitiesCount: 3,
-  productListPdf: "/documents/synthokem-product-list-2026.pdf",
-  productListLabel: "Product List 2026 (PDF, 210 KB)",
+  /** Manufacturing units listed on the current Product List cover (Unit II, Unit III). */
+  facilitiesCount: 2,
+  productListPdf: asset("/documents/synthokem-product-list.pdf"),
+  productListName: "Synthokem Product List",
+  productListSize: "250 KB",
+  productListLabel: "Synthokem Product List (PDF, 250 KB)",
+  /** The QR printed on the Product List cover, extracted unchanged from the PDF. Its destination is managed by the company on qrfy.io. */
+  productListQr: asset("/images/product-list-qr.png"),
+  productListQrLink: "https://qrfy.io/9E6LCQkppJ",
 } as const;
 
 export type Location = {
@@ -34,8 +44,8 @@ export type Location = {
 export const LOCATIONS: Location[] = [
   {
     id: "corporate-office",
-    name: "Corporate Office & Unit II",
-    role: "Registered office and manufacturing",
+    name: "Corporate Office, R&D Unit & Unit II",
+    role: "Corporate office, R&D and manufacturing",
     lines: [
       "Plot No. 222–224 & 235–237, Phase-II",
       "IDA Pashamylaram, Patancheru (Mandal)",

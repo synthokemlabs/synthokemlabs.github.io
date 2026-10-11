@@ -35,7 +35,12 @@ export function SmoothScroll() {
   // New route: start at the top without an animated jump
   useEffect(() => {
     const lenis = (window as unknown as { __lenis?: Lenis }).__lenis;
-    if (lenis && !window.location.hash) lenis.scrollTo(0, { immediate: true });
+    if (!lenis || window.location.hash) return;
+    // Stop any glide still in progress from the previous page, then pin to the top (again next frame,
+    // in case the old animation had one more step queued)
+    lenis.scrollTo(0, { immediate: true, force: true });
+    const raf = requestAnimationFrame(() => lenis.scrollTo(0, { immediate: true, force: true }));
+    return () => cancelAnimationFrame(raf);
   }, [pathname]);
 
   return null;

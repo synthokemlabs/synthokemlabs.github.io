@@ -5,26 +5,28 @@
    Single source of truth for colour. Components reference these tokens only.
    ========================================================================== */
 :root {
-  /* "Synthokem Blue" — a tonal system built from the logo blue (#3FA8EE). All text pairs are WCAG AA. */
-  --primary: #0d3b66;        /* deep navy — buttons, dark sections */
-  --primary-dark: #0a2d50;
-  --primary-ink: #071b30;    /* darkest navy — footer, hero base */
-  --primary-tint: #eaf4fd;   /* pale blue wash */
-  --secondary: #0a7682;      /* teal — text-safe on white (5.3:1) */
-  --secondary-tint: #e3f5f6;
+  /* "Synthokem Sky" — sky/azure blues built around the logo blue (#3FA8EE). All text pairs are WCAG AA. */
+  --primary: #1168ad;        /* sky blue — buttons, panels, active states (white text 5.8:1) */
+  --primary-dark: #0e5c9c;   /* hover */
+  --primary-ink: #0b2e4f;    /* deep blue ink for headings on light surfaces (13.8:1) */
+  --primary-tint: #e3f1fc;   /* pale sky wash */
+  --deep: #0f62a6;           /* sky-azure sections: hero, page headers, feature bands (white 6.3:1) */
+  --deep-2: #0c5591;         /* slightly deeper sky for the footer (white 7.7:1) */
+  --secondary: #0874b6;      /* sky-cyan — text-safe on white (5.0:1) */
+  --secondary-tint: #e3f2fc;
   --accent: #3fa8ee;         /* logo blue — highlights, on dark surfaces */
-  --accent-soft: #9bd2f7;    /* small text on dark (7:1 on navy) */
-  --accent-strong: #0f69b4;  /* blue text & links on light (5.7:1) */
+  --accent-soft: #d2eafc;    /* small labels on sky surfaces (4.7:1 on --primary, 5.1:1 on --deep) */
+  --accent-strong: #0b66ad;  /* blue text & links on light (6.0:1) */
   --brand-mark: #3fa8ee;
   --background: #ffffff;
-  --surface: #f4f8fc;
-  --surface-2: #e9f1f8;
-  --text: #0b1a2a;
-  --muted: #475a6c;
-  --border: #dbe6ef;
-  --border-strong: #c3d3e1;
-  --on-dark: #f1f6fb;
-  --on-dark-muted: #b3c6d8;
+  --surface: #eef6fd;
+  --surface-2: #e2f0fb;
+  --text: #0e2235;
+  --muted: #41566b;
+  --border: #d4e5f3;
+  --border-strong: #b9d3e9;
+  --on-dark: #f5faff;
+  --on-dark-muted: #e3f0fb;  /* 5.0:1 on --primary, 5.5:1 on --deep */
   --success: #15795a;
   --warning: #9a6200;
   --error: #b42318;
@@ -39,6 +41,8 @@
   --color-primary-dark: var(--primary-dark);
   --color-primary-ink: var(--primary-ink);
   --color-primary-tint: var(--primary-tint);
+  --color-deep: var(--deep);
+  --color-deep-2: var(--deep-2);
   --color-secondary: var(--secondary);
   --color-secondary-tint: var(--secondary-tint);
   --color-accent: var(--accent);
@@ -225,8 +229,9 @@ input[type="search"]::-webkit-search-decoration { -webkit-appearance: none; appe
 .mol-draw svg { width: 100%; height: 100%; overflow: visible; }
 .mol-draw svg path[class^="bond-"] { stroke-dasharray: 1; stroke-dashoffset: 1; }
 .is-visible .mol-draw svg path[class^="bond-"] { animation: draw-path 0.7s var(--ease-out) forwards; animation-delay: calc(var(--i) * 30ms + 150ms); }
-.mol-draw svg path[class^="atom-"], .mol-draw svg text { opacity: 0; transition: opacity 0.6s var(--ease-out) 0.7s; }
-.is-visible .mol-draw svg path[class^="atom-"], .is-visible .mol-draw svg text { opacity: 1; }
+/* Atom labels, plus repeat-unit brackets, their subscripts and legends, fade in as the bonds draw */
+.mol-draw svg path:not([class^="bond-"]), .mol-draw svg text { opacity: 0; transition: opacity 0.6s var(--ease-out) 0.7s; }
+.is-visible .mol-draw svg path:not([class^="bond-"]), .is-visible .mol-draw svg text { opacity: 1; }
 .no-js .mol-draw svg path { stroke-dashoffset: 0 !important; opacity: 1 !important; }
 /* Structures on dark surfaces: invert ink, keep heteroatom hues */
 .mol-on-dark { filter: invert(1) hue-rotate(180deg) brightness(1.15); }
@@ -349,4 +354,77 @@ html.lenis-on body { overscroll-behavior: none; }
 @media (prefers-reduced-motion: reduce) {
   ::view-transition-old(*), ::view-transition-new(*), ::view-transition-group(*) { animation-duration: 0s !important; animation-delay: 0s !important; }
   .rule-draw::before { transform: none; }
+}
+
+/* ==========================================================================
+   Sky bands — blue sections get depth from a diagonal deep-azure → sky gradient.
+   Every stop keeps white (≥5.8:1) and soft text (≥4.7:1) readable.
+   ========================================================================== */
+.sky-band { background-color: var(--deep); background-image: linear-gradient(135deg, #0a4c8a 0%, #0b5597 42%, #1168ad 100%); }
+.sky-band-deep { background-color: var(--deep-2); background-image: linear-gradient(160deg, #0b5390 0%, #094273 100%); }
+
+/* ==========================================================================
+   QR card — frosted sky-blue glass, viewfinder corners, centre-out reveal, scan line
+   ========================================================================== */
+.qr-glass {
+  background-color: rgb(9 70 126 / 0.9);
+  background-image: linear-gradient(155deg, rgb(13 92 160 / 0.86) 0%, rgb(8 62 112 / 0.92) 100%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid rgb(255 255 255 / 0.18);
+  box-shadow: 0 30px 60px -32px rgb(3 25 50 / 0.75), inset 0 1px 0 rgb(255 255 255 / 0.14);
+  transition: transform 0.6s var(--ease-out), box-shadow 0.6s var(--ease-out), border-color 0.4s;
+}
+.qr-glass:hover { transform: translateY(-3px); border-color: rgb(255 255 255 / 0.3); box-shadow: 0 36px 70px -34px rgb(3 25 50 / 0.85), inset 0 1px 0 rgb(255 255 255 / 0.18); }
+
+.qr-frame { position: relative; padding: 12px; }
+.qr-corners { position: absolute; inset: 0; pointer-events: none; }
+.qr-in .qr-corners { animation: qr-breathe 3.2s ease-in-out 1.8s infinite; }
+@keyframes qr-breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.035); } }
+.qr-corner { position: absolute; width: 24%; height: 24%; border: 0 solid var(--accent); opacity: 0; transition: opacity 0.7s var(--ease-out) 0.35s, transform 0.9s var(--ease-out) 0.35s; }
+.qr-tl { top: 0; left: 0; border-top-width: 2.5px; border-left-width: 2.5px; border-top-left-radius: 11px; transform: translate(-10px, -10px); }
+.qr-tr { top: 0; right: 0; border-top-width: 2.5px; border-right-width: 2.5px; border-top-right-radius: 11px; transform: translate(10px, -10px); }
+.qr-bl { bottom: 0; left: 0; border-bottom-width: 2.5px; border-left-width: 2.5px; border-bottom-left-radius: 11px; transform: translate(-10px, 10px); }
+.qr-br { bottom: 0; right: 0; border-bottom-width: 2.5px; border-right-width: 2.5px; border-bottom-right-radius: 11px; transform: translate(10px, 10px); }
+.qr-in .qr-corner { opacity: 1; transform: none; }
+
+.qr-tile {
+  position: relative; height: 100%; width: 100%; overflow: hidden; border-radius: 9px; background: #fff; padding: 7px;
+  box-shadow: 0 12px 26px -14px rgb(3 25 50 / 0.65);
+  clip-path: circle(0% at 50% 50%);
+  transition: clip-path 1.15s cubic-bezier(0.65, 0, 0.35, 1) 0.1s, transform 0.6s var(--ease-out);
+}
+.qr-in .qr-tile { clip-path: circle(75% at 50% 50%); }
+.qr-card:hover .qr-tile { transform: scale(1.025); }
+
+/* Scanner sweep: bright leading edge with a soft sky tail */
+.qr-scan {
+  position: absolute; left: 0; right: 0; top: 0; height: 26%; pointer-events: none; opacity: 0;
+  background: linear-gradient(180deg, rgb(63 168 238 / 0) 0%, rgb(63 168 238 / 0.16) 65%, rgb(63 168 238 / 0.42) 100%);
+  border-bottom: 1.5px solid rgb(63 168 238 / 0.8);
+  transform: translateY(-110%);
+}
+.qr-in .qr-scan { animation: qr-scan 4.6s cubic-bezier(0.45, 0, 0.55, 1) 1.6s infinite; }
+@keyframes qr-scan {
+  0% { transform: translateY(-110%); opacity: 1; }
+  40% { transform: translateY(400%); opacity: 1; }
+  41%, 100% { transform: translateY(400%); opacity: 0; }
+}
+.qr-card:hover .qr-scan, .qr-card:focus-within .qr-scan { animation-play-state: paused; visibility: hidden; }
+
+.qr-action {
+  display: inline-flex; align-items: center; gap: 0.4rem; min-height: 2.25rem; padding: 0 0.75rem; border-radius: 6px;
+  font-size: 0.8rem; font-weight: 600; color: #fff; cursor: pointer; white-space: nowrap;
+  background: rgb(255 255 255 / 0.08); box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.24);
+  transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s var(--ease-out);
+}
+.qr-action:hover { background: rgb(255 255 255 / 0.18); box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.5); }
+.qr-action:active { transform: translateY(1px); }
+.qr-action:disabled { opacity: 0.5; cursor: default; }
+
+@media (prefers-reduced-motion: reduce) {
+  .qr-tile { clip-path: none; }
+  .qr-corner { opacity: 1; transform: none; }
+  .qr-corners { animation: none !important; }
+  .qr-scan { display: none; }
 }

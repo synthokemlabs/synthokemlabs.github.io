@@ -4,12 +4,13 @@ import { Breadcrumbs } from "@/components/layout/PageHero";
 import { ProductName, TrackRecentlyViewed } from "@/components/products/ProductCatalogue";
 import { ViewTransition } from "react";
 import { ProductStickyBar } from "@/components/products/ProductStickyBar";
+import { ProductListQR } from "@/components/products/ProductListQR";
 import { readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import { Molecule3D } from "@/components/molecules/Molecule3D";
 import { StructureViewer } from "@/components/molecules/StructureViewer";
-import { getStructure } from "@/data/structures";
-import { formatFormula } from "@/lib/chem";
+import { getRepresentative, getStructure } from "@/data/structures";
+import { formatFormula, structureMaxSize } from "@/lib/chem";
 import { Badge, ButtonLink, Container, JsonLd, SpecRow } from "@/components/ui/primitives";
 import { CopyButton } from "@/components/ui/client";
 import { Icon } from "@/components/ui/Icon";
@@ -49,12 +50,15 @@ export default async function ProductPage({ params }: Params) {
   const svgFile = join(process.cwd(), "public", "structures", "svg", `${p.slug}.svg`);
   const svg = existsSync(svgFile) ? readFileSync(svgFile, "utf8") : undefined;
   const casMatched = structure && !structure.matchedBy;
+  // Polymers (e.g. Calcium Polycarbophil): 3D of a representative segment, labelled as such
+  const representative = structure ? undefined : getRepresentative(p.slug);
+  const model3d = structure?.model3d ?? representative?.model3d;
 
   return (
     <>
       <TrackRecentlyViewed category={p.category} slug={p.slug} />
       <ProductStickyBar name={p.name} cas={p.cas} enquiryHref={enquiry} />
-      <section data-product-hero className="on-dark relative isolate overflow-hidden bg-primary-ink text-white">
+      <section data-product-hero className="on-dark relative isolate overflow-hidden sky-band text-white">
         <div aria-hidden="true" className="grid-paper-dark absolute inset-0 -z-10" />
         <Container className="grid grid-cols-1 items-center gap-10 pb-14 pt-36 lg:grid-cols-12 lg:pb-20 lg:pt-40">
           <div className="lg:col-span-7">
@@ -70,8 +74,8 @@ export default async function ProductPage({ params }: Params) {
           </ViewTransition>
           <div className="mt-6 flex flex-wrap items-center gap-3">
             {p.status && (
-              <span className={`inline-flex min-h-8 items-center gap-2 rounded-lg px-3 font-mono text-xs uppercase tracking-[0.08em] ${p.status === "commercial" ? "bg-accent/20 text-accent" : "bg-[#f3c46b]/15 text-[#f3c46b]"}`}>
-                <span className={`h-1.5 w-1.5 rounded-full ${p.status === "commercial" ? "bg-accent" : "bg-[#f3c46b]"}`} />
+              <span className={`inline-flex min-h-8 items-center gap-2 rounded-lg px-3 font-mono text-xs uppercase tracking-[0.08em] bg-white/10 text-white ring-1 ring-inset ring-white/20`}>
+                <span className={`h-1.5 w-1.5 rounded-full ${p.status === "commercial" ? "bg-[#8ff0bd]" : "bg-[#ffd77a]"}`} />
                 {STATUS_LABEL[p.status]}
               </span>
             )}
@@ -86,17 +90,22 @@ export default async function ProductPage({ params }: Params) {
             <ButtonLink href={enquiry} variant="light">Request product information</ButtonLink>
             <ButtonLink href={`/contact/?intent=customer&product=${encodeURIComponent(p.slug)}`} variant="outline-light">Contact sales</ButtonLink>
           </div>
+          <ProductListQR layout="row" size={104} className="mt-8 w-full max-w-[440px]" />
           </div>
-          {(structure?.model3d || svg) && (
+          {(model3d || svg) && (
             <div className="relative hidden lg:col-span-5 lg:block">
               <div className="relative aspect-square">
-                {structure?.model3d ? (
-                  <Molecule3D model={structure.model3d} label={`Rotating 3D model of ${p.name}`} hydrogens={false} variant="line" speed={0.9} follow />
+                {model3d ? (
+                  <Molecule3D model={model3d} label={`Rotating 3D model of ${representative ? `${representative.label.toLowerCase()} of ${p.name}` : p.name}`} hydrogens={false} variant="line" speed={0.9} follow />
                 ) : (
-                  <div className="mol-draw mol-on-dark is-visible grid h-full w-full place-items-center p-10" dangerouslySetInnerHTML={{ __html: svg! }} />
+                  // is-visible sits on the wrapper: the draw-in styles key off an ancestor of .mol-draw
+                  <div className="is-visible absolute inset-0 grid grid-cols-[minmax(0,1fr)] grid-rows-[minmax(0,1fr)] place-items-center p-10">
+                    <div className="mol-draw mol-on-dark h-full w-full" style={structureMaxSize(svg, 1.3)} role="img" aria-label={`2D chemical structure of ${p.name}`} dangerouslySetInnerHTML={{ __html: svg! }} />
+                  </div>
                 )}
               </div>
               {casMatched && <p className="mt-2 flex justify-between border-t border-white/15 pt-4 font-mono text-sm text-on-dark-muted"><span className="text-white">{formatFormula(structure!.formula)}</span><span>{structure!.mw} g/mol</span></p>}
+              {representative && <p className="mt-2 flex justify-between gap-4 border-t border-white/15 pt-4 font-mono text-sm text-on-dark-muted"><span className="text-white">{representative.label}</span><span>{representative.caption}</span></p>}
             </div>
           )}
         </Container>
@@ -148,8 +157,8 @@ export default async function ProductPage({ params }: Params) {
             </dl>
             <p className="mt-5 flex items-start gap-2 text-sm text-muted">
               <Icon name="file" size={16} className="mt-0.5 shrink-0" />
-              {p.source === "product-list-2026"
-                ? "Information as published in the Synthokem Product List 2026. Contact us for current specifications and documentation."
+              {p.source === "product-list"
+                ? "Information as published in the current Synthokem Product List. Contact us for current specifications and documentation."
                 : "Information as listed in the Synthokem product table. Contact us to confirm current availability and specifications."}
             </p>
             {structure && (
@@ -175,15 +184,15 @@ export default async function ProductPage({ params }: Params) {
 
           <aside className="space-y-6 lg:col-span-5">
             {(svg || p.structureImage) && (
-              <StructureViewer name={p.name} svg={svg} rasterSrc={p.structureImage} model3d={structure?.model3d} parentNote={structure?.model3dParent} cas={p.cas} />
+              <StructureViewer name={p.name} svg={svg} rasterSrc={p.structureImage} model3d={model3d} parentNote={structure?.model3dParent} computed3d={structure?.model3dSource === "computed"} representative={representative?.model3d ? { label: representative.label, note: representative.note } : undefined} cas={p.cas} />
             )}
             <div className="rounded-lg bg-primary p-7 text-white">
               <h2 className="font-display text-xl font-semibold">Documentation</h2>
               <ul className="mt-5 divide-y divide-white/10 border-y border-white/10">
                 <li>
                   <a href={SITE.productListPdf} className="group flex min-h-14 items-center justify-between gap-4 py-3" target="_blank" rel="noopener">
-                    <span><span className="block font-medium">Product List 2026</span><span className="font-mono text-xs text-on-dark-muted">PDF · 210 KB</span></span>
-                    <Icon name="download" size={18} className="text-accent" />
+                    <span><span className="block font-medium">Product List</span><span className="font-mono text-xs text-on-dark-muted">PDF · {SITE.productListSize}</span></span>
+                    <Icon name="download" size={18} className="text-accent-soft" />
                   </a>
                 </li>
               </ul>

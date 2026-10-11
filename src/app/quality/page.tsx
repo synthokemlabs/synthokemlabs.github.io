@@ -7,6 +7,7 @@ import { Img } from "@/components/ui/Img";
 import { Icon } from "@/components/ui/Icon";
 import { SITE } from "@/data/site";
 import { pageMetadata } from "@/lib/seo";
+import { asset } from "@/lib/asset";
 
 export const metadata = pageMetadata({
   title: "Quality Systems — Quality Control & Quality Assurance",
@@ -57,7 +58,7 @@ export default function QualityPage() {
         </Container>
       </section>
 
-      <section id="commitment" className="on-dark relative overflow-hidden bg-primary-ink py-20 text-white lg:py-28">
+      <section id="commitment" className="on-dark relative overflow-hidden sky-band py-20 text-white lg:py-28">
         <div aria-hidden="true" className="grid-paper-dark absolute inset-0" />
         <Container className="relative grid grid-cols-1 gap-12 lg:grid-cols-12">
           <SectionHeading className="lg:col-span-5" tone="light" eyebrow="Quality commitment" title="What we hold ourselves to." />
@@ -91,12 +92,12 @@ export default function QualityPage() {
           <ul className="divide-y divide-border self-start rounded-lg bg-white ring-1 ring-border lg:col-span-7">
             <li>
               <a href={SITE.productListPdf} target="_blank" rel="noopener" className="group flex min-h-20 items-center justify-between gap-4 px-6 py-4 hover:bg-primary-tint/40">
-                <span className="flex items-center gap-4"><Icon name="file" size={22} className="text-accent-strong" /><span><span className="block font-semibold text-primary-ink">Product List 2026</span><span className="font-mono text-xs text-muted">PDF · grades, CAS numbers and regulatory status</span></span></span>
+                <span className="flex items-center gap-4"><Icon name="file" size={22} className="text-accent-strong" /><span><span className="block font-semibold text-primary-ink">Product List</span><span className="font-mono text-xs text-muted">PDF · grades, CAS numbers and regulatory status</span></span></span>
                 <Icon name="download" size={18} className="text-primary" />
               </a>
             </li>
             <li>
-              <a href="/enquiry/?type=technical" className="group flex min-h-20 items-center justify-between gap-4 px-6 py-4 hover:bg-primary-tint/40">
+              <a href={asset("/enquiry/?type=technical")} className="group flex min-h-20 items-center justify-between gap-4 px-6 py-4 hover:bg-primary-tint/40">
                 <span className="flex items-center gap-4"><Icon name="shield" size={22} className="text-accent-strong" /><span><span className="block font-semibold text-primary-ink">Request certificates & regulatory documents</span><span className="text-sm text-muted">GMP certificates, DMF/CEP information, specifications, CoA</span></span></span>
                 <Icon name="arrowRight" size={18} className="arrow-nudge text-primary" />
               </a>

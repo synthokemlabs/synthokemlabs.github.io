@@ -16,7 +16,7 @@ export default function JourneyPage() {
       <PageHero
         eyebrow="Our journey"
         title="Our journey over the years."
-        lede="Synthokem Labs began operations as a single unit with 10 employees. Today it has three manufacturing facilities and over 300 employees."
+        lede="Synthokem Labs began operations as a single unit with 10 employees. Today it has two manufacturing units and over 300 employees."
         crumbs={[{ name: "About", href: "/about/" }, { name: "Our journey", href: "/about/journey/" }]}
         image="warehouse-aisle"
       >

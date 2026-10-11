@@ -324,7 +324,7 @@ function ProductRow({ p, showCategory }: { p: Product; showCategory: boolean }) 
   return (
     <li data-k={p.category + p.slug} className="border-b border-border">
       <Link href={productHref(p)} className="group grid grid-cols-[4.5rem_1fr_auto] items-center gap-x-5 gap-y-2 py-4 transition-colors hover:bg-surface/70 sm:px-3 md:grid-cols-[6rem_minmax(0,1.6fr)_minmax(0,1fr)_minmax(0,1.2fr)_auto]">
-        <span className="grid-paper row-span-2 grid h-16 place-items-center rounded-lg bg-white ring-1 ring-border md:row-span-1 md:h-20"><StructureThumb p={p} className="h-auto max-h-[52px] w-auto max-w-[84px] text-[0] md:max-h-[66px]" /></span>
+        <span className="grid-paper row-span-2 grid h-16 grid-cols-[minmax(0,1fr)] place-items-center rounded-lg bg-white ring-1 ring-border md:row-span-1 md:h-20"><StructureThumb p={p} className="h-auto max-h-[52px] w-auto max-w-[85%] text-[0] md:max-h-[66px]" /></span>
         <span className="min-w-0">
           <ProductName slug={p.slug} className="block font-semibold text-primary-ink group-hover:text-primary">{p.name}</ProductName>
           <span className="mt-1 flex flex-wrap items-center gap-2">

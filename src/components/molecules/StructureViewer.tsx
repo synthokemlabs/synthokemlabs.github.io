@@ -3,20 +3,23 @@
 import { useEffect, useRef, useState } from "react";
 import { Molecule3D, type Model3D } from "./Molecule3D";
 import { Icon } from "@/components/ui/Icon";
+import { structureMaxSize } from "@/lib/chem";
 
 /**
  * Product-page structure panel: an inline 2D structure that draws itself bond by bond,
  * with an optional interactive 3D ball-and-stick model.
  */
 export function StructureViewer({
-  name, svg, rasterSrc, model3d, parentNote, cas,
-}: { name: string; svg?: string; rasterSrc?: string; model3d?: Model3D; parentNote?: boolean; cas?: string }) {
+  name, svg, rasterSrc, model3d, parentNote, computed3d, representative, cas,
+}: {
+  name: string; svg?: string; rasterSrc?: string; model3d?: Model3D; parentNote?: boolean; computed3d?: boolean;
+  /** model3d stands in for a substance that is not a single molecule; label/note say so */
+  representative?: { label: string; note: string }; cas?: string;
+}) {
   const [mode, setMode] = useState<"2d" | "3d">("2d");
   const [drawKey, setDrawKey] = useState(0);
   const wrapRef = useRef<HTMLDivElement>(null);
-  // Cap the on-screen scale (~1.55 px per drawing unit) so small molecules aren't blown up
-  const vb = svg?.match(/viewBox='[\d.-]+ [\d.-]+ ([\d.]+) ([\d.]+)'/);
-  const maxStyle = vb ? { maxWidth: `${Math.round(+vb[1] * 1.55)}px`, maxHeight: `${Math.round(+vb[2] * 1.55)}px` } : undefined;
+  const maxStyle = structureMaxSize(svg);
 
   useEffect(() => {
     const el = wrapRef.current;
@@ -58,7 +61,8 @@ export function StructureViewer({
 
       <div ref={wrapRef} className="relative aspect-[4/3]">
         {mode === "2d" ? (
-          <div className="grid-paper absolute inset-0 grid place-items-center p-6">
+          // Fixed tracks so the drawing is sized by the panel, never by its own width-based height
+          <div className="grid-paper absolute inset-0 grid grid-cols-[minmax(0,1fr)] grid-rows-[minmax(0,1fr)] place-items-center p-6">
             {svg ? (
               <div key={drawKey} className="mol-draw h-full w-full" style={maxStyle} role="img" aria-label={`2D chemical structure of ${name}`} dangerouslySetInnerHTML={{ __html: svg }} />
             ) : rasterSrc ? (
@@ -67,15 +71,15 @@ export function StructureViewer({
             ) : null}
           </div>
         ) : (
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,#123f6b_0%,#071b30_70%)]">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,#1b7cc6_0%,#0c5591_70%)]">
             <Molecule3D model={model3d!} label={`Interactive 3D model of ${name}`} />
             <p className="pointer-events-none absolute bottom-3 left-4 flex items-center gap-2 text-[0.72rem] text-on-dark-muted">
-              <Icon name="globe" size={13} /> Drag to rotate{parentNote ? " · parent molecule shown" : ""}
+              <Icon name="globe" size={13} /> Drag to rotate{representative ? ` · ${representative.note}` : parentNote ? " · parent molecule shown" : ""}
             </p>
           </div>
         )}
       </div>
-      {cas && <div className="flex items-center justify-between border-t border-border bg-surface px-4 py-2.5 font-mono text-xs text-muted"><span>CAS {cas}</span><span>{mode === "3d" ? "3D conformer · PubChem" : "2D depiction"}</span></div>}
+      {cas && <div className="flex items-center justify-between border-t border-border bg-surface px-4 py-2.5 font-mono text-xs text-muted"><span>CAS {cas}</span><span>{mode === "3d" ? (representative ? `${representative.label} · computed (RDKit)` : computed3d ? "3D conformer · computed (RDKit)" : "3D conformer · PubChem") : "2D depiction"}</span></div>}
     </figure>
   );
 }

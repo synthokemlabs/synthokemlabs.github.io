@@ -1,7 +1,7 @@
 # Synthokem Labs — website
 
 Redesign of synthokemlabs.com as a static Next.js 16 + TypeScript + Tailwind CSS v4 site.
-All content was taken from the previous website and the company's *Product List 2026* PDF. No claims, numbers or certifications were invented.
+All content was taken from the previous website and the company's current *Product List* PDF (`public/documents/synthokem-product-list.pdf`, document PRODUCTLIST2021005). No claims, numbers or certifications were invented.
 
 ```bash
 npm install
@@ -16,7 +16,7 @@ npm run build    # static export → ./out (upload to any static host)
 | Pages | 5 pages (`index`, `about`, `our_products`, `our_assurance`, `social_responsibility`, `contact`); everything else was an anchor on those pages. "Our Products" in the nav linked straight to a PDF. |
 | SEO | **`robots.txt` was `Disallow: /`, which blocked all search engines.** Page titles were generic ("Home"), there were no meta descriptions, no sitemap, no structured data, and stale WordPress generator tags. |
 | Content | Lorem-ipsum text was still live on the products page. The "Awards & Accolades" section was empty, and the careers vacancy table had headings but no rows. |
-| Products | The website table listed 13 APIs and 3 intermediates. The *Product List 2026* PDF has 40 products in 7 lists. Neither source had search, filters or product pages. |
+| Products | The website table listed 13 APIs and 3 intermediates. The original *Product List* PDF had 40 products in 7 lists (the current list adds Buparvaquone). Neither source had search, filters or product pages. |
 | Data in images | Manufacturing specs and certificate logos existed only as images. Chemical structures were images with no alt text. |
 | Copyright | The footer read "© 2019". |
 | UX/a11y | There was no skip link and many images had empty `alt`. The page used a 0% preloader, carousel-heavy layouts and a template-style WPBakery structure. |
@@ -58,7 +58,7 @@ Legacy URLs (`about.html`, `our_products.html`, …) redirect via `public/_redir
 
 ## 4. Enquiry forms — integration point
 
-Forms work without a backend. With no endpoint set, they **do not pretend to send anything**: they prepare a pre-filled email to info@synthokemlabs.com and say so. To deliver submissions directly, set an endpoint at build time:
+Forms work without a backend. With no endpoint set, they **do not pretend to send anything**: they prepare a pre-filled email to info@synthokemlabs.com (career applications go to hr@synthokemlabs.com) and say so. To deliver submissions directly, set an endpoint at build time:
 
 ```bash
 NEXT_PUBLIC_ENQUIRY_ENDPOINT=https://your-crm-or-function/enquiries npm run build
@@ -83,7 +83,7 @@ The endpoint receives `multipart/form-data`, including any attachment. See `src/
 
 Synthokem's old site had structure images for 16 products, as low-resolution rasters. The new site shows structures for **38 of 46 products**:
 
-- **34 crisp SVG structures** rendered with RDKit from PubChem records. Each record was matched by the **CAS number in Product List 2026**, or by product name where the CAS lookup failed (Potassium Guaiacol Sulphonate, Drotaverine/Prazosin/Terazosin HCl, Mebeverine HCl 3D model).
+- **34 crisp SVG structures** rendered with RDKit from PubChem records. Each record was matched by the **CAS number in the Product List**, or by product name where the CAS lookup failed (Potassium Guaiacol Sulphonate, Drotaverine/Prazosin/Terazosin HCl, Mebeverine HCl 3D model).
 - **4 original company drawings** are kept where no reliable record exists: Calcium Polycarbophil, Silica Thiol, Calcium Glycerophosphate and Tetrahydro-1-(2-furoyl) piperazine.
 - Products with a `reviewNote` (uncertain CAS) and silica-supported scavengers are deliberately excluded. The cyclodextrins have no reliable record, and a few large or salt records have no 3D model.
 - **Formula, molecular weight and IUPAC name** are shown only for CAS-matched records, each with a link to its PubChem CID. Name-matched records show the structure only, with waters of hydration removed.
@@ -94,10 +94,17 @@ To regenerate after adding products:
 ```bash
 node scripts/fetch-structures.mjs        # PubChem lookups by CAS → src/data/structures.json
 node scripts/fetch-structures-extra.mjs  # name-based fallbacks
+node scripts/add-structures.mjs <slug>…  # add/refresh only the named products (leaves all others untouched)
 node scripts/render-structures.mjs       # RDKit → public/structures/svg/*.svg + structure-index.ts
+python scripts/representative-structures.py  # polymer / cyclodextrins: representative structure, 2D layout and wording
+                                         # → src/data/representative-structures.json
+python scripts/compute-3d.py <slug>…     # computed 3D (RDKit) where PubChem has none: bisbentiamine, sodium-stearyl-fumarate,
+                                         # calcium-polycarbophil, hydroxypropyl- and sulfobutylether-beta-cyclodextrin(-sodium)
 ```
 
 **Company review:** please confirm that every structure matches the material you supply, especially salt and hydrate forms.
+
+**QR codes:** product pages and the Products pages show the QR printed on the Product List cover (`public/images/product-list-qr.png`, extracted unchanged from the PDF; `SITE.productListQr`). It encodes `https://qrfy.io/9E6LCQkppJ`, whose destination is managed on qrfy.io: as of 10 Oct 2026 that link redirects to qrfy's "invalid" page, so it must be reactivated there (pointing at the Product List PDF) for both the PDF and the website codes to open the list. If the QR is ever re-issued, replace the PNG and the two `SITE` entries.
 
 ## 7. Design system
 

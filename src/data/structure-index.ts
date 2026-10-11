@@ -128,5 +128,16 @@ export const STRUCTURE_INDEX: Record<string, { formula?: string; mw?: string }> 
   "formula": "C3H7CaO6P",
   "mw": "210.14"
  },
- "tetrahydro-1-2-furoyl-piperazine": {}
+ "tetrahydro-1-2-furoyl-piperazine": {},
+ "buparvaquone": {
+  "formula": "C21H26O3",
+  "mw": "326.4"
+ },
+ "timolol-maleate": {
+  "formula": "C17H28N4O7S",
+  "mw": "432.5"
+ },
+ "calcium-polycarbophil": {},
+ "hydroxypropyl-beta-cyclodextrin": {},
+ "sulfobutylether-beta-cyclodextrin-sodium": {}
 };

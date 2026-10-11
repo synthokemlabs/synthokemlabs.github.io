@@ -13,7 +13,7 @@ export const metadata = pageMetadata({
 });
 
 const RESOURCES = [
-  { t: "Product List 2026", d: "All products with pharmacopoeial grades, CAS numbers and regulatory status.", href: SITE.productListPdf, kind: "PDF download", icon: "download" as const },
+  { t: "Product List", d: "All products with pharmacopoeial grades, CAS numbers and regulatory status.", href: SITE.productListPdf, kind: "PDF download", icon: "download" as const },
   { t: "Regulatory status by product", d: "Filings and registrations for commercial APIs.", href: "/quality/regulatory-affairs/#by-product", kind: "Reference", icon: "shield" as const },
   { t: "Areas of specialisation", d: "Reaction chemistries we run at scale.", href: "/capabilities/#specialisation", kind: "Capabilities", icon: "flask" as const },
   { t: "Company milestones", d: "Every filing, inspection and certification since 1978.", href: "/about/journey/", kind: "Timeline", icon: "history" as const },

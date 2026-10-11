@@ -1,8 +1,9 @@
 /**
  * Product catalogue.
  *
- * Source of truth: Synthokem "Product List 2026" PDF (public/documents) and the
- * product table on the previous synthokemlabs.com/our_products.html page.
+ * Source of truth: the current Synthokem "Product List" PDF (public/documents,
+ * document PRODUCTLIST2021005, October 2026) and the product table on the
+ * previous synthokemlabs.com/our_products.html page.
  * To add a product, append an entry below — every listing, filter, search,
  * category page, detail page, sitemap entry and enquiry dropdown updates
  * automatically. Leave a field out rather than guessing a value.
@@ -10,7 +11,7 @@
 
 export type CategorySlug = "apis" | "intermediates" | "fine-chemicals" | "excipients" | "metal-scavengers";
 export type ProductStatus = "commercial" | "under-development";
-export type ProductSource = "product-list-2026" | "website-product-table";
+export type ProductSource = "product-list" | "website-product-table";
 
 export interface Product {
   slug: string;
@@ -108,237 +109,239 @@ export const CATEGORIES: Category[] = [
 ];
 
 const ISO_SET = ["TDS", "GMP", "ISO-QMS", "ISO-OHSAS", "ISO-EMS"];
-const s = (slug: string) => `/structures/${slug}.webp`;
+const s = (slug: string) => asset(`/structures/${slug}.webp`);
 
 export const PRODUCTS: Product[] = [
-  // ---- APIs for human use — commercial (Product List 2026, p.1–2) ----
+  // ---- APIs for human use — commercial (Product List, p.2) ----
   {
     slug: "guaifenesin", name: "Guaifenesin", category: "apis", use: "human", status: "commercial",
     cas: "93-14-1", grades: ["USP", "BP", "Ph. Eur.", "IP", "JP", "KP"], therapeuticCategory: "Expectorant",
     regulatoryStatus: ["USDMF", "CEP", "Health Canada", "China", "South Korea", "Russia", "EUWC", "WHO-GMP"],
-    structureImage: s("guaifenesin"), source: "product-list-2026",
+    structureImage: s("guaifenesin"), source: "product-list",
   },
   {
-    slug: "potassium-guaiacol-sulphonate", name: "Potassium Guaiacol Sulphonate", synonyms: ["Potassium guaiacolsulfonate"],
+    slug: "potassium-guaiacol-sulphonate", name: "Potassium Guaiacol Sulfonate", synonyms: ["Potassium Guaiacol Sulphonate", "Potassium guaiacolsulfonate"],
     category: "apis", use: "human", status: "commercial", cas: "78247-49-1", grades: ["USP"],
     therapeuticCategory: "Expectorant", regulatoryStatus: ["DMF", "EUWC", "WHO-GMP"],
-    structureImage: s("potassium-guaiacol-sulphonate"), source: "product-list-2026",
+    structureImage: s("potassium-guaiacol-sulphonate"), source: "product-list",
   },
   {
     slug: "methocarbamol", name: "Methocarbamol", category: "apis", use: "human", status: "commercial",
     cas: "532-03-6", grades: ["USP", "IP", "IH"], therapeuticCategory: "Skeletal muscle relaxant",
     regulatoryStatus: ["USDMF", "EU", "UK", "South Africa", "Switzerland", "Health Canada", "China", "South Korea", "EUWC", "WHO-GMP"],
-    structureImage: s("methocarbamol"), source: "product-list-2026",
+    structureImage: s("methocarbamol"), source: "product-list",
   },
   {
     slug: "mephenesin", name: "Mephenesin", category: "apis", use: "human", status: "commercial",
     cas: "59-47-2", grades: ["BPC-1973", "IP-1985", "IH"], therapeuticCategory: "Skeletal muscle relaxant",
-    regulatoryStatus: ["EU", "South Africa", "EUWC", "WHO-GMP"], structureImage: s("mephenesin"), source: "product-list-2026",
+    regulatoryStatus: ["EU", "South Africa", "EUWC", "WHO-GMP"], structureImage: s("mephenesin"), source: "product-list",
   },
   {
     slug: "chlorphenesin-carbamate", name: "Chlorphenesin Carbamate", category: "apis", use: "human", status: "commercial",
     cas: "886-74-8", grades: ["JP"], therapeuticCategory: "Skeletal muscle relaxant",
-    regulatoryStatus: ["South Korea", "Japan", "Vietnam", "WHO-GMP"], structureImage: s("chlorphenesin-carbamate"), source: "product-list-2026",
+    regulatoryStatus: ["South Korea", "Japan", "Vietnam", "WHO-GMP"], structureImage: s("chlorphenesin-carbamate"), source: "product-list",
   },
   {
     slug: "mebeverine-hydrochloride", name: "Mebeverine Hydrochloride", synonyms: ["Mebeverine HCl"], category: "apis", use: "human",
     status: "commercial", cas: "2753-45-9", grades: ["BP", "Ph. Eur.", "IP"], therapeuticCategory: "Anti-spasmodic",
-    regulatoryStatus: ["CEP", "TDMF", "EUWC", "WHO-GMP"], structureImage: s("mebeverine-hydrochloride"), source: "product-list-2026",
+    regulatoryStatus: ["CEP", "TDMF", "EUWC", "WHO-GMP"], structureImage: s("mebeverine-hydrochloride"), source: "product-list",
   },
   {
     slug: "drotaverine-hydrochloride", name: "Drotaverine Hydrochloride", synonyms: ["Drotaverine HCl"], category: "apis", use: "human",
     status: "commercial", cas: "985-12-6", grades: ["IH", "IP"], therapeuticCategory: "Anti-spasmodic",
-    regulatoryStatus: ["Russia", "EUWC", "WHO-GMP"], structureImage: s("drotaverine-hydrochloride"), source: "product-list-2026",
+    regulatoryStatus: ["Russia", "EUWC", "WHO-GMP"], structureImage: s("drotaverine-hydrochloride"), source: "product-list",
   },
   {
     slug: "prazosin-hydrochloride", name: "Prazosin Hydrochloride", synonyms: ["Prazosin HCl"], category: "apis", use: "human",
     status: "commercial", cas: "19237-84-4", grades: ["USP", "Ph. Eur.", "BP", "IP"], therapeuticCategory: "Anti-hypertensive",
-    regulatoryStatus: ["USDMF", "WHO-GMP", "EUWC"], structureImage: s("prazosin-hydrochloride"), source: "product-list-2026",
+    regulatoryStatus: ["USDMF", "WHO-GMP", "EUWC"], structureImage: s("prazosin-hydrochloride"), source: "product-list",
   },
   {
     slug: "terazosin-hydrochloride", name: "Terazosin Hydrochloride", synonyms: ["Terazosin HCl"], category: "apis", use: "human",
     status: "commercial", cas: "63590-64-7", grades: ["USP", "IP"], therapeuticCategory: "Anti-hypertensive",
-    regulatoryStatus: ["DMF", "GMP"], structureImage: s("terazosin-hydrochloride"), source: "product-list-2026",
+    regulatoryStatus: ["DMF", "GMP"], structureImage: s("terazosin-hydrochloride"), source: "product-list",
   },
   {
     slug: "ranolazine", name: "Ranolazine", category: "apis", use: "human", status: "commercial",
     cas: "95635-55-5", grades: ["IH"], therapeuticCategory: "Anti-anginal",
-    regulatoryStatus: ["EUDMF", "EUWC", "WHO-GMP"], source: "product-list-2026",
+    regulatoryStatus: ["EUDMF", "EUWC", "WHO-GMP"], source: "product-list",
   },
   {
     slug: "benfotiamine", name: "Benfotiamine", category: "apis", use: "human", status: "commercial",
     cas: "22457-89-2", grades: ["IH"], therapeuticCategory: "Diabetic neuropathy",
-    regulatoryStatus: ["DMF", "GMP"], source: "product-list-2026",
+    regulatoryStatus: ["DMF", "GMP"], source: "product-list",
   },
   {
     slug: "chlorphenesin", name: "Chlorphenesin", category: "apis", use: "human", status: "commercial",
     cas: "104-29-0", grades: ["BP-1973", "IP-1985", "IH"], therapeuticCategory: "Anti-fungal",
-    regulatoryStatus: ["EU REACH"], structureImage: s("chlorphenesin"), source: "product-list-2026",
+    regulatoryStatus: ["EU REACH"], structureImage: s("chlorphenesin"), source: "product-list",
   },
-  // ---- APIs for human use — under development (p.7) ----
+  // ---- APIs for human use — under development (p.2) ----
   {
     slug: "calcium-polycarbophil", name: "Calcium Polycarbophil", category: "apis", use: "human", status: "under-development",
     cas: "9003-97-8", grades: ["USP"], therapeuticCategory: "Laxative",
-    applications: ["Constipation management"], regulatoryStatus: ISO_SET, structureImage: s("calcium-polycarbophil"), source: "product-list-2026",
+    applications: ["Constipation management"], regulatoryStatus: ISO_SET, structureImage: s("calcium-polycarbophil"), source: "product-list",
   },
   {
     slug: "bisbentiamine", name: "Bisbentiamine", synonyms: ["Bisbentamin"], category: "apis", use: "human", status: "under-development",
     cas: "2667-89-2", grades: ["KP", "IH"], therapeuticCategory: "Vitamins & nutritional supplements",
-    regulatoryStatus: ISO_SET, source: "product-list-2026",
+    regulatoryStatus: ISO_SET, source: "product-list",
   },
   {
-    slug: "fursultiamine", name: "Fursultiamine", category: "apis", use: "human", status: "under-development",
-    cas: "804-30-8", grades: ["JP"], therapeuticCategory: "Vitamins & nutritional supplements",
-    regulatoryStatus: ISO_SET, source: "product-list-2026",
+    slug: "fursultiamine", name: "Fursultiamine Hydrochloride", synonyms: ["Fursultiamine", "Fursultiamine HCl"], category: "apis", use: "human", status: "under-development",
+    cas: "804-30-8", grades: ["JP", "KP"], therapeuticCategory: "Vitamins & nutritional supplements",
+    regulatoryStatus: ISO_SET, source: "product-list",
   },
   {
     slug: "timolol-maleate", name: "Timolol Maleate", category: "apis", use: "human", status: "under-development",
-    grades: ["USP", "EP", "JP", "KP"], therapeuticCategory: "Ophthalmic", regulatoryStatus: ISO_SET, source: "product-list-2026",
-    reviewNote:
-      "Product List 2026 gives CAS [68890-66-4], which belongs to a different substance (Timolol maleate is commonly 26921-17-5). CAS withheld until the company confirms.",
+    cas: "26921-17-5", grades: ["USP", "EP", "JP", "KP"], therapeuticCategory: "Beta-blocker / Antiglaucoma", regulatoryStatus: ISO_SET, source: "product-list",
   },
-  // ---- APIs for veterinary use — under development (p.6) ----
+  {
+    slug: "buparvaquone", name: "Buparvaquone", category: "apis", use: "human", status: "under-development",
+    cas: "88426-33-9", grades: ["IH"], therapeuticCategory: "Antiprotozoal", regulatoryStatus: ISO_SET, source: "product-list",
+  },
+  // ---- APIs for veterinary use — under development (p.3) ----
   {
     slug: "firocoxib", name: "Firocoxib", category: "apis", use: "veterinary", status: "under-development",
-    cas: "189954-96-9", grades: ["IH"], therapeuticCategory: "NSAID", regulatoryStatus: ISO_SET, source: "product-list-2026",
+    cas: "189954-96-9", grades: ["IH"], therapeuticCategory: "NSAID", regulatoryStatus: ISO_SET, source: "product-list",
   },
   {
     slug: "carprofen", name: "Carprofen", category: "apis", use: "veterinary", status: "under-development",
-    cas: "53716-49-7", grades: ["USP", "EP"], therapeuticCategory: "NSAID", regulatoryStatus: ISO_SET, source: "product-list-2026",
+    cas: "53716-49-7", grades: ["USP", "EP"], therapeuticCategory: "NSAID", regulatoryStatus: ISO_SET, source: "product-list",
   },
   {
     slug: "ketoprofen", name: "Ketoprofen", category: "apis", use: "veterinary", status: "under-development",
-    cas: "22071-15-4", grades: ["USP", "BP", "EP", "JP", "KP"], therapeuticCategory: "NSAID", regulatoryStatus: ISO_SET, source: "product-list-2026",
+    cas: "22071-15-4", grades: ["USP", "BP", "EP", "JP", "KP"], therapeuticCategory: "NSAID", regulatoryStatus: ISO_SET, source: "product-list",
   },
   {
     slug: "imidocarb-dipropionate", name: "Imidocarb Dipropionate", category: "apis", use: "veterinary", status: "under-development",
-    cas: "55750-06-6", grades: ["IH"], therapeuticCategory: "Antiprotozoal", regulatoryStatus: ISO_SET, source: "product-list-2026",
+    cas: "55750-06-6", grades: ["IH"], therapeuticCategory: "Antiprotozoal", regulatoryStatus: ISO_SET, source: "product-list",
   },
   {
     slug: "maropitant-citrate", name: "Maropitant Citrate", category: "apis", use: "veterinary", status: "under-development",
-    cas: "147116-67-4", grades: ["IH"], therapeuticCategory: "NK-1 receptor antagonist", regulatoryStatus: ISO_SET, source: "product-list-2026",
+    cas: "147116-67-4", grades: ["IH"], therapeuticCategory: "Neurokinin-1 (NK-1) antagonist", regulatoryStatus: ISO_SET, source: "product-list",
   },
   {
     slug: "robenacoxib", name: "Robenacoxib", category: "apis", use: "veterinary", status: "under-development",
-    cas: "220991-32-2", grades: ["IH"], therapeuticCategory: "NSAID", regulatoryStatus: ISO_SET, source: "product-list-2026",
+    cas: "220991-32-2", grades: ["IH"], therapeuticCategory: "NSAID", regulatoryStatus: ISO_SET, source: "product-list",
   },
   // ---- Listed on previous website product table only ----
   {
     slug: "calcium-glycerophosphate", name: "Calcium Glycerophosphate", category: "apis", use: "human",
     cas: "27214-00-2", grades: ["USP", "EP", "BP"], therapeuticCategory: "Dietary supplements (minerals & electrolytes)",
     structureImage: s("calcium-glycerophosphate"), source: "website-product-table",
-    reviewNote: "Listed on the previous website but not in Product List 2026 — confirm availability.",
+    reviewNote: "Listed on the previous website but not in the current Product List — confirm availability.",
   },
 
   // ---- Intermediates for human API — commercial (p.3) ----
   {
     slug: "epoxirane-oxirane", name: "Epoxirane (Oxirane)", category: "intermediates", status: "commercial",
-    cas: "75-21-8", usedIn: ["Ranolazine"], regulatoryStatus: ISO_SET, source: "product-list-2026",
+    cas: "75-21-8", usedIn: ["Ranolazine"], regulatoryStatus: ISO_SET, source: "product-list",
     reviewNote: "CAS 75-21-8 is ethylene oxide; confirm the intended Ranolazine epoxide intermediate and CAS.",
   },
   {
     slug: "tetrahydro-2-furoic-acid", name: "Tetrahydro-2-furoic acid", category: "intermediates", status: "commercial",
     cas: "16874-33-2", usedIn: ["Terazosin HCl", "Alfuzosin HCl", "Faropenem", "Baloxavir Marboxil"],
-    applications: ["Agro and other fine chemicals"], regulatoryStatus: ISO_SET, source: "product-list-2026",
+    applications: ["Agro and other fine chemicals"], regulatoryStatus: ISO_SET, source: "product-list",
   },
   {
     slug: "tetrahydro-methyl-2-furoate", name: "Tetrahydro methyl 2-furoate", synonyms: ["Methyl tetrahydro-2-furoate", "Tetrahydro-2-methylfuroate"],
     category: "intermediates", status: "commercial", cas: "37443-42-8", usedIn: ["Terazosin HCl", "Alfuzosin HCl"],
     applications: ["Advanced intermediates for agro", "Fragrances"], regulatoryStatus: ISO_SET,
-    structureImage: s("tetrahydro-methyl-2-furoate"), source: "product-list-2026",
+    structureImage: s("tetrahydro-methyl-2-furoate"), source: "product-list",
   },
   {
-    slug: "veratrol", name: "Veratrol", synonyms: ["Veratrole", "1,2-Dimethoxybenzene"], category: "intermediates", status: "commercial",
-    cas: "91-16-7", usedIn: ["Verapamil"], applications: ["Perfumery"], regulatoryStatus: ISO_SET, source: "product-list-2026",
+    slug: "veratrol", name: "Veratrole", synonyms: ["Veratrol", "1,2-Dimethoxybenzene"], category: "intermediates", status: "commercial",
+    cas: "91-16-7", usedIn: ["Verapamil"], applications: ["Perfumery"], regulatoryStatus: ISO_SET, source: "product-list",
   },
   {
-    slug: "pivaloyl-acetonitrile", name: "Pivaloyl Acetonitrile", synonyms: ["Pivolyl Acetonitrile", "Pivaloylacetonitrile"],
+    slug: "pivaloyl-acetonitrile", name: "Pivalyl Acetonitrile", synonyms: ["Pivaloyl Acetonitrile", "Pivolyl Acetonitrile", "Pivaloylacetonitrile"],
     category: "intermediates", status: "commercial", cas: "59997-51-2",
-    applications: ["Ingredient for pharmaceuticals", "Agrochemicals"], regulatoryStatus: ISO_SET, source: "product-list-2026",
+    applications: ["Ingredient for pharmaceuticals", "Agrochemicals"], regulatoryStatus: ISO_SET, source: "product-list",
   },
   {
     slug: "2-ethoxymethylene-malononitrile", name: "2-(Ethoxymethylene)malononitrile", category: "intermediates", status: "commercial",
-    cas: "123-06-8", usedIn: ["Milrinone", "Milnacipran"], regulatoryStatus: ISO_SET, source: "product-list-2026",
+    cas: "123-06-8", usedIn: ["Milrinone", "Milnacipran"], regulatoryStatus: ISO_SET, source: "product-list",
   },
   {
     slug: "n-2-6-dimethylphenyl-1-piperazine-acetamide", name: "N-(2,6-Dimethylphenyl)-1-piperazine acetamide",
-    category: "intermediates", status: "commercial", cas: "5294-61-1", usedIn: ["Ranolazine"], regulatoryStatus: ISO_SET, source: "product-list-2026",
+    category: "intermediates", status: "commercial", cas: "5294-61-1", usedIn: ["Ranolazine"], regulatoryStatus: ISO_SET, source: "product-list",
   },
   {
     slug: "guethol", name: "Guethol", synonyms: ["2-Ethoxyphenol"], category: "intermediates", status: "commercial",
     cas: "94-71-3", applications: ["Aroma chemicals", "Flavours", "APIs"], regulatoryStatus: ISO_SET,
-    structureImage: s("guethol"), source: "product-list-2026",
+    structureImage: s("guethol"), source: "product-list",
   },
   {
     slug: "tetrahydro-1-2-furoyl-piperazine", name: "Tetrahydro-1-(2-furoyl) piperazine", category: "intermediates",
     structureImage: s("tetrahydro-1-2-furoyl-piperazine"), source: "website-product-table",
-    reviewNote: "Listed on the previous website but not in Product List 2026 — confirm availability and CAS.",
+    reviewNote: "Listed on the previous website but not in the current Product List — confirm availability and CAS.",
   },
 
   // ---- Fine chemicals — commercial (p.4) ----
   {
     slug: "5-hydrazinoisophthalic-acid", name: "5-Hydrazinoisophthalic acid", category: "fine-chemicals", status: "commercial",
-    cas: "121385-69-1", applications: ["Fine chemical"], regulatoryStatus: ISO_SET, source: "product-list-2026",
+    cas: "121385-69-1", applications: ["Fine chemical"], regulatoryStatus: ISO_SET, source: "product-list",
   },
   {
     slug: "5-hydrazinoisophthalic-acid-hcl", name: "5-Hydrazinoisophthalic acid HCl", synonyms: ["5-HIP-HCl"], category: "fine-chemicals",
-    status: "commercial", cas: "873773-66-1", applications: ["Fine chemical"], regulatoryStatus: ISO_SET, source: "product-list-2026",
+    status: "commercial", cas: "873773-66-1", applications: ["Fine chemical"], regulatoryStatus: ISO_SET, source: "product-list",
   },
   {
     slug: "5-aminoisophthalic-acid", name: "5-Aminoisophthalic acid", category: "fine-chemicals", status: "commercial",
-    cas: "99-31-0", applications: ["Fine chemical"], regulatoryStatus: ISO_SET, source: "product-list-2026",
+    cas: "99-31-0", applications: ["Fine chemical"], regulatoryStatus: ISO_SET, source: "product-list",
   },
   {
     slug: "5-aminoisophthalic-acid-hydrate", name: "5-Aminoisophthalic acid hydrate", category: "fine-chemicals", status: "commercial",
-    cas: "1889779-77-4", applications: ["Fine chemical"], regulatoryStatus: ISO_SET, source: "product-list-2026",
+    cas: "1889779-77-4", applications: ["Fine chemical"], regulatoryStatus: ISO_SET, source: "product-list",
   },
 
-  // ---- Excipients — under development (p.8) ----
+  // ---- Excipients — under development (p.4) ----
   {
     slug: "trehalose-dihydrate", name: "Trehalose Dihydrate", category: "excipients", status: "under-development",
     cas: "6138-23-4", grades: ["NF", "EP", "BP"], applications: ["Injectable, high purity, low endotoxin excipient"],
-    regulatoryStatus: ISO_SET, source: "product-list-2026",
+    regulatoryStatus: ISO_SET, source: "product-list",
   },
   {
     slug: "sulfobutylether-beta-cyclodextrin-sodium", name: "Sulfobutylether β-cyclodextrin sodium", synonyms: ["SBE-β-CD", "SBECD"],
     category: "excipients", status: "under-development", cas: "182410-00-0",
-    applications: ["Injectable grade, pyrogen-free excipient"], regulatoryStatus: ISO_SET, source: "product-list-2026",
+    applications: ["Injectable grade, pyrogen-free excipient"], regulatoryStatus: ISO_SET, source: "product-list",
   },
   {
     slug: "sodium-stearyl-fumarate", name: "Sodium Stearyl Fumarate", category: "excipients", status: "under-development",
-    cas: "4070-80-8", grades: ["USP", "EP"], applications: ["Excipient / lubricant"], regulatoryStatus: ISO_SET, source: "product-list-2026",
+    cas: "4070-80-8", grades: ["USP", "EP"], applications: ["Excipient / lubricant"], regulatoryStatus: ISO_SET, source: "product-list",
   },
   {
     slug: "d-galactose", name: "D-Galactose", category: "excipients", status: "under-development",
     cas: "59-23-4", grades: ["NF", "EP"], applications: ["Injectable, high purity, low endotoxin excipient"],
-    regulatoryStatus: ISO_SET, source: "product-list-2026",
+    regulatoryStatus: ISO_SET, source: "product-list",
   },
   {
     slug: "hydroxypropyl-beta-cyclodextrin", name: "Hydroxypropyl β-cyclodextrin", synonyms: ["HPBCD", "HP-β-CD"],
     category: "excipients", status: "under-development", cas: "128446-35-5", grades: ["USP-NF", "EP"],
-    applications: ["Injectable grade, pyrogen-free excipient"], regulatoryStatus: ISO_SET, source: "product-list-2026",
+    applications: ["Injectable grade, pyrogen-free excipient"], regulatoryStatus: ISO_SET, source: "product-list",
   },
 
-  // ---- Metal scavengers — under development (p.5) ----
+  // ---- Metal scavengers — under development (p.4) ----
   {
     slug: "silica-thiol", name: "Silica Thiol", category: "metal-scavengers", status: "under-development",
-    cas: "1189056-65-2", applications: ["Metal scavenger"], regulatoryStatus: ISO_SET, structureImage: s("silica-thiol"), source: "product-list-2026",
+    cas: "1189056-65-2", applications: ["Metal scavenger"], regulatoryStatus: ISO_SET, structureImage: s("silica-thiol"), source: "product-list",
   },
   {
     slug: "silica-tmt", name: "Silica TMT", category: "metal-scavengers", status: "under-development",
-    cas: "1226494-16-1", applications: ["Metal scavenger"], regulatoryStatus: ISO_SET, source: "product-list-2026",
+    cas: "1226494-16-1", applications: ["Metal scavenger"], regulatoryStatus: ISO_SET, source: "product-list",
   },
   {
     slug: "silica-dmt", name: "Silica DMT", category: "metal-scavengers", status: "under-development",
-    cas: "2222422-83-3", applications: ["Metal scavenger"], regulatoryStatus: ISO_SET, source: "product-list-2026",
+    cas: "2222422-83-3", applications: ["Metal scavenger"], regulatoryStatus: ISO_SET, source: "product-list",
   },
   {
     slug: "silica-thiourea", name: "Silica Thiourea", category: "metal-scavengers", status: "under-development",
-    applications: ["Metal scavenger"], regulatoryStatus: ISO_SET, source: "product-list-2026",
+    applications: ["Metal scavenger"], regulatoryStatus: ISO_SET, source: "product-list",
   },
   {
     slug: "silica-amine", name: "Silica Amine", category: "metal-scavengers", status: "under-development",
-    cas: "126850-14-4", applications: ["Metal scavenger"], regulatoryStatus: ISO_SET, source: "product-list-2026",
+    cas: "126850-14-4", applications: ["Metal scavenger"], regulatoryStatus: ISO_SET, source: "product-list",
   },
 ];
 
@@ -404,11 +407,12 @@ export const GRADE_GLOSSARY: Record<string, string> = {
 };
 
 /* ---------------------------- structures ---------------------------- */
+import { asset } from "@/lib/asset";
 import { STRUCTURE_INDEX } from "./structure-index";
 
 /** Best available 2D structure: rendered SVG (PubChem-matched by CAS) → company drawing → none. */
 export function structureSrc(p: Pick<Product, "slug" | "structureImage">): string | undefined {
-  return STRUCTURE_INDEX[p.slug] ? `/structures/svg/${p.slug}.svg` : p.structureImage;
+  return STRUCTURE_INDEX[p.slug] ? asset(`/structures/svg/${p.slug}.svg`) : p.structureImage;
 }
 /** Molecular formula / weight (only for records matched to the company's CAS number). */
 export function structureMeta(slug: string) {

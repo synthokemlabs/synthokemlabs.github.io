@@ -12,7 +12,7 @@ const d = (s: number) => ({ "--draw-delay": `${s}s`, "--node-delay": `${s}s` }) 
 /* ------------------------------------------------------------------ */
 export const QUALITY_LAYERS = [
   { title: "Regulatory compliance", body: "Ph. Eur., USP and other national & international standards; DMFs, CEPs and GMP approvals.", r: 190, fill: "var(--primary-tint)", text: "var(--primary)" },
-  { title: "Quality assurance", body: "Integrated quality systems that harmonise global quality and regulatory standards across functions.", r: 142, fill: "#cfe3ee", text: "var(--primary)" },
+  { title: "Quality assurance", body: "Integrated quality systems that harmonise global quality and regulatory standards across functions.", r: 142, fill: "#c6e2f8", text: "var(--primary)" },
   { title: "Quality control", body: "Qualified QC laboratory responsible for all analysis, at every stage of the process.", r: 94, fill: "var(--secondary)", text: "#ffffff" },
 ];
 
@@ -32,7 +32,7 @@ export function QualityLayers() {
             </g>
           ))}
           <g className="node-pop" style={d(0.75)}>
-            <circle cx="210" cy="210" r="46" fill="var(--primary)" />
+            <circle cx="210" cy="210" r="46" fill="var(--deep-2)" />
             <text x="210" y="206" textAnchor="middle" fontSize="12" fontWeight="700" fill="#fff" style={{ fontFamily: "var(--font-sans)" }}>EVERY</text>
             <text x="210" y="222" textAnchor="middle" fontSize="12" fontWeight="700" fill="#fff" style={{ fontFamily: "var(--font-sans)" }}>PRODUCT</text>
           </g>
@@ -94,10 +94,11 @@ export function ValuesDiagram() {
 /* ------------------------------------------------------------------ */
 export function FacilitiesNetwork() {
   const nodes = [
-    { id: "unit-i", x: 160, y: 120, label: "Unit I", sub: "USFDA approved since 2005" },
-    { id: "unit-ii", x: 160, y: 300, label: "Unit II", sub: "Pashamylaram, Telangana" },
-    { id: "unit-iii", x: 840, y: 120, label: "Unit III", sub: "JN Pharmacity, Andhra Pradesh" },
-    { id: "world", x: 840, y: 300, label: "40 countries", sub: "Four regions worldwide" },
+    // As listed on the Product List cover: Corporate Office | R&D Unit, and manufacturing Units II and III
+    { id: "rnd", x: 160, y: 120, glyph: "R&D", label: "R&D unit", sub: "At the corporate office" },
+    { id: "unit-ii", x: 160, y: 300, glyph: "II", label: "Unit II", sub: "Pashamylaram, Telangana" },
+    { id: "unit-iii", x: 840, y: 120, glyph: "III", label: "Unit III", sub: "JN Pharmacity, Andhra Pradesh" },
+    { id: "world", x: 840, y: 300, glyph: "◎", label: "40 countries", sub: "Four regions worldwide" },
   ];
   return (
     <Reveal>
@@ -132,7 +133,7 @@ export function FacilitiesNetwork() {
             <g key={n.id} className="node-pop" style={d(0.6 + i * 0.12)}>
               <rect x={n.x - 130} y={n.y - 38} width="260" height="76" rx="8" fill="#fff" stroke="var(--border)" />
               <circle cx={n.x - 96} cy={n.y} r="18" fill="var(--primary-tint)" />
-              <text x={n.x - 96} y={n.y + 5} textAnchor="middle" fontSize="13" fontWeight="700" fill="var(--primary)" style={{ fontFamily: "var(--font-display)" }}>{n.id === "world" ? "◎" : ["I", "II", "III"][i]}</text>
+              <text x={n.x - 96} y={n.y + 5} textAnchor="middle" fontSize={n.glyph.length > 2 ? 10 : 13} fontWeight="700" fill="var(--primary)" style={{ fontFamily: "var(--font-display)" }}>{n.glyph}</text>
               <text x={n.x - 66} y={n.y - 4} fontSize="17" fontWeight="700" fill="var(--primary-ink)" style={{ fontFamily: "var(--font-display)" }}>{n.label}</text>
               <text x={n.x - 66} y={n.y + 18} fontSize="12.5" fill="var(--muted)" style={{ fontFamily: "var(--font-sans)" }}>{n.sub}</text>
             </g>

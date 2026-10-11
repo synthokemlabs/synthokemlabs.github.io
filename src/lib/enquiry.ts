@@ -13,7 +13,7 @@ import { SITE } from "@/data/site";
  * optional attachment) and should return 2xx on success.
  *
  * Until an endpoint is configured, the form does NOT pretend to send anything:
- * it prepares a pre-filled email to info@synthokemlabs.com and tells the user so.
+ * it prepares a pre-filled email to info@synthokemlabs.com (hr@ for careers) and tells the user so.
  */
 export const ENQUIRY_ENDPOINT = process.env.NEXT_PUBLIC_ENQUIRY_ENDPOINT ?? "";
 
@@ -45,7 +45,7 @@ export function summarise(fd: FormData): string {
   return lines.join("\n");
 }
 
-export async function submitEnquiry(fd: FormData, subject: string): Promise<SubmitResult> {
+export async function submitEnquiry(fd: FormData, subject: string, to: string = SITE.email): Promise<SubmitResult> {
   if (ENQUIRY_ENDPOINT) {
     const res = await fetch(ENQUIRY_ENDPOINT, { method: "POST", body: fd, headers: { Accept: "application/json" } });
     if (!res.ok) throw new Error(`Submission failed (${res.status})`);
@@ -56,7 +56,7 @@ export async function submitEnquiry(fd: FormData, subject: string): Promise<Subm
   return {
     mode: "email",
     summary,
-    mailto: `mailto:${SITE.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`,
+    mailto: `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`,
   };
 }
 

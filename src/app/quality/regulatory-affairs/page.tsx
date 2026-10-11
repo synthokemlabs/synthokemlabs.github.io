@@ -29,7 +29,7 @@ export default function RegulatoryPage() {
 
       <section id="by-product" className="bg-surface py-20 lg:py-28">
         <Container>
-          <SectionHeading eyebrow="Regulatory status by product" title="Commercial APIs — filings and registrations." lede="As published in the Synthokem Product List 2026." />
+          <SectionHeading eyebrow="Regulatory status by product" title="Commercial APIs — filings and registrations." lede="As published in the current Synthokem Product List." />
           {/* Phones: one card per product */}
           <ul className="mt-12 grid grid-cols-1 gap-3 md:hidden">
             {commercialApis.map((p) => (

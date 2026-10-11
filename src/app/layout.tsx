@@ -1,3 +1,4 @@
+import { asset } from "@/lib/asset";
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
@@ -24,11 +25,11 @@ export const metadata: Metadata = {
   applicationName: SITE.name,
   authors: [{ name: SITE.legalName }],
   formatDetection: { telephone: false },
-  icons: { icon: [{ url: "/icon.svg", type: "image/svg+xml" }, { url: "/favicon.ico", sizes: "any" }], apple: "/apple-icon.png" },
+  icons: { icon: [{ url: asset("/icon.svg"), type: "image/svg+xml" }, { url: asset("/favicon.ico"), sizes: "any" }], apple: asset("/apple-icon.png") },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0d3b66",
+  themeColor: "#0f62a6",
   width: "device-width",
   initialScale: 1,
 };

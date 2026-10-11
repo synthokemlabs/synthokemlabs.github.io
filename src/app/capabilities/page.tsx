@@ -73,7 +73,7 @@ export default function CapabilitiesPage() {
         </Container>
       </section>
 
-      <section className="on-dark bg-primary-ink py-20 text-white">
+      <section className="on-dark sky-band py-20 text-white">
         <Container>
           <div className="grid grid-cols-1 gap-px overflow-hidden rounded-lg bg-white/10 md:grid-cols-2">
           {[
@@ -82,7 +82,7 @@ export default function CapabilitiesPage() {
           ].map((x) => (
             <Link key={x.href} href={x.href} className="zoom-parent group relative isolate flex min-h-72 flex-col justify-end overflow-hidden p-8 sm:p-10">
               <Img name={x.img} sizes="(min-width:768px) 50vw, 100vw" className="zoom-img absolute inset-0 -z-20 h-full w-full object-cover" alt="" />
-              <span aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-t from-primary-ink via-primary-ink/70 to-primary-ink/20" />
+              <span aria-hidden="true" className="absolute inset-0 -z-10 bg-gradient-to-t from-deep via-deep/70 to-deep/20" />
               <span className="font-display text-3xl font-semibold">{x.t}</span>
               <span className="mt-2 flex items-center justify-between text-on-dark-muted">{x.d}<Icon name="arrowRight" size={20} className="arrow-nudge text-white" /></span>
             </Link>
