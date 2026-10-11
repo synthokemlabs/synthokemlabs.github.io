@@ -33,7 +33,7 @@ export default function ManufacturingPage() {
         </Container>
       </section>
 
-      <section id="process" className="on-dark relative overflow-hidden bg-deep py-20 text-white lg:py-28">
+      <section id="process" className="on-dark relative overflow-hidden bg-primary-ink py-20 text-white lg:py-28">
         <div aria-hidden="true" className="grid-paper-dark absolute inset-0" />
         <Container className="relative">
           <SectionHeading tone="light" eyebrow="How we work" title="Facility → technology → process → quality → delivery." />

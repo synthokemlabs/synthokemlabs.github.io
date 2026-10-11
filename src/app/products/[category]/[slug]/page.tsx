@@ -58,7 +58,7 @@ export default async function ProductPage({ params }: Params) {
     <>
       <TrackRecentlyViewed category={p.category} slug={p.slug} />
       <ProductStickyBar name={p.name} cas={p.cas} enquiryHref={enquiry} />
-      <section data-product-hero className="on-dark relative isolate overflow-hidden bg-deep text-white">
+      <section data-product-hero className="on-dark relative isolate overflow-hidden bg-primary-ink text-white">
         <div aria-hidden="true" className="grid-paper-dark absolute inset-0 -z-10" />
         <Container className="grid grid-cols-1 items-center gap-10 pb-14 pt-36 lg:grid-cols-12 lg:pb-20 lg:pt-40">
           <div className="lg:col-span-7">
@@ -74,8 +74,8 @@ export default async function ProductPage({ params }: Params) {
           </ViewTransition>
           <div className="mt-6 flex flex-wrap items-center gap-3">
             {p.status && (
-              <span className={`inline-flex min-h-8 items-center gap-2 rounded-lg px-3 font-mono text-xs uppercase tracking-[0.08em] bg-white/10 text-white ring-1 ring-inset ring-white/20`}>
-                <span className={`h-1.5 w-1.5 rounded-full ${p.status === "commercial" ? "bg-[#8ff0bd]" : "bg-[#ffd77a]"}`} />
+              <span className={`inline-flex min-h-8 items-center gap-2 rounded-lg px-3 font-mono text-xs uppercase tracking-[0.08em] ${p.status === "commercial" ? "bg-accent/20 text-accent" : "bg-[#f3c46b]/15 text-[#f3c46b]"}`}>
+                <span className={`h-1.5 w-1.5 rounded-full ${p.status === "commercial" ? "bg-accent" : "bg-[#f3c46b]"}`} />
                 {STATUS_LABEL[p.status]}
               </span>
             )}
@@ -192,7 +192,7 @@ export default async function ProductPage({ params }: Params) {
                 <li>
                   <a href={SITE.productListPdf} className="group flex min-h-14 items-center justify-between gap-4 py-3" target="_blank" rel="noopener">
                     <span><span className="block font-medium">Product List</span><span className="font-mono text-xs text-on-dark-muted">PDF · {SITE.productListSize}</span></span>
-                    <Icon name="download" size={18} className="text-accent-soft" />
+                    <Icon name="download" size={18} className="text-accent" />
                   </a>
                 </li>
               </ul>

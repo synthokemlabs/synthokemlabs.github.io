@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react";
 export interface Model3D { atoms: [number, number, number, string][]; bonds: [number, number, number][] }
 
 const COLOR: Record<string, string> = {
-  C: "#5b7a8c", H: "#e8eef2", O: "#ff7a5c", N: "#b3e0ff", S: "#f2c14e", Cl: "#3dd68c", F: "#4fd1c5",
+  C: "#5b7a8c", H: "#e8eef2", O: "#ef5a3c", N: "#3fa8ee", S: "#f2c14e", Cl: "#3dd68c", F: "#4fd1c5",
   P: "#f59e0b", Na: "#a78bfa", K: "#a78bfa", Ca: "#a78bfa",
 };
 const COLOR_LIGHT: Record<string, string> = { ...COLOR, C: "#24343d", H: "#cfd9df" };

@@ -5,28 +5,26 @@
    Single source of truth for colour. Components reference these tokens only.
    ========================================================================== */
 :root {
-  /* "Synthokem Sky" — sky/azure blues built around the logo blue (#3FA8EE). All text pairs are WCAG AA. */
-  --primary: #1168ad;        /* sky blue — buttons, panels, active states (white text 5.8:1) */
-  --primary-dark: #0e5c9c;   /* hover */
-  --primary-ink: #0b2e4f;    /* deep blue ink for headings on light surfaces (13.8:1) */
-  --primary-tint: #e3f1fc;   /* pale sky wash */
-  --deep: #0f62a6;           /* sky-azure sections: hero, page headers, feature bands (white 6.3:1) */
-  --deep-2: #0c5591;         /* slightly deeper sky for the footer (white 7.7:1) */
+  /* "Synthokem Blue" — a tonal system built from the logo blue (#3FA8EE). All text pairs are WCAG AA. */
+  --primary: #0d3b66;        /* deep navy — buttons, dark sections */
+  --primary-dark: #0a2d50;
+  --primary-ink: #071b30;    /* darkest navy — footer, hero base */
+  --primary-tint: #eaf4fd;   /* pale blue wash */
   --secondary: #0a7682;      /* teal — text-safe on white (5.3:1) */
   --secondary-tint: #e3f5f6;
   --accent: #3fa8ee;         /* logo blue — highlights, on dark surfaces */
-  --accent-soft: #d2eafc;    /* small labels on sky surfaces (4.7:1 on --primary, 5.1:1 on --deep) */
-  --accent-strong: #0b66ad;  /* blue text & links on light (6.0:1) */
+  --accent-soft: #9bd2f7;    /* small text on dark (7:1 on navy) */
+  --accent-strong: #0f69b4;  /* blue text & links on light (5.7:1) */
   --brand-mark: #3fa8ee;
   --background: #ffffff;
-  --surface: #eef6fd;
-  --surface-2: #e2f0fb;
-  --text: #0e2235;
-  --muted: #41566b;
-  --border: #d4e5f3;
-  --border-strong: #b9d3e9;
-  --on-dark: #f5faff;
-  --on-dark-muted: #e3f0fb;  /* 5.0:1 on --primary, 5.5:1 on --deep */
+  --surface: #f4f8fc;
+  --surface-2: #e9f1f8;
+  --text: #0b1a2a;
+  --muted: #475a6c;
+  --border: #dbe6ef;
+  --border-strong: #c3d3e1;
+  --on-dark: #f1f6fb;
+  --on-dark-muted: #b3c6d8;
   --success: #15795a;
   --warning: #9a6200;
   --error: #b42318;
@@ -41,8 +39,6 @@
   --color-primary-dark: var(--primary-dark);
   --color-primary-ink: var(--primary-ink);
   --color-primary-tint: var(--primary-tint);
-  --color-deep: var(--deep);
-  --color-deep-2: var(--deep-2);
   --color-secondary: var(--secondary);
   --color-secondary-tint: var(--secondary-tint);
   --color-accent: var(--accent);
@@ -361,8 +357,8 @@ html.lenis-on body { overscroll-behavior: none; }
    QR card — frosted sky-blue glass, viewfinder corners, centre-out reveal, scan line
    ========================================================================== */
 .qr-glass {
-  background-color: rgb(9 70 126 / 0.9);
-  background-image: linear-gradient(155deg, rgb(13 92 160 / 0.86) 0%, rgb(8 62 112 / 0.92) 100%);
+  background-color: rgb(10 45 80 / 0.9);
+  background-image: linear-gradient(155deg, rgb(13 59 102 / 0.88) 0%, rgb(7 27 48 / 0.94) 100%);
   -webkit-backdrop-filter: blur(14px) saturate(140%);
   backdrop-filter: blur(14px) saturate(140%);
   border: 1px solid rgb(255 255 255 / 0.18);

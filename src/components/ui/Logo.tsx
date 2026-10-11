@@ -33,7 +33,7 @@ export function Logo({ tone = "dark", className = "" }: { tone?: "dark" | "light
     <span className={`inline-flex items-center gap-3 ${className}`}>
       <LogoMark className="h-10 w-auto shrink-0" tone={light ? "light" : "brand"} />
       <span className="flex flex-col leading-none">
-        <span className={`whitespace-nowrap font-display text-[1.08rem] font-bold tracking-[0.04em] ${light ? "text-white" : "text-primary-ink"}`}>SYNTHOKEM LABS</span>
+        <span className={`whitespace-nowrap font-display text-[1.08rem] font-bold tracking-[0.04em] ${light ? "text-white" : "text-primary"}`}>SYNTHOKEM LABS</span>
         <span className={`mt-1.5 whitespace-nowrap text-[0.64rem] font-medium tracking-[0.3em] ${light ? "text-on-dark-muted" : "text-muted"}`}>PRIVATE LIMITED</span>
       </span>
     </span>

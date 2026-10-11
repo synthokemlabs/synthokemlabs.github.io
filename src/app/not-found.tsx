@@ -13,7 +13,7 @@ const LINKS = [
 
 export default function NotFound() {
   return (
-    <section className="on-dark relative isolate flex min-h-[90svh] items-center overflow-hidden bg-deep text-white">
+    <section className="on-dark relative isolate flex min-h-[90svh] items-center overflow-hidden bg-primary-ink text-white">
       <div aria-hidden="true" className="grid-paper-dark absolute inset-0 -z-10" />
       <Container className="py-40">
         <p className="eyebrow text-accent-soft">Error 404</p>
@@ -25,7 +25,7 @@ export default function NotFound() {
         </div>
         <ul className="mt-14 grid grid-cols-1 max-w-3xl gap-px overflow-hidden rounded-lg bg-white/10 sm:grid-cols-2">
           {LINKS.map((l) => (
-            <li key={l.href}><Link href={l.href} className="group flex min-h-14 items-center justify-between bg-deep px-5 hover:bg-primary-dark">{l.label}<Icon name="arrowRight" size={16} className="arrow-nudge text-accent-soft" /></Link></li>
+            <li key={l.href}><Link href={l.href} className="group flex min-h-14 items-center justify-between bg-primary-ink px-5 hover:bg-primary-dark">{l.label}<Icon name="arrowRight" size={16} className="arrow-nudge text-accent" /></Link></li>
           ))}
         </ul>
       </Container>

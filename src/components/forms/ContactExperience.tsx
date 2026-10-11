@@ -38,7 +38,7 @@ export function ContactExperience() {
             </Link>
           ) : (
             <button key={i.id} type="button" aria-pressed={on} onClick={() => setIntent(i.id)} className={`${cls} cursor-pointer`}>
-              <Icon name={i.icon} size={20} className={on ? "text-accent-soft" : "text-accent-strong"} />
+              <Icon name={i.icon} size={20} className={on ? "text-accent" : "text-accent-strong"} />
               {i.label}
             </button>
           );
