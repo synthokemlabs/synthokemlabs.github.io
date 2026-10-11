@@ -13,7 +13,7 @@ const LINKS = [
 
 export default function NotFound() {
   return (
-    <section className="on-dark relative isolate flex min-h-[90svh] items-center overflow-hidden sky-band text-white">
+    <section className="on-dark relative isolate flex min-h-[90svh] items-center overflow-hidden bg-deep text-white">
       <div aria-hidden="true" className="grid-paper-dark absolute inset-0 -z-10" />
       <Container className="py-40">
         <p className="eyebrow text-accent-soft">Error 404</p>

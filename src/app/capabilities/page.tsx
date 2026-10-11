@@ -73,7 +73,7 @@ export default function CapabilitiesPage() {
         </Container>
       </section>
 
-      <section className="on-dark sky-band py-20 text-white">
+      <section className="on-dark bg-deep py-20 text-white">
         <Container>
           <div className="grid grid-cols-1 gap-px overflow-hidden rounded-lg bg-white/10 md:grid-cols-2">
           {[

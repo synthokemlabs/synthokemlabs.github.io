@@ -80,7 +80,7 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      <section id="vision" className="on-dark relative overflow-hidden sky-band py-20 text-white lg:py-28">
+      <section id="vision" className="on-dark relative overflow-hidden bg-deep py-20 text-white lg:py-28">
         <div aria-hidden="true" className="grid-paper-dark absolute inset-0" />
         <Container className="relative grid grid-cols-1 gap-14 lg:grid-cols-2 lg:gap-20">
           {[{ k: "Our vision", v: VISION }, { k: "Our mission", v: MISSION }].map((x, i) => (

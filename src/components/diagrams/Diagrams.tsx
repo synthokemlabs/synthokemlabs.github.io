@@ -12,7 +12,7 @@ const d = (s: number) => ({ "--draw-delay": `${s}s`, "--node-delay": `${s}s` }) 
 /* ------------------------------------------------------------------ */
 export const QUALITY_LAYERS = [
   { title: "Regulatory compliance", body: "Ph. Eur., USP and other national & international standards; DMFs, CEPs and GMP approvals.", r: 190, fill: "var(--primary-tint)", text: "var(--primary)" },
-  { title: "Quality assurance", body: "Integrated quality systems that harmonise global quality and regulatory standards across functions.", r: 142, fill: "#c6e2f8", text: "var(--primary)" },
+  { title: "Quality assurance", body: "Integrated quality systems that harmonise global quality and regulatory standards across functions.", r: 142, fill: "#cfe3ee", text: "var(--primary)" },
   { title: "Quality control", body: "Qualified QC laboratory responsible for all analysis, at every stage of the process.", r: 94, fill: "var(--secondary)", text: "#ffffff" },
 ];
 
@@ -32,7 +32,7 @@ export function QualityLayers() {
             </g>
           ))}
           <g className="node-pop" style={d(0.75)}>
-            <circle cx="210" cy="210" r="46" fill="var(--deep-2)" />
+            <circle cx="210" cy="210" r="46" fill="var(--primary)" />
             <text x="210" y="206" textAnchor="middle" fontSize="12" fontWeight="700" fill="#fff" style={{ fontFamily: "var(--font-sans)" }}>EVERY</text>
             <text x="210" y="222" textAnchor="middle" fontSize="12" fontWeight="700" fill="#fff" style={{ fontFamily: "var(--font-sans)" }}>PRODUCT</text>
           </g>

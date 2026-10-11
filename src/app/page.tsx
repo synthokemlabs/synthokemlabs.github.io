@@ -57,8 +57,8 @@ export default function HomePage() {
         <Parallax speed={0.22} className="absolute inset-0 -z-20">
           <Img name="hero-cleanroom" priority sizes="100vw" className="ken-burns h-full w-full object-cover object-[72%_center]" alt="" />
         </Parallax>
-        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgb(8_64_118/0.93)_0%,rgb(12_88_155/0.88)_100%)] lg:bg-[linear-gradient(100deg,rgb(8_64_118/0.95)_0%,rgb(12_88_155/0.86)_40%,rgb(30_128_200/0.6)_72%,rgb(63_168_238/0.38)_100%)]" />
-        <div aria-hidden="true" className="absolute inset-x-0 bottom-0 -z-10 h-1/2 bg-gradient-to-t from-[#0a4c8a] via-[#0a4c8a]/70 to-transparent" />
+        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(100deg,rgb(11_74_128/0.94)_0%,rgb(15_98_166/0.86)_48%,rgb(22_116_190/0.74)_100%)]" />
+        <div aria-hidden="true" className="absolute inset-x-0 bottom-0 -z-10 h-1/3 bg-gradient-to-t from-deep to-transparent" />
 
         <Container className="grid grid-cols-1 flex-1 items-center gap-12 pb-10 pt-32 lg:grid-cols-12 lg:pb-12">
           <div className="lg:col-span-7" data-hero-fade>
@@ -67,7 +67,7 @@ export default function HomePage() {
               API manufacturer · Hyderabad · Since 1978
             </p>
             <h1 id="hero-title" className="display-xl mt-8 max-w-[16ch] font-display text-white">
-              <SplitWords text="Performance and perfection, driven by chemistry." highlight="driven by chemistry." highlightClass="text-[#a9dcfb]" base={150} />
+              <SplitWords text="Performance and perfection, driven by chemistry." base={150} />
             </h1>
             <p className="lede hero-in mt-7 max-w-[36rem] text-on-dark-muted" style={d(650)}>
               We manufacture Active Pharmaceutical Ingredients and drug intermediates — with a global presence across {COUNTRIES.length} countries.
@@ -161,7 +161,7 @@ export default function HomePage() {
       </section>
 
       {/* ───────────── HOW WE WORK ───────────── */}
-      <section className="on-dark relative isolate overflow-x-clip sky-band py-24 text-white lg:py-32" aria-labelledby="chain-title">
+      <section className="on-dark relative isolate overflow-x-clip bg-deep py-24 text-white lg:py-32" aria-labelledby="chain-title">
         <Container>
           <SectionHeading id="chain-title" tone="light" eyebrow="How we work" index="04" title="From molecule to market." lede="The Synthokem value chain, step by step — each stage links to the detail behind it." />
           <div className="mt-10 lg:mt-4"><ValueChain /></div>
