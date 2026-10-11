@@ -102,7 +102,7 @@ export default function CareersPage() {
         <Container className="grid grid-cols-1 gap-12 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <SectionHeading eyebrow="Submit your resume" title={<span id="apply-title">Looking for opportunities to work with us?</span>} size="md" />
-            <p className="mt-5 text-muted">Share your details and resume. You can also email us at <a className="font-semibold text-primary underline underline-offset-2" href={`mailto:${SITE.email}?subject=Careers`}>{SITE.email}</a>.</p>
+            <p className="mt-5 text-muted">Share your details and resume. You can also email us at <a className="font-semibold text-primary underline underline-offset-2" href={`mailto:${SITE.careersEmail}?subject=Careers`}>{SITE.careersEmail}</a>.</p>
           </div>
           <div className="lg:col-span-8"><CareerForm /></div>
         </Container>

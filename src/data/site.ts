@@ -13,7 +13,9 @@ export const SITE = {
   tagline: "Performance and perfection, driven by chemistry.",
   description:
     "Synthokem Labs is a manufacturer of Active Pharmaceutical Ingredients (APIs) and drug intermediates headquartered in Hyderabad, India, operating since 1978.",
-  email: "hr@synthokemlabs.com",
+  email: "info@synthokemlabs.com",
+  /** Used only on the Careers page and its application form. */
+  careersEmail: "hr@synthokemlabs.com",
   phone: { display: "+91 8455 224180", href: "tel:+918455224180" },
   hours: "Monday to Saturday, 9:00 am – 5:30 pm",
   responseTime: "Our team will contact you within 3 business days.",
