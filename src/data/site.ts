@@ -1,3 +1,5 @@
+import { asset } from "@/lib/asset";
+
 /**
  * Company facts. Every value here is taken from the existing synthokemlabs.com
  * website or the company's current "Product List" PDF. Do not add claims that the
@@ -18,12 +20,12 @@ export const SITE = {
   people: "300+",
   /** Manufacturing units listed on the current Product List cover (Unit II, Unit III). */
   facilitiesCount: 2,
-  productListPdf: "/documents/synthokem-product-list.pdf",
+  productListPdf: asset("/documents/synthokem-product-list.pdf"),
   productListName: "Synthokem Product List",
   productListSize: "250 KB",
   productListLabel: "Synthokem Product List (PDF, 250 KB)",
   /** The QR printed on the Product List cover, extracted unchanged from the PDF. Its destination is managed by the company on qrfy.io. */
-  productListQr: "/images/product-list-qr.png",
+  productListQr: asset("/images/product-list-qr.png"),
   productListQrLink: "https://qrfy.io/9E6LCQkppJ",
 } as const;
 

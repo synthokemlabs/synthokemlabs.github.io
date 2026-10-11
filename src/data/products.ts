@@ -109,7 +109,7 @@ export const CATEGORIES: Category[] = [
 ];
 
 const ISO_SET = ["TDS", "GMP", "ISO-QMS", "ISO-OHSAS", "ISO-EMS"];
-const s = (slug: string) => `/structures/${slug}.webp`;
+const s = (slug: string) => asset(`/structures/${slug}.webp`);
 
 export const PRODUCTS: Product[] = [
   // ---- APIs for human use — commercial (Product List, p.2) ----
@@ -407,11 +407,12 @@ export const GRADE_GLOSSARY: Record<string, string> = {
 };
 
 /* ---------------------------- structures ---------------------------- */
+import { asset } from "@/lib/asset";
 import { STRUCTURE_INDEX } from "./structure-index";
 
 /** Best available 2D structure: rendered SVG (PubChem-matched by CAS) → company drawing → none. */
 export function structureSrc(p: Pick<Product, "slug" | "structureImage">): string | undefined {
-  return STRUCTURE_INDEX[p.slug] ? `/structures/svg/${p.slug}.svg` : p.structureImage;
+  return STRUCTURE_INDEX[p.slug] ? asset(`/structures/svg/${p.slug}.svg`) : p.structureImage;
 }
 /** Molecular formula / weight (only for records matched to the company's CAS number). */
 export function structureMeta(slug: string) {

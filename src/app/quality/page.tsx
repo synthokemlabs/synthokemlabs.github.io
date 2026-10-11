@@ -7,6 +7,7 @@ import { Img } from "@/components/ui/Img";
 import { Icon } from "@/components/ui/Icon";
 import { SITE } from "@/data/site";
 import { pageMetadata } from "@/lib/seo";
+import { asset } from "@/lib/asset";
 
 export const metadata = pageMetadata({
   title: "Quality Systems — Quality Control & Quality Assurance",
@@ -96,7 +97,7 @@ export default function QualityPage() {
               </a>
             </li>
             <li>
-              <a href="/enquiry/?type=technical" className="group flex min-h-20 items-center justify-between gap-4 px-6 py-4 hover:bg-primary-tint/40">
+              <a href={asset("/enquiry/?type=technical")} className="group flex min-h-20 items-center justify-between gap-4 px-6 py-4 hover:bg-primary-tint/40">
                 <span className="flex items-center gap-4"><Icon name="shield" size={22} className="text-accent-strong" /><span><span className="block font-semibold text-primary-ink">Request certificates & regulatory documents</span><span className="text-sm text-muted">GMP certificates, DMF/CEP information, specifications, CoA</span></span></span>
                 <Icon name="arrowRight" size={18} className="arrow-nudge text-primary" />
               </a>

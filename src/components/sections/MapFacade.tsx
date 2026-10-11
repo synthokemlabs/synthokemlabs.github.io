@@ -1,5 +1,6 @@
 "use client";
 
+import { asset } from "@/lib/asset";
 import { useState } from "react";
 import { Icon } from "@/components/ui/Icon";
 
@@ -13,7 +14,7 @@ export function MapFacade({ src, title, directions }: { src: string; title: stri
       ) : (
         <div className="absolute inset-0 grid place-items-center">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/images/world-dots.svg" alt="" aria-hidden="true" className="absolute inset-0 h-full w-full scale-[3.2] object-cover opacity-30" style={{ objectPosition: "71% 46%" }} />
+          <img src={asset("/images/world-dots.svg")} alt="" aria-hidden="true" className="absolute inset-0 h-full w-full scale-[3.2] object-cover opacity-30" style={{ objectPosition: "71% 46%" }} />
           <div className="relative flex flex-col items-center gap-4 px-6 text-center text-white">
             <span className="grid h-14 w-14 place-items-center rounded-full bg-accent text-primary-ink"><Icon name="pin" size={24} /></span>
             <p className="max-w-xs text-sm text-on-dark-muted">Loading the map connects to Google Maps, which may set cookies.</p>

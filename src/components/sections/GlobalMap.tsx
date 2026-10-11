@@ -1,5 +1,6 @@
 "use client";
 
+import { asset } from "@/lib/asset";
 import { useMemo, useState } from "react";
 import { COUNTRIES, HUB, REGIONS, type Region } from "@/data/company";
 
@@ -50,7 +51,7 @@ export function GlobalMap({ tone = "dark" }: { tone?: "dark" | "light" }) {
 
       <div className="relative mt-8">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/images/world-dots.svg" alt="" aria-hidden="true" width={1440} height={552} className={`block h-auto w-full ${dark ? "opacity-[0.35]" : "opacity-70"}`} loading="lazy" />
+        <img src={asset("/images/world-dots.svg")} alt="" aria-hidden="true" width={1440} height={552} className={`block h-auto w-full ${dark ? "opacity-[0.35]" : "opacity-70"}`} loading="lazy" />
         <svg viewBox={`0 0 ${W} ${H}`} className="absolute inset-0 h-full w-full" role="img" aria-label={`Map showing Synthokem's presence in ${region === "All" ? `${COUNTRIES.length} countries` : region}`}>
           <g key={region}>
             {visible.map((c, i) => (

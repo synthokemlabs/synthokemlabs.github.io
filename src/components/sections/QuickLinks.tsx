@@ -1,5 +1,6 @@
 "use client";
 
+import { asset } from "@/lib/asset";
 import Link from "next/link";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Icon } from "@/components/ui/Icon";
@@ -54,7 +55,7 @@ export function QuickLinks({ heading }: { heading: ReactNode }) {
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 key={p.img}
-                src={`/images/${p.img}-640.webp`}
+                src={asset(`/images/${p.img}-640.webp`)}
                 alt=""
                 loading="lazy"
                 className={`qpeek absolute inset-0 h-full w-full object-cover ${i === active ? "is-current" : ""}`}

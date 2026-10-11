@@ -1,3 +1,5 @@
+import { asset } from "@/lib/asset";
+
 /**
  * Responsive WebP image. Source assets live in /public/images as
  * `<name>-640.webp`, `<name>-1280.webp` and `<name>-1920.webp`
@@ -27,11 +29,11 @@ export function Img({
   name, alt, className = "", sizes = "100vw", priority = false, width = 1600, height = 1067,
 }: { name: string; alt?: string; className?: string; sizes?: string; priority?: boolean; width?: number; height?: number }) {
   const widths = WIDTHS[name] ?? [640, 1280, 1920];
-  const srcSet = widths.map((w) => `/images/${name}-${w}.webp ${w}w`).join(", ");
+  const srcSet = widths.map((w) => `${asset(`/images/${name}-${w}.webp`)} ${w}w`).join(", ");
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      src={`/images/${name}-${widths[Math.min(1, widths.length - 1)]}.webp`}
+      src={asset(`/images/${name}-${widths[Math.min(1, widths.length - 1)]}.webp`)}
       srcSet={srcSet}
       sizes={sizes}
       alt={alt ?? IMAGE_ALT[name] ?? ""}
