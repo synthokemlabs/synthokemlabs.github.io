@@ -42,7 +42,7 @@ export function CareerForm() {
     if (Object.keys(e).length) { requestAnimationFrame(() => document.getElementById("error-summary")?.focus()); return; }
     setState("submitting");
     try {
-      setResult(await submitEnquiry(fd, `[Careers] ${v("area")} — ${v("name")}`));
+      setResult(await submitEnquiry(fd, `[Careers] ${v("area")} — ${v("name")}`, SITE.careersEmail));
       setState("idle");
     } catch { setState("error"); }
   }
@@ -56,7 +56,7 @@ export function CareerForm() {
         ) : (
           <>
             <h3 className="display-md mt-6 text-primary-ink">Your application email is ready.</h3>
-            <p className="mt-4 text-muted">Open it in your email app, <strong className="text-primary-ink">attach your resume</strong>, and send it to {SITE.email}.</p>
+            <p className="mt-4 text-muted">Open it in your email app, <strong className="text-primary-ink">attach your resume</strong>, and send it to {SITE.careersEmail}.</p>
             <a href={result.mailto} className="mt-6 inline-flex min-h-12 items-center gap-2 rounded-md bg-primary px-5 font-semibold text-white hover:bg-primary-dark"><Icon name="mail" size={18} /> Open in email app</a>
           </>
         )}
@@ -90,7 +90,7 @@ export function CareerForm() {
         </label>
         {errors.consent && <p id="consent-error" className="mt-1.5 text-[0.85rem] font-medium text-error">{errors.consent}</p>}
       </div>
-      {state === "error" && <p role="alert" className="rounded-lg bg-[#fdf0ee] p-4 text-sm text-error">Something went wrong. Please try again or email {SITE.email}.</p>}
+      {state === "error" && <p role="alert" className="rounded-lg bg-[#fdf0ee] p-4 text-sm text-error">Something went wrong. Please try again or email {SITE.careersEmail}.</p>}
       <button type="submit" disabled={state === "submitting"} className="group inline-flex min-h-12 w-full cursor-pointer items-center justify-center gap-2 rounded-md bg-primary px-7 font-semibold text-white hover:bg-primary-dark disabled:opacity-70 sm:w-auto">
         {state === "submitting" ? "Sending…" : <>Submit application <Icon name="arrowRight" size={17} className="arrow-nudge" /></>}
       </button>
