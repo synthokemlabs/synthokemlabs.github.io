@@ -1,0 +1,63 @@
+name: Deploy to GitHub Pages
+
+# One Pages site, two versions:
+#   /     → the approved site (branch main)
+#   /v2/  → the upgraded preview (branch draft)
+on:
+  push:
+    branches: [main, draft]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          path: main
+      - uses: actions/checkout@v4
+        with:
+          ref: draft
+          path: draft
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: |
+            main/package-lock.json
+            draft/package-lock.json
+      - name: Build approved site (/)
+        working-directory: main
+        run: npm ci && npm run build
+      - name: Build upgraded site (/v2/)
+        working-directory: draft
+        env:
+          NEXT_PUBLIC_BASE_PATH: /v2
+        run: npm ci && npm run build
+      - name: Combine
+        run: |
+          cp -r draft/out main/out/v2
+          touch main/out/.nojekyll
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: main/out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
