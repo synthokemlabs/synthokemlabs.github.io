@@ -523,3 +523,9 @@ html.lenis-on body { overscroll-behavior: none; }
   .reveal.reveal-rise3d { transform: none; }
   .vmv-value, .vmv-line { opacity: 1; transform: none; }
 }
+
+/* "Our evolution" timeline rail draws down (phones) or across (desktop) when revealed */
+.evo-rail { transform: scaleY(0); transform-origin: 50% 0; transition: transform 1.4s var(--ease-out) 0.1s; }
+@media (min-width: 1024px) { .evo-rail { transform: scaleX(0); transform-origin: 0 50%; } }
+.is-visible .evo-rail, .settled .evo-rail, .no-js .evo-rail { transform: none; }
+@media (prefers-reduced-motion: reduce) { .evo-rail { transform: none; } }

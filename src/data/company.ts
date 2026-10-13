@@ -327,12 +327,16 @@ export const VALUES = ["Innovation", "Integrity", "Respect", "Excellence", "Cust
 export const RESPONSIBILITY =
   "We aim to be a responsible corporate entity serving the community at large through business, social and environmental actions that contribute to a better future.";
 
-/** PPT slide 2. */
-export const LEADERSHIP = [
-  { name: "Mr. Jayant Tagore Madireddy", role: "Chairperson" },
-  { name: "Mrs. Aishwarya", role: "Managing Director" },
-  { name: "Mr. Aryaman", role: "Director" },
-  { name: "Dr. Srinivas Kolupula", role: "Chief Scientific Officer" },
+/**
+ * PPT slide 2, grouped the way listed pharma companies present leadership (board, then management).
+ * `photo` takes an Img name once headshots are supplied; until then the card shows a portrait placeholder.
+ */
+export interface Leader { name: string; role: string; group: "board" | "management"; photo?: string }
+export const LEADERSHIP: Leader[] = [
+  { name: "Mr. Jayant Tagore Madireddy", role: "Chairperson", group: "board" },
+  { name: "Mrs. Aishwarya", role: "Managing Director", group: "board" },
+  { name: "Mr. Aryaman", role: "Director", group: "board" },
+  { name: "Dr. Srinivas Kolupula", role: "Chief Scientific Officer", group: "management" },
 ];
 
 /** PPT slide 5 ("Corporate"), condensed to one line each; shown on the Careers page. Its functions list is merged into CAREER_AREAS. */

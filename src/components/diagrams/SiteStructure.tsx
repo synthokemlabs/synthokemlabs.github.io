@@ -5,7 +5,7 @@ import { Reveal } from "@/components/ui/client";
 
 const TREE: { label: string; href: string; icon: IconName; children: { label: string; href: string }[] }[] = [
   { label: "About", href: "/about/", icon: "factory", children: [
-    { label: "Company overview", href: "/about/" }, { label: "Chairperson’s message", href: "/about/chairperson/" },
+    { label: "Company overview", href: "/about/" }, { label: "Leadership", href: "/about/leadership/" }, { label: "Chairperson’s message", href: "/about/chairperson/" },
     { label: "Our journey", href: "/about/journey/" }, { label: "Global presence", href: "/about/global-presence/" },
   ] },
   { label: "Products", href: "/products/", icon: "flask", children: [

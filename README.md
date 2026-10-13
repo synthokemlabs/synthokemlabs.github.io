@@ -81,7 +81,7 @@ The endpoint receives `multipart/form-data`, including any attachment. See `src/
 11. **Social media:** the presentation shows Facebook, Twitter, Instagram and LinkedIn icons with "/synthokem" but no full links. Not added until the exact page URLs are confirmed.
 12. **Chillers (slide 19):** the slide says "~20 deg.C water", which is probably −20 °C brine. The figure is left out until confirmed.
 13. **Distances (slides 13 and 16)** are shown as the company gave them. Please re-check "Rajiv Gandhi International Airport ~40 km" from Pashamylaram and "~750 km" from Unit III.
-14. **Leadership names (slide 2):** only "Mrs. Aishwarya" (Managing Director) and "Mr. Aryaman" (Director) are given, with no surnames. No portraits were supplied, so monograms are used.
+14. **Leadership (slide 2):** only "Mrs. Aishwarya" (Managing Director) and "Mr. Aryaman" (Director) are given, with no surnames. No headshots were supplied, so the leadership cards and the Chairperson page show a portrait placeholder. Add each photo to `public/images` and set `photo` on its `LEADERSHIP` entry in `src/data/company.ts`.
 15. **Unit I:** the presentation lists only Units II and III. The Journey timeline and the approval tiles still describe Unit I's history (USFDA approval, KFDA, COFEPRIS, EU WC, Kosher). Please confirm these are still valid to show.
 
 ## 6. Chemical structures

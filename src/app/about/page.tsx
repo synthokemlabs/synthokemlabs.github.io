@@ -6,7 +6,9 @@ import { Counter, Reveal } from "@/components/ui/client";
 import { Img } from "@/components/ui/Img";
 import { Icon } from "@/components/ui/Icon";
 import { VisionMissionValues } from "@/components/sections/VisionMission";
-import { CHAIRPERSON, COUNTRIES, LEADERSHIP, OVERVIEW, PARTNER_PRODUCTS, PHILOSOPHY, TOTAL_CAPACITY_KL } from "@/data/company";
+import { EvolutionTimeline, WhatWeDeliver } from "@/components/sections/AboutSections";
+import { LeadershipGrid } from "@/components/sections/Leadership";
+import { CHAIRPERSON, COUNTRIES, OVERVIEW, PARTNER_PRODUCTS, PHILOSOPHY, TOTAL_CAPACITY_KL } from "@/data/company";
 import { PRODUCTS, productHref } from "@/data/products";
 import { SITE } from "@/data/site";
 import { pageMetadata } from "@/lib/seo";
@@ -36,7 +38,7 @@ export default function AboutPage() {
     <>
       <PageHero eyebrow="Who we are" title="Driven by our principles and people." lede="Delivering products for a healthier and happier community — since 1978." crumbs={[{ name: "About", href: "/about/" }]} image="facility-aerial" />
 
-      <PageNav items={[{ id: "overview", label: "Overview" }, { id: "vision", label: "Vision & values" }, { id: "philosophy", label: "Philosophy" }, { id: "leadership", label: "Leadership" }, { id: "more", label: "Explore more" }]} />
+      <PageNav items={[{ id: "overview", label: "Overview" }, { id: "deliver", label: "What we deliver" }, { id: "vision", label: "Vision & values" }, { id: "evolution", label: "Our evolution" }, { id: "philosophy", label: "Philosophy" }, { id: "leadership", label: "Leadership" }]} />
 
       <section id="overview" className="py-20 lg:py-28">
         <Container>
@@ -75,8 +77,28 @@ export default function AboutPage() {
         </Container>
       </section>
 
+      <section id="deliver" className="bg-surface py-20 lg:py-24">
+        <Container>
+          <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
+            <SectionHeading eyebrow="What we deliver" title="A portfolio across the value chain." size="md" />
+            <ButtonLink href="/products/" variant="secondary">All products</ButtonLink>
+          </div>
+          <div className="mt-12"><WhatWeDeliver /></div>
+        </Container>
+      </section>
+
       {/* PPT slide 3 */}
       <VisionMissionValues />
+
+      <section id="evolution" className="py-20 lg:py-28">
+        <Container>
+          <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
+            <SectionHeading eyebrow="Our evolution" title="From a single unit to two manufacturing sites." size="md" />
+            <ButtonLink href="/about/journey/" variant="secondary">Full journey</ButtonLink>
+          </div>
+          <div className="mt-14"><EvolutionTimeline /></div>
+        </Container>
+      </section>
 
       <section id="philosophy" className="bg-surface py-20 lg:py-28">
         <Container className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
@@ -96,30 +118,23 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* PPT slide 2 */}
+      {/* PPT slide 2: the quote and its button belong to the Chairperson; the whole team is below and on /about/leadership/ */}
       <section id="leadership" className="py-20 lg:py-28">
-        <Container className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
-          <div className="lg:col-span-7">
-            <p className="eyebrow text-accent-strong">Message from the Chairperson</p>
-            <blockquote className="mt-6">
-              <p className="font-display text-[1.75rem] font-medium leading-snug tracking-[-0.02em] text-primary-ink sm:text-[2.4rem]">
-                <span className="text-accent-strong">“</span>{CHAIRPERSON.quote}<span className="text-accent-strong">”</span>
-              </p>
-              <footer className="mt-6 text-muted"><cite className="not-italic"><strong className="text-primary-ink">{CHAIRPERSON.name}</strong>, {CHAIRPERSON.title}</cite></footer>
-            </blockquote>
-            <div className="mt-8"><ButtonLink href="/about/chairperson/" variant="secondary">Read the full message</ButtonLink></div>
+        <Container>
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-end lg:gap-16">
+            <div className="lg:col-span-7">
+              <SectionHeading eyebrow="Leadership" title="Guided by experience." size="md" />
+              <blockquote className="mt-8 border-l-2 border-accent-strong pl-6">
+                <p className="font-display text-[1.35rem] font-medium leading-snug tracking-[-0.01em] text-primary-ink sm:text-[1.6rem]">“{CHAIRPERSON.quote}”</p>
+                <footer className="mt-4 text-sm text-muted"><cite className="not-italic"><strong className="text-primary-ink">{CHAIRPERSON.name}</strong>, {CHAIRPERSON.title}</cite></footer>
+              </blockquote>
+            </div>
+            <div className="flex flex-wrap gap-3 lg:col-span-5 lg:justify-end">
+              <ButtonLink href="/about/chairperson/">Read the Chairperson’s message</ButtonLink>
+              <ButtonLink href="/about/leadership/" variant="secondary">Meet the leadership team</ButtonLink>
+            </div>
           </div>
-          <Reveal delay={100} className="self-center rounded-lg bg-surface p-7 ring-1 ring-border sm:p-8 lg:col-span-5">
-            <h2 className="eyebrow text-muted">Leadership team</h2>
-            <ul className="mt-2 divide-y divide-border">
-              {LEADERSHIP.map((p) => (
-                <li key={p.name} className="py-4">
-                  <span className="block text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-accent-strong">{p.role}</span>
-                  <span className="mt-1 block text-lg font-semibold text-primary-ink">{p.name}</span>
-                </li>
-              ))}
-            </ul>
-          </Reveal>
+          <div className="mt-14"><LeadershipGrid /></div>
         </Container>
       </section>
 
@@ -127,7 +142,7 @@ export default function AboutPage() {
         <Container>
           <ul className="grid grid-cols-1 gap-px overflow-hidden rounded-lg bg-border ring-1 ring-border md:grid-cols-3">
             {[
-              { href: "/about/journey/", t: "Our journey", d: "From a single unit with 10 employees in 1978 to two manufacturing units today.", icon: "history" as const },
+              { href: "/about/leadership/", t: "Leadership", d: "Our Board of Directors and management team.", icon: "users" as const },
               { href: "/about/global-presence/", t: "Global presence", d: `${COUNTRIES.length} countries across Europe, Asia-Pacific, the Middle East & Africa and the Americas.`, icon: "globe" as const },
               { href: "/quality/regulatory-affairs/", t: "Regulatory affairs", d: "Audited and recognised by global regulatory authorities.", icon: "shield" as const },
             ].map((x) => (

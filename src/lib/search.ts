@@ -40,7 +40,8 @@ export interface PageEntry { title: string; href: string; section: string; keywo
 export const PAGES: PageEntry[] = [
   { title: "About Synthokem", href: "/about/", section: "Company", keywords: "company overview history people 1978 hyderabad" },
   { title: "Philosophy, vision & mission", href: "/about/#philosophy", section: "Company", keywords: "quality manufacturing integrity values vision mission" },
-  { title: "Chairperson's message", href: "/about/chairperson/", section: "Company", keywords: "leadership chairperson jayant tagore madireddy" },
+  { title: "Leadership", href: "/about/leadership/", section: "Company", keywords: "leadership board of directors management chairperson managing director director chief scientific officer jayant tagore madireddy aishwarya aryaman srinivas kolupula" },
+  { title: "Chairperson's message", href: "/about/chairperson/", section: "Company", keywords: "chairperson message jayant tagore madireddy" },
   { title: "Our journey", href: "/about/journey/", section: "Company", keywords: "timeline milestones history usfda dmf cep" },
   { title: "Global presence", href: "/about/global-presence/", section: "Company", keywords: "countries markets export world map" },
   { title: "All products", href: "/products/", section: "Products", keywords: "catalogue search api intermediates" },

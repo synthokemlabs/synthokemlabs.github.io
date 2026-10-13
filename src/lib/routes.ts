@@ -4,6 +4,7 @@ import { CATEGORIES, PRODUCTS, productHref } from "@/data/products";
 export const STATIC_ROUTES: { path: string; title: string; group: string; priority: number }[] = [
   { path: "/", title: "Home", group: "Company", priority: 1 },
   { path: "/about/", title: "About Synthokem", group: "Company", priority: 0.8 },
+  { path: "/about/leadership/", title: "Leadership", group: "Company", priority: 0.6 },
   { path: "/about/chairperson/", title: "Chairperson's message", group: "Company", priority: 0.5 },
   { path: "/about/journey/", title: "Our journey", group: "Company", priority: 0.6 },
   { path: "/about/global-presence/", title: "Global presence", group: "Company", priority: 0.6 },

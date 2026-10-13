@@ -18,7 +18,7 @@ export const MAIN_NAV: NavItem[] = [
     href: "/about/",
     items: [
       { label: "Company overview", href: "/about/", description: "Who we are, since 1978", icon: "factory" },
-      { label: "Chairperson’s message", href: "/about/chairperson/", description: "A word from our leadership", icon: "message" },
+      { label: "Leadership", href: "/about/leadership/", description: "Board of Directors & management", icon: "users" },
       { label: "Our journey", href: "/about/journey/", description: "Milestones, 1978 to today", icon: "history" },
       { label: "Global presence", href: "/about/global-presence/", description: "40 countries, four regions", icon: "globe" },
     ],
@@ -56,7 +56,7 @@ export const FOOTER_NAV: { heading: string; links: NavLink[] }[] = [
     heading: "Company",
     links: [
       { label: "About Synthokem", href: "/about/" },
-      { label: "Chairperson’s message", href: "/about/chairperson/" },
+      { label: "Leadership", href: "/about/leadership/" },
       { label: "Our journey", href: "/about/journey/" },
       { label: "Global presence", href: "/about/global-presence/" },
       { label: "Sustainability", href: "/sustainability/" },
