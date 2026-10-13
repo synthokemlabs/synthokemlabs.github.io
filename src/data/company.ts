@@ -304,26 +304,19 @@ export const COUNTRIES: Country[] = [
 export const REGIONS: Region[] = ["Europe", "Asia-Pacific", "Middle East & Africa", "Americas"];
 
 /* ------------------------------ Editorial copy ------------------------------ */
-/** The first three paragraphs are from PPT slide 2; the rest from the previous website. */
-export const OVERVIEW = [
-  "Synthokem Labs Private Limited began its journey as a pharmaceutical company in 1978, headquartered in Hyderabad, India, as a manufacturer of high-quality Active Pharmaceutical Ingredients and drug intermediates. Today it manufactures at facilities in two states — Telangana and Andhra Pradesh.",
-  "Synthokem is globally recognised for its strengths in API manufacturing and distribution under current Good Manufacturing Practices, with USFDA-inspected, state-of-the-art facilities and a strong research team — with an aim to provide accessible and affordable pharmaceutical products to people in need.",
-  "Synthokem has established itself as a preferred business partner to leading consumer brands for Guaifenesin, an expectorant, and Methocarbamol, a widely accepted muscle relaxant.",
-  "Over the decades, Synthokem Labs has leveraged its core expertise in evolving process chemistry, advanced capabilities, backward integration and stringent quality standards to build a portfolio of products across the value chain and enhance its competitiveness.",
-  "Having been successfully audited and recognised by global regulatory authorities, Synthokem Labs is an integral part of the Indian pharmaceutical industry, delivering differentiated, high-quality products consistently.",
-  "Our strength lies in our people — over 300 skilled and unskilled individuals across two manufacturing units and the corporate office and R&D unit. Founded and managed by an experienced team of professionals with technical expertise and decades of industry experience, we foster a culture of sustainable growth through education, inclusion, empowerment and innovation.",
+/** PPT slide 2, condensed. */
+export const OVERVIEW =
+  "Synthokem Labs began in 1978 in Hyderabad as a manufacturer of high-quality Active Pharmaceutical Ingredients and drug intermediates. Today we manufacture at two facilities in Telangana and Andhra Pradesh — USFDA-inspected, run to current Good Manufacturing Practices and backed by a strong research team.";
+/** PPT slide 2: "a preferred business partner to the leading consumer brands" for these two APIs. */
+export const PARTNER_PRODUCTS = [
+  { slug: "guaifenesin", use: "Expectorant" },
+  { slug: "methocarbamol", use: "Muscle relaxant" },
 ];
 
 export const PHILOSOPHY = [
   { title: "Quality", body: "Maintaining the highest quality and regulatory standards in all our products and processes." },
   { title: "Manufacturing", body: "Aiding the translation of fundamental science into pharmaceutical solutions, persistently." },
   { title: "Integrity", body: "Being consistent with our values, means and actions in our business and as part of the society." },
-];
-
-export const COMMITMENTS = [
-  { title: "We assure quality", body: "Made possible by sustained effort and total dedication — from gram level up to multi-ton supplies." },
-  { title: "We innovate & ideate", body: "Producing cutting-edge intermediates for new and off-patent APIs within the requisite time frame." },
-  { title: "We aim for the best", body: "The secret of our success is complete customer satisfaction. Customers are our lifeline and guideline." },
 ];
 
 /** PPT slide 3 (replaces the previous website's vision and mission). */
@@ -334,29 +327,20 @@ export const VALUES = ["Innovation", "Integrity", "Respect", "Excellence", "Cust
 export const RESPONSIBILITY =
   "We aim to be a responsible corporate entity serving the community at large through business, social and environmental actions that contribute to a better future.";
 
-/** PPT slide 2. No portraits were supplied, so the About page shows monograms. */
+/** PPT slide 2. */
 export const LEADERSHIP = [
-  { name: "Mr. Jayant Tagore Madireddy", role: "Chairperson", initials: "JT" },
-  { name: "Mrs. Aishwarya", role: "Managing Director", initials: "A" },
-  { name: "Mr. Aryaman", role: "Director", initials: "A" },
-  { name: "Dr. Srinivas Kolupula", role: "Chief Scientific Officer", initials: "SK" },
+  { name: "Mr. Jayant Tagore Madireddy", role: "Chairperson" },
+  { name: "Mrs. Aishwarya", role: "Managing Director" },
+  { name: "Mr. Aryaman", role: "Director" },
+  { name: "Dr. Srinivas Kolupula", role: "Chief Scientific Officer" },
 ];
 
-/** PPT slide 5 ("Corporate"). */
+/** PPT slide 5 ("Corporate"), condensed to one line each; shown on the Careers page. Its functions list is merged into CAREER_AREAS. */
 export const CORPORATE = [
-  { t: "Streamlined organisational framework", points: ["A clear hierarchy that enables fast decision-making", "Well-defined roles and responsibilities across functions and units"] },
-  { t: "Cross-functional collaboration", points: ["Integrated workflow between departments", "Shared KPIs that drive unified performance and goals"] },
-  { t: "Standardised, optimised & harmonised processes", points: ["Company-wide SOPs that improve consistency and reduce variation", "A continuous-improvement culture driven by ISO guidelines and lean practices"] },
-  { t: "High-performance culture", points: ["Talent development programmes", "Recognition systems that reinforce excellence"] },
-];
-export const FUNCTIONS = [
-  "Business Development & Marketing",
-  "Supply Chain Management",
-  "Regulatory Affairs",
-  "Finance, Accounts & Costing",
-  "Information Technology & ERP",
-  "Projects & Engineering",
-  "Human Resources, Learning & Skill Development",
+  { t: "Streamlined organisation", d: "A clear hierarchy and well-defined roles across functions and units, for fast decisions." },
+  { t: "Cross-functional teams", d: "Integrated workflows between departments, and shared KPIs that drive unified goals." },
+  { t: "Standardised processes", d: "Company-wide SOPs and continuous improvement driven by ISO guidelines and lean practices." },
+  { t: "High-performance culture", d: "Talent development programmes and recognition systems that reinforce excellence." },
 ];
 
 export const CHAIRPERSON = {
@@ -471,4 +455,9 @@ export const CAREER_AREAS = [
   "Export Marketing",
   "Domestic Marketing",
   "Purchase",
+  // Further functions listed on PPT slide 5
+  "Finance, Accounts & Costing",
+  "IT & ERP",
+  "Projects & Engineering",
+  "Human Resources & Learning",
 ];

@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { PageHero, PageNav } from "@/components/layout/PageHero";
 import { ValuesDiagram } from "@/components/diagrams/Diagrams";
-import { ButtonLink, Container, Eyebrow, SectionHeading } from "@/components/ui/primitives";
+import { ButtonLink, Container, SectionHeading } from "@/components/ui/primitives";
 import { Counter, Reveal } from "@/components/ui/client";
 import { Img } from "@/components/ui/Img";
 import { Icon } from "@/components/ui/Icon";
-import { CHAIRPERSON, COMMITMENTS, CORPORATE, COUNTRIES, FUNCTIONS, LEADERSHIP, MISSION, OVERVIEW, PHILOSOPHY, VALUES, VISION } from "@/data/company";
+import { CHAIRPERSON, COUNTRIES, LEADERSHIP, MISSION, OVERVIEW, PARTNER_PRODUCTS, PHILOSOPHY, TOTAL_CAPACITY_KL, VALUES, VISION } from "@/data/company";
+import { PRODUCTS, productHref } from "@/data/products";
 import { SITE } from "@/data/site";
 import { pageMetadata } from "@/lib/seo";
 
@@ -15,100 +16,112 @@ export const metadata = pageMetadata({
   path: "/about/",
 });
 
+const STATS = [
+  { v: 1978, l: "Established" },
+  { v: SITE.facilitiesCount, l: "Manufacturing units" },
+  // Non-breaking space: the odometer lays digits out with flex, which drops a plain leading space
+  { v: TOTAL_CAPACITY_KL, suffix: " KL", l: "Reactor capacity" },
+  { v: 300, suffix: "+", l: "People" },
+  { v: COUNTRIES.length, l: "Countries served" },
+];
+
 export default function AboutPage() {
+  const partners = PARTNER_PRODUCTS.flatMap((p) => {
+    const product = PRODUCTS.find((x) => x.slug === p.slug);
+    return product ? [{ ...p, name: product.name, href: productHref(product) }] : [];
+  });
+
   return (
     <>
       <PageHero eyebrow="Who we are" title="Driven by our principles and people." lede="Delivering products for a healthier and happier community — since 1978." crumbs={[{ name: "About", href: "/about/" }]} image="facility-aerial" />
 
-      <PageNav items={[{ id: "overview", label: "Overview" }, { id: "philosophy", label: "Philosophy" }, { id: "vision", label: "Vision & values" }, { id: "leadership", label: "Leadership" }, { id: "organisation", label: "Organisation" }, { id: "more", label: "Explore more" }]} />
+      <PageNav items={[{ id: "overview", label: "Overview" }, { id: "vision", label: "Vision & values" }, { id: "philosophy", label: "Philosophy" }, { id: "leadership", label: "Leadership" }, { id: "more", label: "Explore more" }]} />
 
       <section id="overview" className="py-20 lg:py-28">
-        <Container className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-20">
-          <div className="lg:col-span-5">
-            <SectionHeading eyebrow="Company overview" title="An integral part of the Indian pharmaceutical industry." highlight="pharmaceutical industry." size="md" />
-            <dl className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-lg bg-border ring-1 ring-border">
-              {[
-                { v: <Counter value={1978} />, l: "Year established" },
-                { v: <Counter value={SITE.facilitiesCount} />, l: "Manufacturing units" },
-                { v: <Counter value={300} suffix="+" />, l: "People" },
-                { v: <Counter value={COUNTRIES.length} />, l: "Countries" },
-              ].map((s, i) => (
-                <div key={i} className="flex flex-col bg-white p-5">
-                  <dd className="font-display text-3xl font-semibold text-primary">{s.v}</dd>
-                  <dt className="order-2 mt-1 text-sm text-muted">{s.l}</dt>
-                </div>
-              ))}
-            </dl>
+        <Container>
+          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-16">
+            <div className="lg:col-span-6">
+              <SectionHeading eyebrow="Company overview" title="Quality APIs from India, since 1978." highlight="since 1978." size="md" />
+              <p className="lede mt-6 text-muted">{OVERVIEW}</p>
+              <div className="mt-8">
+                <p className="text-sm font-medium text-muted">A preferred partner to leading consumer brands for</p>
+                <ul className="mt-3 flex flex-wrap gap-3">
+                  {partners.map((p) => (
+                    <li key={p.slug}>
+                      <Link href={p.href} className="group inline-flex items-center gap-3 rounded-full bg-white py-2 pl-5 pr-3 ring-1 ring-border transition-shadow hover:ring-primary/50">
+                        <span className="font-semibold text-primary-ink">{p.name}</span>
+                        <span className="text-[0.82rem] text-muted">{p.use}</span>
+                        <span className="grid h-7 w-7 place-items-center rounded-full bg-primary-tint text-primary"><Icon name="arrowRight" size={14} className="arrow-nudge" /></span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+            {/* Not a .zoom-parent: the parallax scale would crop the signboard at the left edge */}
+            <Reveal variant="image" className="overflow-hidden rounded-lg lg:col-span-6">
+              <Img name="unit2-gate" width={1920} height={1116} sizes="(min-width:1024px) 45vw, 100vw" className="aspect-[1920/1116] w-full object-cover" />
+            </Reveal>
           </div>
-          <div className="space-y-5 text-[1.05rem] leading-relaxed text-text lg:col-span-7">
-            {OVERVIEW.slice(0, 3).map((p, i) => <Reveal key={i}><p className={i === 0 ? "lede text-primary-ink" : "text-muted"}>{p}</p></Reveal>)}
-            <details className="group rounded-lg bg-surface p-5 [&_summary::-webkit-details-marker]:hidden">
-              <summary className="flex min-h-8 cursor-pointer list-none items-center justify-between font-semibold text-primary">
-                <span className="group-open:hidden">Read the full overview</span><span className="hidden group-open:inline">Show less</span>
-                <Icon name="plus" size={18} className="transition-transform duration-300 group-open:rotate-45" />
-              </summary>
-              <div className="mt-4 space-y-4 text-muted">{OVERVIEW.slice(3).map((p, i) => <p key={i}>{p}</p>)}</div>
-            </details>
+          <dl className="mt-16 grid grid-cols-2 gap-x-6 gap-y-8 border-t border-border pt-10 sm:grid-cols-3 lg:grid-cols-5">
+            {STATS.map((s) => (
+              <div key={s.l} className="flex flex-col">
+                <dd className="font-display text-4xl font-semibold tracking-tight text-primary"><Counter value={s.v} suffix={s.suffix} /></dd>
+                <dt className="order-2 mt-1.5 text-sm text-muted">{s.l}</dt>
+              </div>
+            ))}
+          </dl>
+        </Container>
+      </section>
+
+      {/* PPT slide 3 */}
+      <section id="vision" className="on-dark relative overflow-hidden sky-band py-20 text-white lg:py-24">
+        <div aria-hidden="true" className="grid-paper-dark absolute inset-0" />
+        <Container className="relative">
+          <SectionHeading tone="light" eyebrow="What drives us" title="Vision, mission & values." size="md" />
+          <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-3">
+            {[{ k: "Vision", v: VISION, icon: "eye" as const }, { k: "Mission", v: MISSION, icon: "target" as const }].map((x, i) => (
+              <Reveal key={x.k} delay={i * 100} className="flex flex-col rounded-lg bg-white/[0.08] p-7 ring-1 ring-white/20 sm:p-8">
+                <span className="grid h-11 w-11 place-items-center rounded-full bg-white/15"><Icon name={x.icon} size={20} className="text-white" /></span>
+                <h3 className="eyebrow mt-6 text-accent-soft">{x.k}</h3>
+                <p className="mt-3 font-display text-xl font-medium leading-snug text-white">{x.v}</p>
+              </Reveal>
+            ))}
+            <Reveal delay={200} className="flex flex-col rounded-lg bg-white/[0.08] p-7 ring-1 ring-white/20 sm:p-8">
+              <span className="grid h-11 w-11 place-items-center rounded-full bg-white/15"><Icon name="award" size={20} className="text-white" /></span>
+              <h3 className="eyebrow mt-6 text-accent-soft">Values</h3>
+              <ul className="mt-3 space-y-2">
+                {VALUES.map((v) => (
+                  <li key={v} className="flex items-center gap-3 font-display text-lg font-medium text-white"><span className="h-1.5 w-1.5 shrink-0 rounded-full bg-accent-soft" />{v}</li>
+                ))}
+              </ul>
+            </Reveal>
           </div>
         </Container>
       </section>
 
       <section id="philosophy" className="bg-surface py-20 lg:py-28">
-        <Container>
-          <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
-            <div className="lg:col-span-5">
-              <SectionHeading eyebrow="Our philosophy" title="Three spheres of influence, one ethos." highlight="one ethos." size="md" />
-              <ul className="mt-8 space-y-5">
-                {PHILOSOPHY.map((p, i) => (
-                  <Reveal as="li" key={p.title} delay={i * 90} variant="left" className="flex gap-4">
-                    <span className="mt-1.5 h-3 w-3 shrink-0 rounded-full" style={{ background: ["var(--accent)", "var(--secondary)", "var(--primary)"][i] }} />
-                    <span><span className="block text-lg font-semibold text-primary-ink">{p.title}</span><span className="mt-1 block text-muted">{p.body}</span></span>
-                  </Reveal>
-                ))}
-              </ul>
-            </div>
-            <div className="lg:col-span-7"><ValuesDiagram /></div>
-          </div>
-          <ul className="mt-10 grid grid-cols-1 gap-8 md:grid-cols-3">
-            {COMMITMENTS.map((c) => (
-              <li key={c.title} className="lift rounded-lg bg-white p-6 ring-1 ring-border">
-                <h3 className="eyebrow text-accent-strong">{c.title}</h3>
-                <p className="mt-3 leading-relaxed text-text">{c.body}</p>
-              </li>
-            ))}
-          </ul>
-        </Container>
-      </section>
-
-      <section id="vision" className="on-dark relative overflow-hidden sky-band py-20 text-white lg:py-28">
-        <div aria-hidden="true" className="grid-paper-dark absolute inset-0" />
-        <Container className="relative grid grid-cols-1 gap-14 lg:grid-cols-2 lg:gap-20">
-          {[{ k: "Our vision", v: VISION, icon: "eye" as const }, { k: "Our mission", v: MISSION, icon: "target" as const }].map((x, i) => (
-            <Reveal key={x.k} delay={i * 120}>
-              <span className="grid h-12 w-12 place-items-center rounded-full bg-white/12 ring-1 ring-white/25"><Icon name={x.icon} size={22} className="text-accent-soft" /></span>
-              <Eyebrow tone="light" className="mt-6">{x.k}</Eyebrow>
-              <p className="mt-5 font-display text-[1.6rem] font-medium leading-snug tracking-[-0.015em] text-white sm:text-[2rem]">{x.v}</p>
-            </Reveal>
-          ))}
-        </Container>
-        {/* PPT slide 3 */}
-        <Container className="relative mt-16 lg:mt-20">
-          <Eyebrow tone="light">Our values</Eyebrow>
-          <ul className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-            {VALUES.map((v, i) => (
-              <Reveal as="li" key={v} delay={i * 80} variant="scale" className="flex items-center gap-3 rounded-lg bg-white/10 px-5 py-4 ring-1 ring-white/20 backdrop-blur-sm">
-                <span className="font-mono text-xs text-accent-soft">0{i + 1}</span>
-                <span className="font-display text-lg font-semibold text-white">{v}</span>
-              </Reveal>
-            ))}
-          </ul>
-        </Container>
-      </section>
-
-      <section id="leadership" className="py-20 lg:py-28">
         <Container className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-5">
+            <SectionHeading eyebrow="Our philosophy" title="Three spheres of influence, one ethos." highlight="one ethos." size="md" />
+            <ul className="mt-8 space-y-5">
+              {PHILOSOPHY.map((p, i) => (
+                <Reveal as="li" key={p.title} delay={i * 90} variant="left" className="flex gap-4">
+                  <span className="mt-1.5 h-3 w-3 shrink-0 rounded-full" style={{ background: ["var(--accent)", "var(--secondary)", "var(--primary)"][i] }} />
+                  <span><span className="block text-lg font-semibold text-primary-ink">{p.title}</span><span className="mt-1 block text-muted">{p.body}</span></span>
+                </Reveal>
+              ))}
+            </ul>
+          </div>
+          <div className="lg:col-span-7"><ValuesDiagram /></div>
+        </Container>
+      </section>
+
+      {/* PPT slide 2 */}
+      <section id="leadership" className="py-20 lg:py-28">
+        <Container className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-7">
-            <Eyebrow>Message from the Chairperson</Eyebrow>
+            <p className="eyebrow text-accent-strong">Message from the Chairperson</p>
             <blockquote className="mt-6">
               <p className="font-display text-[1.75rem] font-medium leading-snug tracking-[-0.02em] text-primary-ink sm:text-[2.4rem]">
                 <span className="text-accent-strong">“</span>{CHAIRPERSON.quote}<span className="text-accent-strong">”</span>
@@ -117,46 +130,15 @@ export default function AboutPage() {
             </blockquote>
             <div className="mt-8"><ButtonLink href="/about/chairperson/" variant="secondary">Read the full message</ButtonLink></div>
           </div>
-          <Reveal variant="image" className="zoom-parent overflow-hidden rounded-lg lg:col-span-5">
-            <Img name="lab-team" sizes="(min-width:1024px) 40vw, 100vw" className="zoom-img aspect-[4/3] w-full object-cover" />
-          </Reveal>
-        </Container>
-        {/* PPT slide 2 */}
-        <Container className="mt-20">
-          <h2 className="eyebrow text-muted">Leadership team</h2>
-          <ul className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {LEADERSHIP.map((p, i) => (
-              <Reveal as="li" key={p.name} delay={i * 80} className="lift flex items-center gap-4 rounded-lg bg-white p-5 ring-1 ring-border">
-                <span aria-hidden="true" className="grid h-14 w-14 shrink-0 place-items-center rounded-full bg-gradient-to-br from-primary to-accent-strong font-display text-lg font-semibold text-white">{p.initials}</span>
-                <span>
-                  <span className="block font-semibold leading-snug text-primary-ink">{p.name}</span>
-                  <span className="mt-0.5 block text-sm text-muted">{p.role}</span>
-                </span>
-              </Reveal>
-            ))}
-          </ul>
-        </Container>
-      </section>
-
-      {/* PPT slide 5 */}
-      <section id="organisation" className="bg-surface py-20 lg:py-28">
-        <Container>
-          <SectionHeading eyebrow="Corporate" title="Organised for fast, consistent decisions." lede="A streamlined structure, shared goals and standardised processes — run by experienced, qualified teams." />
-          <ul className="mt-14 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
-            {CORPORATE.map((c, i) => (
-              <Reveal as="li" key={c.t} delay={i * 80} className="flex flex-col rounded-lg bg-white p-7 ring-1 ring-border">
-                <span className="font-mono text-sm text-accent-strong">0{i + 1}</span>
-                <h3 className="mt-4 text-lg font-semibold leading-snug text-primary-ink">{c.t}</h3>
-                <ul className="mt-4 space-y-2.5 border-t border-border pt-4">
-                  {c.points.map((x) => <li key={x} className="flex gap-2.5 text-[0.92rem] leading-snug text-muted"><Icon name="check" size={16} className="mt-0.5 shrink-0 text-accent-strong" />{x}</li>)}
-                </ul>
-              </Reveal>
-            ))}
-          </ul>
-          <Reveal className="mt-6 rounded-lg bg-white p-7 ring-1 ring-border sm:p-9">
-            <h3 className="text-lg font-semibold text-primary-ink">Experienced, qualified teams in every function</h3>
-            <ul className="mt-5 flex flex-wrap gap-2">
-              {FUNCTIONS.map((f) => <li key={f} className="rounded-full bg-primary-tint px-3.5 py-1.5 text-[0.86rem] font-medium text-primary-ink">{f}</li>)}
+          <Reveal delay={100} className="self-center rounded-lg bg-surface p-7 ring-1 ring-border sm:p-8 lg:col-span-5">
+            <h2 className="eyebrow text-muted">Leadership team</h2>
+            <ul className="mt-2 divide-y divide-border">
+              {LEADERSHIP.map((p) => (
+                <li key={p.name} className="py-4">
+                  <span className="block text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-accent-strong">{p.role}</span>
+                  <span className="mt-1 block text-lg font-semibold text-primary-ink">{p.name}</span>
+                </li>
+              ))}
             </ul>
           </Reveal>
         </Container>

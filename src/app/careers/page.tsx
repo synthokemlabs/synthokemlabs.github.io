@@ -4,7 +4,7 @@ import { ButtonLink, Container, SectionHeading } from "@/components/ui/primitive
 import { Reveal } from "@/components/ui/client";
 import { Img } from "@/components/ui/Img";
 import { Icon } from "@/components/ui/Icon";
-import { CAREER_AREAS, OPENINGS } from "@/data/company";
+import { CAREER_AREAS, CORPORATE, OPENINGS } from "@/data/company";
 import { SITE } from "@/data/site";
 import { pageMetadata } from "@/lib/seo";
 
@@ -55,6 +55,18 @@ export default function CareersPage() {
               </ul>
             </div>
           </div>
+        </Container>
+        {/* PPT slide 5 */}
+        <Container className="mt-16">
+          <h3 className="eyebrow text-muted">How we work</h3>
+          <ul className="mt-6 grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-4">
+            {CORPORATE.map((c, i) => (
+              <Reveal as="li" key={c.t} delay={i * 70} className="border-t-2 border-primary pt-4">
+                <span className="block font-semibold text-primary-ink">{c.t}</span>
+                <span className="mt-1.5 block text-[0.93rem] leading-relaxed text-muted">{c.d}</span>
+              </Reveal>
+            ))}
+          </ul>
         </Container>
       </section>
 

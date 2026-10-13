@@ -153,10 +153,10 @@ python scripts/compute-3d.py <slug>…     # computed 3D (RDKit) where PubChem h
 | Slides | Content | Now on |
 |---|---|---|
 | 1, 31 | Title, contacts, "We deliver what we promise" | Footer promise line; contacts already on `/contact/` |
-| 2 | Company introduction, leadership | `/about/` overview (first three paragraphs) and leadership team |
+| 2 | Company introduction, leadership | `/about/` overview (one paragraph, links to Guaifenesin and Methocarbamol) and the leadership list |
 | 3 | Vision, mission, values | `/about/#vision` (replaces the old website's vision and mission; the old mission is now the commitment on `/sustainability/`) |
 | 4 | Accolades (certification logos) | Approval tiles on `/quality/#approvals`, `/quality/regulatory-affairs/` and the home page |
-| 5 | Corporate structure and functions | `/about/#organisation` |
+| 5 | Corporate structure and functions | `/careers/` "How we work" row; functions added to the career areas |
 | 6 | CDMO | `/capabilities/#cdmo` |
 | 7 | Synthetic chemistry capabilities | `/capabilities/#specialisation` (23 reactions) |
 | 8–10 | Analytical development, R&D labs, team, literature support | `/capabilities/#rnd`, `#analytical`, `#team` |
