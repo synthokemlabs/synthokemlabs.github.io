@@ -5,7 +5,8 @@ import { ButtonLink, Container, SectionHeading } from "@/components/ui/primitive
 import { Counter, Reveal } from "@/components/ui/client";
 import { Img } from "@/components/ui/Img";
 import { Icon } from "@/components/ui/Icon";
-import { CHAIRPERSON, COUNTRIES, LEADERSHIP, MISSION, OVERVIEW, PARTNER_PRODUCTS, PHILOSOPHY, TOTAL_CAPACITY_KL, VALUES, VISION } from "@/data/company";
+import { VisionMissionValues } from "@/components/sections/VisionMission";
+import { CHAIRPERSON, COUNTRIES, LEADERSHIP, OVERVIEW, PARTNER_PRODUCTS, PHILOSOPHY, TOTAL_CAPACITY_KL } from "@/data/company";
 import { PRODUCTS, productHref } from "@/data/products";
 import { SITE } from "@/data/site";
 import { pageMetadata } from "@/lib/seo";
@@ -75,30 +76,7 @@ export default function AboutPage() {
       </section>
 
       {/* PPT slide 3 */}
-      <section id="vision" className="on-dark relative overflow-hidden sky-band py-20 text-white lg:py-24">
-        <div aria-hidden="true" className="grid-paper-dark absolute inset-0" />
-        <Container className="relative">
-          <SectionHeading tone="light" eyebrow="What drives us" title="Vision, mission & values." size="md" />
-          <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-3">
-            {[{ k: "Vision", v: VISION, icon: "eye" as const }, { k: "Mission", v: MISSION, icon: "target" as const }].map((x, i) => (
-              <Reveal key={x.k} delay={i * 100} className="flex flex-col rounded-lg bg-white/[0.08] p-7 ring-1 ring-white/20 sm:p-8">
-                <span className="grid h-11 w-11 place-items-center rounded-full bg-white/15"><Icon name={x.icon} size={20} className="text-white" /></span>
-                <h3 className="eyebrow mt-6 text-accent-soft">{x.k}</h3>
-                <p className="mt-3 font-display text-xl font-medium leading-snug text-white">{x.v}</p>
-              </Reveal>
-            ))}
-            <Reveal delay={200} className="flex flex-col rounded-lg bg-white/[0.08] p-7 ring-1 ring-white/20 sm:p-8">
-              <span className="grid h-11 w-11 place-items-center rounded-full bg-white/15"><Icon name="award" size={20} className="text-white" /></span>
-              <h3 className="eyebrow mt-6 text-accent-soft">Values</h3>
-              <ul className="mt-3 space-y-2">
-                {VALUES.map((v) => (
-                  <li key={v} className="flex items-center gap-3 font-display text-lg font-medium text-white"><span className="h-1.5 w-1.5 shrink-0 rounded-full bg-accent-soft" />{v}</li>
-                ))}
-              </ul>
-            </Reveal>
-          </div>
-        </Container>
-      </section>
+      <VisionMissionValues />
 
       <section id="philosophy" className="bg-surface py-20 lg:py-28">
         <Container className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12">
@@ -107,7 +85,8 @@ export default function AboutPage() {
             <ul className="mt-8 space-y-5">
               {PHILOSOPHY.map((p, i) => (
                 <Reveal as="li" key={p.title} delay={i * 90} variant="left" className="flex gap-4">
-                  <span className="mt-1.5 h-3 w-3 shrink-0 rounded-full" style={{ background: ["var(--accent)", "var(--secondary)", "var(--primary)"][i] }} />
+                  {/* Centred on the title's first line (text-lg, 28px line): 8px + 12px dot */}
+                  <span className="mt-2 h-3 w-3 shrink-0 rounded-full" style={{ background: ["var(--accent)", "var(--secondary)", "var(--primary)"][i] }} />
                   <span><span className="block text-lg font-semibold text-primary-ink">{p.title}</span><span className="mt-1 block text-muted">{p.body}</span></span>
                 </Reveal>
               ))}

@@ -58,29 +58,38 @@ export function QualityLayers() {
 /* Values — three overlapping spheres (from "Our philosophy")         */
 /* ------------------------------------------------------------------ */
 export function ValuesDiagram() {
+  // Circle centres form an equilateral triangle (side 140) around the centroid C. Each label sits in its circle's
+  // own (non-overlapping) region: a third of the radius out from the centre, along the line from C through that
+  // centre — where that region is widest, so "Manufacturing" keeps clear of both circle edges.
+  const R = 112;
+  const C = { x: 210, y: 221.3 };
   const circles = [
-    { cx: 200, cy: 150, label: "Quality", color: "var(--accent)" },
-    { cx: 140, cy: 255, label: "Manufacturing", color: "var(--secondary)" },
-    { cx: 260, cy: 255, label: "Integrity", color: "var(--primary)" },
-  ];
+    { cx: 210, cy: 140, label: "Quality", icon: "award" as const, color: "var(--accent)" },
+    { cx: 140, cy: 262, label: "Manufacturing", icon: "factory" as const, color: "var(--secondary)" },
+    { cx: 280, cy: 262, label: "Integrity", icon: "shield" as const, color: "var(--primary)" },
+  ].map((c) => {
+    const dx = c.cx - C.x, dy = c.cy - C.y, len = Math.hypot(dx, dy);
+    return { ...c, lx: c.cx + (dx / len) * R * 0.33, ly: c.cy + (dy / len) * R * 0.33 };
+  });
   return (
     <Reveal>
-      <svg viewBox="0 0 400 400" className="mx-auto w-full max-w-[420px]" role="img" aria-label="Three overlapping spheres of influence: Quality, Manufacturing and Integrity, forming the Synthokem ethos">
+      <svg viewBox="0 0 420 400" className="mx-auto w-full max-w-[440px]" role="img" aria-label="Three overlapping spheres of influence: Quality, Manufacturing and Integrity, forming the Synthokem ethos">
         {circles.map((c, i) => (
-          <g key={c.label} className="node-pop" style={d(0.1 + i * 0.15)}>
-            <circle cx={c.cx} cy={c.cy} r="105" fill={c.color} fillOpacity="0.16" stroke={c.color} strokeWidth="1.5" />
+          <circle key={c.label} cx={c.cx} cy={c.cy} r={R} fill={c.color} fillOpacity="0.14" stroke={c.color} strokeWidth="1.5" className="node-pop" style={d(0.1 + i * 0.15)} />
+        ))}
+        {circles.map((c, i) => (
+          <g key={c.label} className="node-pop" style={d(0.55 + i * 0.12)}>
+            {/* Icon badge centred 18px above the label point, text baseline 16px below it — one centred stack */}
+            <circle cx={c.lx} cy={c.ly - 18} r="15" fill="#fff" stroke={c.color} strokeOpacity="0.55" />
+            <svg x={c.lx - 9} y={c.ly - 27} width="18" height="18" viewBox="0 0 24 24" style={{ color: c.color }}>
+              <Icon name={c.icon} size={24} strokeWidth={1.8} />
+            </svg>
+            <text x={c.lx} y={c.ly + 16} textAnchor="middle" fontSize="13.5" fontWeight="700" fill="var(--primary-ink)" style={{ fontFamily: "var(--font-display)" }}>{c.label}</text>
           </g>
         ))}
-        {circles.map((c, i) => {
-          const ty = c.cy + (i === 0 ? -52 : 58);
-          const tx = c.cx + (i === 1 ? -38 : i === 2 ? 38 : 0);
-          return (
-            <text key={c.label} x={tx} y={ty} textAnchor="middle" fontSize="15" fontWeight="700" fill="var(--primary-ink)" className="node-pop" style={{ ...d(0.6 + i * 0.1), fontFamily: "var(--font-display)" }}>{c.label}</text>
-          );
-        })}
-        <g className="node-pop" style={d(0.9)}>
-          <circle cx="200" cy="222" r="34" fill="#fff" stroke="var(--border-strong)" />
-          <foreignObject x="174" y="196" width="52" height="52">
+        <g className="node-pop" style={d(0.95)}>
+          <circle cx={C.x} cy={C.y} r="34" fill="#fff" stroke="var(--border-strong)" />
+          <foreignObject x={C.x - 26} y={C.y - 26} width="52" height="52">
             <div style={{ display: "grid", placeItems: "center", height: "100%" }}><LogoMark className="h-8 w-auto" /></div>
           </foreignObject>
         </g>

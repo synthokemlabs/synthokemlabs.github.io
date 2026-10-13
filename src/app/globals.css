@@ -491,3 +491,35 @@ html.lenis-on body { overscroll-behavior: none; }
 .bar-grow { transform: scaleX(0); transform-origin: 0 50%; transition: transform 1.2s var(--ease-out) var(--bar-delay, 0s); }
 .is-visible .bar-grow, .settled .bar-grow, .no-js .bar-grow { transform: none; }
 @media (prefers-reduced-motion: reduce) { .bar-grow { transform: none; } }
+
+/* ==========================================================================
+   Vision, mission & values (About) — glass cards that flip up on the sky band,
+   icon rings that draw in with an orbiting dot, statements rising word by word,
+   values sliding in with self-drawing checks, and slow light behind it all.
+   ========================================================================== */
+.vmv-orb { position: absolute; z-index: -1; border-radius: 9999px; filter: blur(80px); opacity: 0.42; pointer-events: none; animation: vmv-float 16s ease-in-out infinite alternate; }
+.vmv-orb-b { opacity: 0.32; animation-duration: 21s; animation-direction: alternate-reverse; }
+@keyframes vmv-float { from { transform: translate3d(0, 0, 0) scale(1); } to { transform: translate3d(80px, 56px, 0) scale(1.2); } }
+
+.reveal.reveal-rise3d { transform: perspective(1100px) translate3d(0, 64px, 0) rotateX(18deg); transform-origin: 50% 100%; transition: opacity 0.9s var(--ease-out), transform 1.25s var(--ease-out); transition-delay: var(--reveal-delay, 0ms); }
+.reveal.reveal-rise3d.is-visible { transform: none; }
+
+.vmv-card { background: linear-gradient(160deg, rgb(255 255 255 / 0.15), rgb(255 255 255 / 0.05)); box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.18); backdrop-filter: blur(6px); transition: transform 0.5s var(--ease-out), box-shadow 0.5s var(--ease-out); }
+.vmv-card:hover { transform: translateY(-6px); box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.42), 0 30px 60px -30px rgb(3 25 50 / 0.65); }
+.vmv-line { position: absolute; inset: 0 0 auto 0; height: 2px; background: linear-gradient(90deg, transparent, var(--accent-soft), transparent); transform: scaleX(0); transition: transform 1.2s var(--ease-out) calc(var(--reveal-delay, 0ms) + 0.35s); }
+.is-visible .vmv-line, .settled .vmv-line, .no-js .vmv-line { transform: scaleX(1); }
+
+.vmv-orbit { transform-box: view-box; transform-origin: 50% 50%; animation: vmv-spin 12s linear infinite; }
+@keyframes vmv-spin { to { transform: rotate(360deg); } }
+.vmv-glyph { transition: transform 0.5s var(--ease-spring); }
+.vmv-card:hover .vmv-glyph { transform: scale(1.14); }
+
+.vmv-value { opacity: 0; transform: translateX(-16px); transition: opacity 0.6s var(--ease-out), transform 0.7s var(--ease-out), background-color 0.3s; transition-delay: calc(var(--reveal-delay, 0ms) + 0.6s + var(--i) * 90ms); }
+.is-visible .vmv-value, .settled .vmv-value, .no-js .vmv-value { opacity: 1; transform: none; }
+.vmv-value:hover { background-color: rgb(255 255 255 / 0.1); transition-delay: 0s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .vmv-orb, .vmv-orbit { animation: none; }
+  .reveal.reveal-rise3d { transform: none; }
+  .vmv-value, .vmv-line { opacity: 1; transform: none; }
+}
