@@ -428,3 +428,61 @@ html.lenis-on body { overscroll-behavior: none; }
   .qr-corners { animation: none !important; }
   .qr-scan { display: none; }
 }
+
+/* ==========================================================================
+   Photo wipe (home statement photo) — outline draws in, a sky panel sweeps
+   left→right to reveal the photo as it settles from a zoom, the chip and
+   caption follow, then the photo drifts slowly. Timeline is relative to
+   --reveal-delay and finishes before Reveal's .settled safety net (2.2s).
+   ========================================================================== */
+.reveal.reveal-wipe { opacity: 1; transform: none; }
+
+.wipe-outline { translate: 10px 10px; transition: translate 0.6s var(--ease-out); }
+@media (min-width: 1024px) { .wipe-outline { translate: 14px 14px; } }
+.wipe-photo { transition: transform 0.6s var(--ease-out), box-shadow 0.6s var(--ease-out); }
+.wipe-frame:hover .wipe-outline { translate: 5px 5px; }
+.wipe-frame:hover .wipe-photo { transform: translate(-3px, -3px); box-shadow: 0 24px 44px -26px rgb(10 45 80 / 0.5); }
+
+.wipe-panel { position: absolute; inset: 0; z-index: 2; pointer-events: none; transform: scaleX(0); background: linear-gradient(115deg, var(--primary) 0%, var(--accent) 100%); }
+.is-visible .wipe-panel { animation: wipe-panel 1.15s calc(var(--reveal-delay, 0ms) + 0.1s) both; }
+@keyframes wipe-panel {
+  0%   { transform: scaleX(0); transform-origin: 0 50%; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
+  45%  { transform: scaleX(1); transform-origin: 0 50%; }
+  55%  { transform: scaleX(1); transform-origin: 100% 50%; animation-timing-function: cubic-bezier(0.65, 0, 0.35, 1); }
+  100% { transform: scaleX(0); transform-origin: 100% 50%; }
+}
+
+/* The image appears only once the panel fully covers the frame, then settles from a zoom and keeps drifting */
+.wipe-img { opacity: 0; }
+.is-visible .wipe-img {
+  animation:
+    wipe-show 0.01s linear calc(var(--reveal-delay, 0ms) + 0.62s) forwards,
+    wipe-zoom 1.5s var(--ease-out) calc(var(--reveal-delay, 0ms) + 0.62s) both,
+    wipe-drift 18s ease-in-out calc(var(--reveal-delay, 0ms) + 2.2s) infinite alternate;
+}
+@keyframes wipe-show { to { opacity: 1; } }
+@keyframes wipe-zoom { from { transform: scale(1.28); } to { transform: none; } }
+/* Max 1.04: the signboard and logo wall sit within ~3% of the photo's edges */
+@keyframes wipe-drift { from { transform: none; } to { transform: scale(1.04); } }
+
+.wipe-chip { opacity: 0; transform: translateY(-10px); }
+.is-visible .wipe-chip { animation: wipe-chip 0.7s var(--ease-out) calc(var(--reveal-delay, 0ms) + 1.05s) both; }
+@keyframes wipe-chip { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: none; } }
+
+.wipe-mask { display: block; overflow: hidden; padding-bottom: 0.1em; margin-bottom: -0.1em; }
+.wipe-line { display: block; transform: translateY(110%); }
+.is-visible .wipe-line { animation: wipe-line 0.85s var(--ease-out) calc(var(--reveal-delay, 0ms) + 1s + var(--l, 0) * 120ms) both; }
+@keyframes wipe-line { from { transform: translateY(110%); } to { transform: none; } }
+
+/* Safety net: pin the entrance's final state (the slow drift keeps running) */
+.reveal-wipe.settled .wipe-panel { animation: none; transform: scaleX(0); }
+.reveal-wipe.settled .wipe-img { opacity: 1; }
+.reveal-wipe.settled .wipe-chip, .reveal-wipe.settled .wipe-line { animation: none; opacity: 1; transform: none; }
+.no-js .wipe-panel { display: none; }
+.no-js .wipe-img, .no-js .wipe-chip, .no-js .wipe-line { opacity: 1; transform: none; }
+.no-js .reveal-wipe .draw-path { stroke-dashoffset: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .wipe-panel { display: none; }
+  .wipe-img, .wipe-chip, .wipe-line { animation: none !important; opacity: 1; transform: none; }
+}

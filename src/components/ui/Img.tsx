@@ -7,11 +7,13 @@ import { asset } from "@/lib/asset";
  */
 const WIDTHS: Record<string, number[]> = {
   "lab-team": [640, 1280],
+  "unit2-gate": [544],
 };
 
 export const IMAGE_ALT: Record<string, string> = {
   "hero-cleanroom": "Synthokem operator in full cleanroom attire working at process equipment",
   "facility-aerial": "Aerial view of a Synthokem Labs manufacturing site",
+  "unit2-gate": "Main gate of Synthokem Labs Unit II, with the company signboard and logo wall",
   "lab-precision": "Scientist handling a sample in an analytical laboratory",
   "qc-analyst": "Quality control analyst working with laboratory instruments",
   "lab-team": "Synthokem chemists at work in the laboratory",

@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import { Img } from "@/components/ui/Img";
+import { Icon } from "@/components/ui/Icon";
 import { ButtonLink, Container, SectionHeading, SplitWords } from "@/components/ui/primitives";
 import { Counter, Parallax, Reveal } from "@/components/ui/client";
 import { HeroSearch } from "@/components/sections/HeroSearch";
@@ -104,21 +105,34 @@ export default function HomePage() {
       {/* ───────────── STATEMENT ───────────── */}
       <section className="pb-6 pt-24 lg:pb-10 lg:pt-36" aria-label="About Synthokem">
         <Container className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-center lg:gap-16">
-          <div className="lg:col-span-4">
+          <div className="lg:col-span-5">
             <Reveal className="flex items-baseline justify-between gap-4 border-b border-border pb-4">
               <p className="text-[0.74rem] font-semibold uppercase tracking-[0.16em] text-muted">Synthokem Labs</p>
               <p className="font-mono text-xs text-muted">Hyderabad · Est. 1978</p>
             </Reveal>
-            {/* Site photograph: curtain reveal, then a gentle scroll drift (ScrollFX) */}
-            <Reveal variant="image" delay={120} className="zoom-parent relative mt-6 aspect-[16/10] overflow-hidden rounded-lg bg-deep lg:aspect-[4/5]">
-              <Img name="facility-aerial" sizes="(min-width:1024px) 32vw, 100vw" className="zoom-img absolute inset-0 h-full w-full object-cover" />
-              <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-deep/90 via-deep/45 to-transparent px-5 pb-5 pt-20 text-white">
-                <span className="block font-mono text-xs text-on-dark-muted">Two units · Telangana &amp; Andhra Pradesh</span>
-                <span className="mt-1.5 block font-display text-lg font-semibold leading-snug">Manufacturing in India since 1978</span>
-              </span>
+            {/* Unit II gate: outline draws in, a sky panel sweeps across to reveal the photo, chip and caption follow,
+                then a slow drift (globals.css "Photo wipe"). Landscape frame keeps both the signboard and the logo wall. */}
+            <Reveal variant="wipe" delay={120} className="wipe-frame mt-6">
+              <div className="relative">
+                <svg aria-hidden="true" className="wipe-outline pointer-events-none absolute inset-0 h-full w-full overflow-visible text-accent">
+                  <rect className="draw-path" x="0" y="0" width="100%" height="100%" rx="8" pathLength={1} fill="none" stroke="currentColor" strokeWidth="1.5" style={{ "--draw-delay": "0.2s" } as CSSProperties} />
+                </svg>
+                {/* Not a .zoom-parent: ScrollFX's 1.12 parallax scale would crop the signboard at the left edge */}
+                <div className="wipe-photo relative aspect-[544/316] overflow-hidden rounded-lg">
+                  <Img name="unit2-gate" width={544} height={316} sizes="(min-width:1024px) 40vw, 100vw" className="wipe-img absolute inset-0 h-full w-full object-cover" />
+                  <span aria-hidden="true" className="wipe-panel" />
+                  <span className="wipe-chip absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-1.5 font-mono text-[0.7rem] text-primary-ink shadow-sm backdrop-blur-sm">
+                    <Icon name="pin" size={13} className="text-accent-strong" /> Unit II · Pashamylaram
+                  </span>
+                </div>
+              </div>
+              <p className="mt-7">
+                <span className="wipe-mask"><span className="wipe-line font-mono text-xs text-muted" style={{ "--l": 0 } as CSSProperties}>Two units · Telangana &amp; Andhra Pradesh</span></span>
+                <span className="wipe-mask mt-1.5"><span className="wipe-line font-display text-lg font-semibold leading-snug text-primary-ink" style={{ "--l": 1 } as CSSProperties}>Manufacturing in India since 1978</span></span>
+              </p>
             </Reveal>
           </div>
-          <div className="lg:col-span-8">
+          <div className="lg:col-span-7">
             <ScrollStatement
               className="font-display text-[clamp(1.6rem,2.3vw+0.75rem,2.75rem)] font-medium leading-[1.22] tracking-[-0.02em] text-primary-ink"
               text={`Since 1978, Synthokem Labs has manufactured Active Pharmaceutical Ingredients and drug intermediates in India — from gram level to multi-ton supplies, audited and recognised by global regulatory authorities, with a global presence across ${COUNTRIES.length} countries.`}

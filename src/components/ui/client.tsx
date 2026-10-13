@@ -4,7 +4,7 @@ import { useEffect, useLayoutEffect, useRef, useState, type ReactNode, type CSSP
 import { Icon } from "./Icon";
 
 /** Fades/slides children in when they enter the viewport. Content is visible without JS and under reduced motion. */
-export function Reveal({ children, delay = 0, className = "", as: Tag = "div", variant = "up" }: { children: ReactNode; delay?: number; className?: string; as?: "div" | "li" | "section" | "article" | "ol" | "ul"; variant?: "up" | "left" | "right" | "scale" | "image" }) {
+export function Reveal({ children, delay = 0, className = "", as: Tag = "div", variant = "up" }: { children: ReactNode; delay?: number; className?: string; as?: "div" | "li" | "section" | "article" | "ol" | "ul"; variant?: "up" | "left" | "right" | "scale" | "image" | "wipe" }) {
   const ref = useRef<HTMLElement>(null);
   useEffect(() => {
     const el = ref.current;
