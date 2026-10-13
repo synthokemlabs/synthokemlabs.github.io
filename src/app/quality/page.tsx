@@ -1,20 +1,20 @@
 import { PageHero, PageNav } from "@/components/layout/PageHero";
-import { QualityLayers } from "@/components/diagrams/Diagrams";
+import { QmsCycle, QualityLayers } from "@/components/diagrams/Diagrams";
 import { ApprovalsGrid } from "@/components/sections/shared";
-import { ButtonLink, Container, SectionHeading } from "@/components/ui/primitives";
+import { ButtonLink, Container, Eyebrow, SectionHeading } from "@/components/ui/primitives";
 import { Reveal } from "@/components/ui/client";
 import { Img } from "@/components/ui/Img";
 import { Icon } from "@/components/ui/Icon";
+import { QA_RESPONSIBILITIES, QUALITY_POLICY, QUALITY_UNIT } from "@/data/company";
 import { SITE } from "@/data/site";
 import { pageMetadata } from "@/lib/seo";
 import { asset } from "@/lib/asset";
 
 export const metadata = pageMetadata({
   title: "Quality Systems — Quality Control & Quality Assurance",
-  description: "Synthokem's quality systems: a qualified quality control laboratory, integrated quality assurance, and analytical facilities consistently meeting Ph. Eur., USP and other international standards.",
+  description: "Synthokem's quality systems: an ISO 9001:2015 quality management system, an independent Quality Unit reporting to the Managing Director, qualified QC laboratories, and approvals including USFDA inspection, WHO-GMP, EDQM CEP and KFDA.",
   path: "/quality/",
 });
-
 
 const COMMITMENT = [
   "To maintain the highest quality standards for all Synthokem products.",
@@ -23,12 +23,20 @@ const COMMITMENT = [
   "To support customers with their technical and regulatory queries.",
 ];
 
+/** QC laboratory photographs from the company presentation (slides 18 and 20). */
+const QC_LAB = [
+  { name: "hplc-system", caption: "HPLC system" },
+  { name: "gc-instruments", caption: "Gas chromatographs" },
+  { name: "melting-point", caption: "Melting point apparatus" },
+  { name: "qc-instrument-lab", caption: "QC laboratory" },
+];
+
 export default function QualityPage() {
   return (
     <>
       <PageHero eyebrow="Quality & assurance" title="Quality goes beyond business." lede="Benchmarking quality and regulatory affairs — Synthokem’s quality systems cover three key functional areas." crumbs={[{ name: "Quality", href: "/quality/" }]} image="lab-precision" />
 
-      <PageNav items={[{ id: "system", label: "Quality system" }, { id: "control", label: "Quality control" }, { id: "assurance", label: "Quality assurance" }, { id: "commitment", label: "Commitment" }, { id: "approvals", label: "Approvals" }, { id: "documents", label: "Documents" }]} />
+      <PageNav items={[{ id: "system", label: "Quality system" }, { id: "qms", label: "QMS" }, { id: "policy", label: "Quality policy" }, { id: "control", label: "Quality control" }, { id: "assurance", label: "Quality unit" }, { id: "commitment", label: "Commitment" }, { id: "approvals", label: "Approvals" }, { id: "documents", label: "Documents" }]} />
 
       <section id="system" className="py-20 lg:py-28">
         <Container>
@@ -37,7 +45,32 @@ export default function QualityPage() {
         </Container>
       </section>
 
-      <section className="bg-surface py-20 lg:py-28">
+      {/* PPT slide 21 */}
+      <section id="qms" className="border-t border-border py-20 lg:py-28">
+        <Container>
+          <SectionHeading eyebrow="Quality management system" title="An ISO 9001:2015 system that keeps improving." lede="Customer requirements and the needs of interested parties feed a Plan–Do–Check–Act cycle; its outputs are customer satisfaction, the results of the QMS, and products and services." />
+          <div className="mt-14"><QmsCycle /></div>
+        </Container>
+      </section>
+
+      {/* PPT slide 22 */}
+      <section id="policy" className="bg-surface py-20 lg:py-28">
+        <Container className="grid grid-cols-1 items-center gap-12 lg:grid-cols-12 lg:gap-16">
+          <Reveal className="lg:col-span-7">
+            <Eyebrow>Quality policy</Eyebrow>
+            <blockquote className="mt-6">
+              <p className="font-display text-[1.45rem] font-medium leading-snug tracking-[-0.015em] text-primary-ink sm:text-[1.9rem]">
+                <span className="text-accent-strong">“</span>{QUALITY_POLICY}<span className="text-accent-strong">”</span>
+              </p>
+            </blockquote>
+          </Reveal>
+          <Reveal variant="image" delay={120} className="zoom-parent overflow-hidden rounded-lg lg:col-span-5">
+            <Img name="qa-team" sizes="(min-width:1024px) 40vw, 100vw" className="zoom-img aspect-[4/3] w-full object-cover" />
+          </Reveal>
+        </Container>
+      </section>
+
+      <section className="py-20 lg:py-28">
         <Container className="grid grid-cols-1 gap-6 lg:grid-cols-2">
           <article id="control" className="overflow-hidden rounded-lg bg-white ring-1 ring-border">
             <Img name="qc-analyst" sizes="(min-width:1024px) 50vw, 100vw" className="aspect-[16/9] w-full object-cover" />
@@ -47,14 +80,32 @@ export default function QualityPage() {
               <p className="mt-5 leading-relaxed text-muted">The Quality Control laboratory is staffed by qualified, well-trained personnel and equipped with sophisticated instruments to ensure product quality and consistency at various stages of the process. Quality Control is responsible for all analysis undertaken at Synthokem — and provides analytical support and training to customers during product and method development and validation.</p>
             </div>
           </article>
+          {/* PPT slide 23 */}
           <article id="assurance" className="overflow-hidden rounded-lg bg-white ring-1 ring-border">
-            <Img name="lab-team" sizes="(min-width:1024px) 50vw, 100vw" className="aspect-[16/9] w-full object-cover" />
+            <Img name="qa-office" sizes="(min-width:1024px) 50vw, 100vw" className="aspect-[16/9] w-full object-cover" />
             <div className="p-8 lg:p-10">
               <p className="eyebrow text-accent-strong">03 · Quality assurance</p>
-              <h2 className="display-md mt-4 text-primary-ink">Integrated quality systems.</h2>
-              <p className="mt-5 leading-relaxed text-muted">Quality Assurance is responsible for the implementation of integrated quality systems. It harmonises global quality and regulatory standards across functions through collective collaboration.</p>
+              <h2 className="display-md mt-4 text-primary-ink">An independent Quality Unit.</h2>
+              <ul className="mt-5 space-y-2.5">
+                {QUALITY_UNIT.map((x) => <li key={x} className="flex gap-2.5 leading-relaxed text-muted"><Icon name="check" size={17} className="mt-1 shrink-0 text-accent-strong" />{x}</li>)}
+              </ul>
+              <h3 className="eyebrow mt-7 text-muted">QA responsibilities</h3>
+              <ul className="mt-3 flex flex-wrap gap-2">
+                {QA_RESPONSIBILITIES.map((x) => <li key={x} className="rounded-full bg-primary-tint px-3 py-1.5 text-[0.82rem] font-medium text-primary-ink">{x}</li>)}
+              </ul>
             </div>
           </article>
+        </Container>
+        <Container className="mt-12">
+          <h2 className="eyebrow text-muted">Inside our QC laboratories</h2>
+          <ul className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-4">
+            {QC_LAB.map((p, i) => (
+              <Reveal as="li" key={p.name} variant="image" delay={i * 80} className="zoom-parent relative aspect-[4/3] overflow-hidden rounded-lg bg-surface">
+                <Img name={p.name} sizes="(min-width:1024px) 25vw, 50vw" className="zoom-img absolute inset-0 h-full w-full object-cover" />
+                <span className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/65 to-transparent px-3 pb-2.5 pt-8 text-[0.8rem] font-medium text-white">{p.caption}</span>
+              </Reveal>
+            ))}
+          </ul>
         </Container>
       </section>
 
@@ -73,6 +124,7 @@ export default function QualityPage() {
         </Container>
       </section>
 
+      {/* PPT slide 4 */}
       <section id="approvals" className="py-20 lg:py-28">
         <Container>
           <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">

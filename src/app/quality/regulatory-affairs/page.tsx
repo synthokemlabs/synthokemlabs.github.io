@@ -9,7 +9,7 @@ import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
   title: "Regulatory Affairs — DMFs, CEPs, Approvals & Certifications",
-  description: "Synthokem Labs regulatory record: USDMF filings since 1993, CEP for Guaifenesin, USFDA facility approval, WHO-GMP, EU Written Confirmation, KFDA, COFEPRIS, ISO 9001/14001 and OHSAS 18001 — with regulatory status by product.",
+  description: "Synthokem Labs regulatory record: USDMF filings since 1993, CEP for Guaifenesin, USFDA facility approval, WHO-GMP, EU Written Confirmation, KFDA, COFEPRIS, ISO 9001:2015, ISO 14001:2015, ISO 45001:2018 and MSME ZED Gold — with regulatory status by product.",
   path: "/quality/regulatory-affairs/",
 });
 

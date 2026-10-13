@@ -34,6 +34,7 @@ export function Footer() {
             <p className="mt-6 max-w-sm text-[0.95rem] leading-relaxed text-on-dark-muted">
               Progressive and proactive, dynamic and innovative — a manufacturer of Active Pharmaceutical Ingredients and drug intermediates, headquartered in Hyderabad, India, since 1978.
             </p>
+            <p className="mt-4 font-display text-lg font-semibold text-white">“{SITE.promise}”</p>
             <address className="mt-8 space-y-3 text-[0.92rem] not-italic text-on-dark-muted">
               <p className="flex gap-3"><Icon name="pin" size={18} className="mt-0.5 shrink-0 text-accent-soft" /><span>{hq.lines.join(", ")}</span></p>
               <p><a className="flex min-h-8 items-center gap-3 hover:text-white" href={SITE.phone.href}><Icon name="phone" size={18} className="shrink-0 text-accent-soft" />{SITE.phone.display}</a></p>

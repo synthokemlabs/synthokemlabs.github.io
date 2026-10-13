@@ -486,3 +486,8 @@ html.lenis-on body { overscroll-behavior: none; }
   .wipe-panel { display: none; }
   .wipe-img, .wipe-chip, .wipe-line { animation: none !important; opacity: 1; transform: none; }
 }
+
+/* Capacity bars grow in from the left when their Reveal becomes visible */
+.bar-grow { transform: scaleX(0); transform-origin: 0 50%; transition: transform 1.2s var(--ease-out) var(--bar-delay, 0s); }
+.is-visible .bar-grow, .settled .bar-grow, .no-js .bar-grow { transform: none; }
+@media (prefers-reduced-motion: reduce) { .bar-grow { transform: none; } }

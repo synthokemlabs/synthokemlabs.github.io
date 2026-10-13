@@ -1,7 +1,7 @@
 # Synthokem Labs — website
 
 Redesign of synthokemlabs.com as a static Next.js 16 + TypeScript + Tailwind CSS v4 site.
-All content was taken from the previous website and the company's current *Product List* PDF (`public/documents/synthokem-product-list.pdf`, document PRODUCTLIST2021005). No claims, numbers or certifications were invented.
+All content was taken from the previous website, the company's current *Product List* PDF (`public/documents/synthokem-product-list.pdf`, document PRODUCTLIST2021005) and the company presentation *for website.pptx* (31 slides, Oct 2026 — see section 8). No claims, numbers or certifications were invented.
 
 ```bash
 npm install
@@ -77,7 +77,12 @@ The endpoint receives `multipart/form-data`, including any attachment. See `src/
 7. **Name spellings standardised:** Bisbentamin → Bisbentiamine, Pivolyl → Pivaloyl, Veratrol (kept), Frideral Crafts → Friedel–Crafts, Drazens → Darzens. The original spellings are kept as search synonyms.
 8. **Legal pages** are structured drafts and need approved wording.
 9. **Photography:** the facility aerial and several lab photos are low-resolution originals. Replace them with new professional shoots when available. `lab-precision` and `csr-environment` look like stock images.
-10. **Regulator logos** (USFDA, WHO, EDQM, KFDA) are deliberately **not** used. Agencies restrict use of their marks, so approvals are shown as typography instead.
+10. **Certification logos** (EDQM, WHO-GMP, KFDA, ISO 9001:2015, ISO 14001:2015, ISO 45001:2018, MSME ZED Gold) are shown on the approval tiles at the company's request, from the presentation's "Accolades" slide. EDQM, WHO and ISO restrict use of their marks — **the company should confirm it may display them.** The slide's "FDA APPROVED" stamp is **not** used: the USFDA inspects API facilities, it doesn't approve them. USFDA, EU WC, COFEPRIS and Kosher get a designed seal instead.
+11. **Social media:** the presentation shows Facebook, Twitter, Instagram and LinkedIn icons with "/synthokem" but no full links. Not added until the exact page URLs are confirmed.
+12. **Chillers (slide 19):** the slide says "~20 deg.C water", which is probably −20 °C brine. The figure is left out until confirmed.
+13. **Distances (slides 13 and 16)** are shown as the company gave them. Please re-check "Rajiv Gandhi International Airport ~40 km" from Pashamylaram and "~750 km" from Unit III.
+14. **Leadership names (slide 2):** only "Mrs. Aishwarya" (Managing Director) and "Mr. Aryaman" (Director) are given, with no surnames. No portraits were supplied, so monograms are used.
+15. **Unit I:** the presentation lists only Units II and III. The Journey timeline and the approval tiles still describe Unit I's history (USFDA approval, KFDA, COFEPRIS, EU WC, Kosher). Please confirm these are still valid to show.
 
 ## 6. Chemical structures
 
@@ -142,3 +147,30 @@ python scripts/compute-3d.py <slug>…     # computed 3D (RDKit) where PubChem h
   - "On this page" links land below the sticky bars.
   - Form errors clear as they are fixed.
 - **Navigation:** three compact dropdowns (About, Products, Capabilities) plus Sustainability, Careers and Contact. Long pages have a sticky "On this page" bar that highlights the current section.
+
+## 8. Company presentation (*for website.pptx*) — where each slide went
+
+| Slides | Content | Now on |
+|---|---|---|
+| 1, 31 | Title, contacts, "We deliver what we promise" | Footer promise line; contacts already on `/contact/` |
+| 2 | Company introduction, leadership | `/about/` overview (first three paragraphs) and leadership team |
+| 3 | Vision, mission, values | `/about/#vision` (replaces the old website's vision and mission; the old mission is now the commitment on `/sustainability/`) |
+| 4 | Accolades (certification logos) | Approval tiles on `/quality/#approvals`, `/quality/regulatory-affairs/` and the home page |
+| 5 | Corporate structure and functions | `/about/#organisation` |
+| 6 | CDMO | `/capabilities/#cdmo` |
+| 7 | Synthetic chemistry capabilities | `/capabilities/#specialisation` (23 reactions) |
+| 8–10 | Analytical development, R&D labs, team, literature support | `/capabilities/#rnd`, `#analytical`, `#team` |
+| 11–17 | Units II and III: address, coordinates, distances, photos | `/capabilities/manufacturing/#units` |
+| 18–19 | Common equipment | `/capabilities/manufacturing/#equipment` |
+| 20 | Capacity (II: 250 KL, III: 125 KL, total 375 KL) | `/capabilities/manufacturing/#capacity` |
+| 21 | ISO 9001:2015 QMS diagram | `/quality/#qms`, redrawn as an animated SVG |
+| 22–23 | Quality policy, Quality Unit, QA responsibilities | `/quality/#policy` and `#assurance`, plus the QC lab photo strip |
+| 24–27 | EHS: safeguards flowchart, SHE policy, health and hygiene, standards | `/sustainability/#ehs` |
+| 28–29 | Solar PV, solar heaters and concentrators, ZLD, greenery | `/sustainability/#energy` |
+| 30 | CSR policy and organisations supported | `/sustainability/#community` |
+
+All text is in `src/data/company.ts`, with a "PPT slide N" note on each block. The photos are in `public/images`. Date stamps and phone watermarks were cropped off, and Unit II's main gate photo (`unit2-gate`) is now the full-resolution original.
+
+**Corrected from the slides:** "USFDA approved facility" → USFDA-inspected; the "FDA APPROVED" stamp left out; "SYNYHOKEM" → Synthokem; "Kw/hr" → kW; Unit III's degrees-minutes-seconds, which repeated Unit II's, recomputed from its own decimal coordinates; "Parwawada" → Parawada; "Jayanth tagore" → Jayant Tagore; "Emergency Exists" → exits; reaction names (Bischler–Napieralski, Darzens, Friedel–Crafts). OHSAS 18001 → ISO 45001:2018 and ISO 14001:2004 → 2015 everywhere they were stated as current.
+
+**Not used, as stock or filler:** the template slide with "This text is fully editable" placeholder text, stock and clip-art photos (baby feet, lab and laptop stock, a woman on a rock, a "Truworth wellness" health check-up graphic, CSR and QA clip art), coloured state maps (replaced by coordinates and distance lists), and the contact and social icons.

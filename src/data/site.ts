@@ -11,6 +11,8 @@ export const SITE = {
   url: "https://www.synthokemlabs.com",
   foundingYear: 1978,
   tagline: "Performance and perfection, driven by chemistry.",
+  /** Company promise from the closing slide of "for website.pptx". */
+  promise: "We deliver what we promise.",
   description:
     "Synthokem Labs is a manufacturer of Active Pharmaceutical Ingredients (APIs) and drug intermediates headquartered in Hyderabad, India, operating since 1978.",
   email: "info@synthokemlabs.com",

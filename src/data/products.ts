@@ -386,9 +386,9 @@ export const REGULATORY_GLOSSARY: Record<string, string> = {
   EUWC: "EU Written Confirmation for APIs imported into the EU",
   "WHO-GMP": "World Health Organization Good Manufacturing Practice",
   GMP: "Good Manufacturing Practice",
-  "ISO-QMS": "ISO 9001 Quality Management System",
-  "ISO-EMS": "ISO 14001 Environmental Management System",
-  "ISO-OHSAS": "OHSAS 18001 Occupational Health & Safety",
+  "ISO-QMS": "ISO 9001:2015 Quality Management System",
+  "ISO-EMS": "ISO 14001:2015 Environmental Management System",
+  "ISO-OHSAS": "ISO 45001:2018 Occupational Health & Safety (formerly OHSAS 18001)",
   "EU REACH": "EU Registration, Evaluation, Authorisation and Restriction of Chemicals",
 };
 

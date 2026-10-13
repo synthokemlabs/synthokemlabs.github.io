@@ -1,7 +1,8 @@
 /**
  * Corporate content: journey, facilities, approvals, global presence,
- * specialisations and editorial copy. All entries are taken from the previous
- * synthokemlabs.com pages (About, Our Assurance, Social Responsibility, Contact).
+ * specialisations and editorial copy. Entries come from the previous
+ * synthokemlabs.com pages (About, Our Assurance, Social Responsibility, Contact)
+ * and the company presentation "for website.pptx" (Oct 2026), noted per block as "PPT slide N".
  */
 
 /* ------------------------------ Journey ------------------------------ */
@@ -57,18 +58,29 @@ export interface Approval {
   authority: string;
   short: string;
   scope: string;
-  since: string;
+  since?: string;
+  /** Logo from the "Accolades" slide (PPT slide 4), in /public/images/logos. Entries without one get a designed seal. */
+  logo?: { src: string; width: number; height: number };
 }
+const logo = (name: string, width: number, height: number) => ({ src: `/images/logos/${name}.png`, width, height });
+
+/**
+ * PPT slide 4 ("Accolades") supplies the logos and the current standards: ISO 9001:2015, ISO 14001:2015,
+ * ISO 45001:2018 (which replaced OHSAS 18001) and MSME ZED Gold. The slide's "FDA APPROVED" stamp is not
+ * used: the USFDA inspects API facilities rather than approving them (the company's own wording, slide 2,
+ * is "USFDA inspected"), so USFDA keeps a designed seal.
+ */
 export const APPROVALS: Approval[] = [
   { short: "USFDA", authority: "US Food & Drug Administration", scope: "Unit I facility approval with regular inspections; Unit II inspection completed in 2018. DMFs filed since 1993.", since: "2005" },
-  { short: "CEP", authority: "EDQM — Certificate of Suitability", scope: "Guaifenesin (Ph. Eur.) — Unit I in 2001, Unit II in 2019.", since: "2001" },
-  { short: "WHO-GMP", authority: "World Health Organization GMP", scope: "Certified since 2002; Unit II certified in 2016. Renewed to date.", since: "2002" },
+  { short: "CEP", authority: "EDQM — Certificate of Suitability", scope: "Guaifenesin (Ph. Eur.) — Unit I in 2001, Unit II in 2019.", since: "2001", logo: logo("edqm", 450, 239) },
+  { short: "WHO-GMP", authority: "World Health Organization GMP", scope: "Certified since 2002; Unit II certified in 2016. Renewed to date.", since: "2002", logo: logo("who-gmp", 158, 176) },
+  { short: "KFDA", authority: "Korean FDA", scope: "Unit I inspected; certificate achieved for Methocarbamol.", since: "2012", logo: logo("kfda", 198, 77) },
   { short: "EU WC", authority: "EU Written Confirmation", scope: "Unit I (2013) and Unit II (2016), per Art. 46b(2)(b) of 2001/83/EC.", since: "2013" },
-  { short: "KFDA", authority: "Korean FDA", scope: "Unit I inspected; certificate achieved for Methocarbamol.", since: "2012" },
   { short: "COFEPRIS", authority: "Mexican Health Authority", scope: "Unit I inspected for Methocarbamol and Guaifenesin; approved in 2016.", since: "2016" },
-  { short: "ISO 9001", authority: "Quality Management System — DNV GL", scope: "Certified since 2000; Unit II since 2013. Renewed to date.", since: "2000" },
-  { short: "ISO 14001", authority: "Environmental Management System — DNV GL", scope: "Unit II, renewed to date.", since: "2015" },
-  { short: "OHSAS 18001", authority: "Occupational Health & Safety — DNV GL", scope: "Unit II, renewed to date.", since: "2015" },
+  { short: "ISO 9001:2015", authority: "Quality Management System — DNV GL", scope: "Certified since 2000; Unit II since 2013. Renewed to date.", since: "2000", logo: logo("iso-9001", 172, 172) },
+  { short: "ISO 14001:2015", authority: "Environmental Management System — DNV GL", scope: "Unit II, certified since 2015 and renewed to date.", since: "2015", logo: logo("iso-14001", 220, 223) },
+  { short: "ISO 45001:2018", authority: "Occupational Health & Safety Management", scope: "Unit II — certified for occupational health & safety since 2015 (OHSAS 18001, now ISO 45001:2018).", since: "2015", logo: logo("iso-45001", 383, 346) },
+  { short: "ZED Gold", authority: "MSME — Zero Defect Zero Effect", scope: "Gold-level certification under the Government of India's MSME ZED scheme.", logo: logo("msme-zed-gold", 200, 200) },
   { short: "Kosher", authority: "Kosher certification", scope: "Guaifenesin, Unit I. Renewed to date.", since: "2010" },
 ];
 
@@ -76,41 +88,170 @@ export const APPROVALS: Approval[] = [
 export interface Facility {
   id: string;
   name: string;
+  state: string;
   location: string;
+  address: string;
   summary: string;
   highlights: string[];
+  /** Reactor capacity in kilolitres (PPT slide 20). */
+  capacityKL: number;
+  coords: { lat: number; lon: number; dms: string };
+  /** Approximate distances, as given by the company (PPT slides 13 and 16). */
+  logistics: { kind: "airport" | "seaport"; name: string; km: number }[];
+  /** Site photographs (Img names), first one leads. */
+  photos: { name: string; caption: string }[];
 }
 export const FACILITIES: Facility[] = [
   {
     id: "unit-ii",
     name: "Unit II",
+    state: "Telangana",
     location: "IDA Pashamylaram, Patancheru, Sanga Reddy, Telangana",
+    address: "Plot No. 222–224 & 235–237, Phase-II, IDA Pashamylaram, Patancheru – 502319, Sanga Reddy, Telangana, India",
     summary: "Acquired in 2004 and in operation since 2010, on the same site as the corporate office and R&D unit.",
-    highlights: ["USFDA inspection completed (2018)", "WHO-GMP & EU Written Confirmation (2016)", "CEP for Guaifenesin (2019)", "ISO 9001, ISO 14001 and OHSAS 18001 by DNV GL"],
+    highlights: ["USFDA inspection completed (2018)", "WHO-GMP & EU Written Confirmation (2016)", "CEP for Guaifenesin (2019)", "ISO 9001:2015, ISO 14001:2015 and ISO 45001:2018"],
+    capacityKL: 250,
+    coords: { lat: 17.536135, lon: 78.178622, dms: "17° 32′ 10.1″ N, 78° 10′ 43.0″ E" },
+    logistics: [
+      { kind: "airport", name: "Rajiv Gandhi International Airport, Hyderabad", km: 40 },
+      { kind: "seaport", name: "Chennai Port", km: 634 },
+      { kind: "seaport", name: "Mumbai Port", km: 743 },
+    ],
+    photos: [
+      { name: "facility-aerial", caption: "Unit II from the air" },
+      { name: "unit2-campus", caption: "Unit II campus" },
+      { name: "unit2-qc-lab", caption: "Laboratory" },
+      { name: "reactor-hall", caption: "Reactors" },
+      { name: "warehouse-drums", caption: "Warehouse" },
+    ],
   },
   {
     id: "unit-iii",
     name: "Unit III",
+    state: "Andhra Pradesh",
     location: "JN Pharmacity, Parawada, Anakapalli, Andhra Pradesh",
-    summary: "Synthokem's manufacturing presence in Andhra Pradesh, within JN Pharmacity.",
-    highlights: ["Plot No. 75, JN Pharmacity, Thanam", "Parawada – 531019, Anakapalli"],
+    address: "Plot No. 75, JN Pharmacity, Thanam, Parawada – 531019, Anakapalli, Andhra Pradesh, India",
+    summary: "A WHO- and EU-compliant manufacturing facility within JN Pharmacity, near Visakhapatnam.",
+    highlights: ["WHO- and EU-compliant facility", "ISO 9001:2015 & GMP facility", "Close to Visakhapatnam airport and seaport"],
+    capacityKL: 125,
+    // The slide repeated Unit II's degrees-minutes-seconds; these are converted from Unit III's own decimal coordinates
+    coords: { lat: 17.65302, lon: 83.0731, dms: "17° 39′ 10.9″ N, 83° 04′ 23.2″ E" },
+    logistics: [
+      { kind: "airport", name: "Visakhapatnam Airport (VTZ)", km: 31 },
+      { kind: "seaport", name: "Visakhapatnam Port", km: 36 },
+      { kind: "airport", name: "Alluri Sitarama Raju International Airport, Bhogapuram", km: 62 },
+      { kind: "airport", name: "Rajiv Gandhi International Airport, Hyderabad", km: 750 },
+    ],
+    photos: [
+      { name: "unit3-block", caption: "Unit III, JN Pharmacity" },
+      { name: "unit3-production", caption: "Reactor hall" },
+      { name: "unit3-lab", caption: "Laboratory" },
+    ],
   },
 ];
 
+export const TOTAL_CAPACITY_KL = FACILITIES.reduce((sum, f) => sum + f.capacityKL, 0);
+
+/** PPT slides 18–19: equipment common to all units. */
+export const COMMON_EQUIPMENT = {
+  process: [
+    "Class 100,000 clean area for the finished product, from crystallisation onwards",
+    "Leaf filters and sparkler filters for in-process filtration",
+    "Centrifuges / ANFDs and fluid-bed dryers for separating and drying wet product",
+    "Multimill / pulveriser for homogenisation",
+    "Sifters for sieving the finished product",
+  ],
+  utilities: [
+    "PSA nitrogen system for inertisation",
+    "Air compressors for dry instrument air",
+    "Cooling towers for cooling water",
+    "Chillers for process and heat-exchanger cooling",
+    "Hot-oil boilers for high-vacuum distillation",
+    "Steam ejectors for vacuum and a boiler for steam",
+    "EDI water purification and supply system",
+    "DG sets for complete power back-up, and a fire-fighting system",
+  ],
+};
+
 /* ------------------------------ Specialisation ------------------------------ */
+/** PPT slide 7 ("Synthetic chemistry — capabilities") plus cross-coupling (slide 6), alphabetised; names spelled per IUPAC usage. */
 export const SPECIALISATIONS: { name: string }[] = [
-  { name: "Chloromethylation" },
-  { name: "Halogenation" },
-  { name: "Hydrogenation" },
-  { name: "High-vacuum distillation" },
-  { name: "Racemisation" },
-  { name: "Williamson synthesis" },
-  { name: "Friedel–Crafts acylation" },
-  { name: "Esterification" },
   { name: "Aldol reaction" },
+  { name: "Alkylation" },
+  { name: "Bischler–Napieralski reaction" },
+  { name: "Chloromethylation" },
+  { name: "Condensation" },
+  { name: "Cross-coupling reactions" },
+  { name: "Cyanation" },
+  { name: "Cyclisation" },
+  { name: "Darzens (glycidic ester) reaction" },
+  { name: "Dealkylation" },
+  { name: "Esterification" },
+  { name: "Friedel–Crafts acylation" },
+  { name: "Halogenation" },
+  { name: "High-vacuum distillation" },
+  { name: "Hydrogenation" },
+  { name: "Nitration" },
+  { name: "Oxidation" },
+  { name: "Peptide amidation" },
+  { name: "Polymerisation" },
+  { name: "Racemisation" },
   { name: "Radical bromination" },
-  { name: "Darzens reaction" },
+  { name: "Sulfonation" },
+  { name: "Williamson synthesis" },
 ];
+
+/* ------------------------------ R&D and CDMO ------------------------------ */
+/** PPT slide 6. The slide's "USFDA approved facility" is corrected to "USFDA-inspected" (see APPROVALS). */
+export const CDMO = {
+  lead: "Established Good Manufacturing Practices, a strong R&D team, systematic product development, a proven record of customer satisfaction, uncompromising ethics and flexible customer relationships — the approach behind Synthokem's growth over four decades.",
+  points: [
+    { t: "Two locations", d: "A USFDA-inspected facility in Hyderabad and a WHO- and EU-compliant facility near Visakhapatnam.", icon: "factory" as const },
+    { t: "Demanding chemistry", d: "Process and support equipment for most kinds of reactions, including high-pressure reactions and hydrogenation.", icon: "flask" as const },
+    { t: "About 375 KL capacity", d: "Across both locations — batches from small volumes to high-volume output, with scope to expand for future projects.", icon: "grid" as const },
+    { t: "Shared expertise", d: "Our R&D team is open to co-development and CDMO partnerships, and happy to share its expertise.", icon: "users" as const },
+  ],
+};
+
+/** PPT slide 8. */
+export const ANALYTICAL_DEVELOPMENT = [
+  "Analytical method development",
+  "Method validation and verification",
+  "Method transfer to quality control laboratories",
+  "Characterisation studies for structure elucidation",
+  "Genotoxic impurity studies and reporting",
+  "Responses to regulatory queries",
+  "GLP and regulatory compliance",
+];
+
+/** PPT slide 9. */
+export const RND_LABS = [
+  {
+    t: "Synthesis laboratory",
+    d: "Reactions from milligram to kilogram scale.",
+    items: ["10 fume hoods", "High-vacuum distillation systems", "Rotary evaporators", "Dedicated solvent and chemical storage area"],
+  },
+  {
+    t: "Analytical R&D laboratory",
+    d: "Supports the synthesis lab, with 21 CFR Part 11 compliant data handling.",
+    items: ["HPLC (Agilent) with UV / PDA detector", "GC (Agilent) with FID and headspace", "Chromatography data system (CDS 2.2)", "Digital melting point apparatus", "Karl Fischer titrator and pH meter", "UV and IR spectrophotometers"],
+  },
+];
+
+/** PPT slide 10. */
+export const RND_TEAM = {
+  stats: [
+    { v: 15, suffix: "+", l: "Master's-level chemists" },
+    { v: 10, suffix: "+ yrs", l: "Average R&D experience" },
+  ],
+  note: "PhD and Master's degrees from reputed institutions across India.",
+  literature: [
+    "SciFinder and Reaxys",
+    "Central government institute libraries in Hyderabad — Chemical Abstracts and journals",
+    "Online patent databases",
+    "Online ACS and Elsevier journals",
+  ],
+};
 
 /* ------------------------------ Global presence ------------------------------ */
 export type Region = "Europe" | "Asia-Pacific" | "Middle East & Africa" | "Americas";
@@ -163,9 +304,11 @@ export const COUNTRIES: Country[] = [
 export const REGIONS: Region[] = ["Europe", "Asia-Pacific", "Middle East & Africa", "Americas"];
 
 /* ------------------------------ Editorial copy ------------------------------ */
+/** The first three paragraphs are from PPT slide 2; the rest from the previous website. */
 export const OVERVIEW = [
-  "Synthokem Labs Pvt Ltd is a privately held company that came into existence in 1978. It manufactures Active Pharmaceutical Ingredients and drug intermediates at facilities located in two states — Telangana and Andhra Pradesh — in India.",
-  "The company is recognised for its strengths in manufacturing and distribution of a wide range of products and capabilities in R&D, with an aim to provide accessible and affordable pharmaceutical products to people in need.",
+  "Synthokem Labs Private Limited began its journey as a pharmaceutical company in 1978, headquartered in Hyderabad, India, as a manufacturer of high-quality Active Pharmaceutical Ingredients and drug intermediates. Today it manufactures at facilities in two states — Telangana and Andhra Pradesh.",
+  "Synthokem is globally recognised for its strengths in API manufacturing and distribution under current Good Manufacturing Practices, with USFDA-inspected, state-of-the-art facilities and a strong research team — with an aim to provide accessible and affordable pharmaceutical products to people in need.",
+  "Synthokem has established itself as a preferred business partner to leading consumer brands for Guaifenesin, an expectorant, and Methocarbamol, a widely accepted muscle relaxant.",
   "Over the decades, Synthokem Labs has leveraged its core expertise in evolving process chemistry, advanced capabilities, backward integration and stringent quality standards to build a portfolio of products across the value chain and enhance its competitiveness.",
   "Having been successfully audited and recognised by global regulatory authorities, Synthokem Labs is an integral part of the Indian pharmaceutical industry, delivering differentiated, high-quality products consistently.",
   "Our strength lies in our people — over 300 skilled and unskilled individuals across two manufacturing units and the corporate office and R&D unit. Founded and managed by an experienced team of professionals with technical expertise and decades of industry experience, we foster a culture of sustainable growth through education, inclusion, empowerment and innovation.",
@@ -183,10 +326,38 @@ export const COMMITMENTS = [
   { title: "We aim for the best", body: "The secret of our success is complete customer satisfaction. Customers are our lifeline and guideline." },
 ];
 
-export const VISION =
-  "To optimize our manufacturing capabilities through a quality-driven approach and emerge as a leading API manufacturer with a diversified portfolio in the global pharmaceutical industry.";
-export const MISSION =
+/** PPT slide 3 (replaces the previous website's vision and mission). */
+export const VISION = "To be a global service provider offering quality products that meet global standards.";
+export const MISSION = "Manufacturing and marketing APIs and intermediates that meet global standards, at affordable prices.";
+export const VALUES = ["Innovation", "Integrity", "Respect", "Excellence", "Customer delight"];
+/** From the previous website's mission; kept as the sustainability commitment, where it fits. */
+export const RESPONSIBILITY =
   "We aim to be a responsible corporate entity serving the community at large through business, social and environmental actions that contribute to a better future.";
+
+/** PPT slide 2. No portraits were supplied, so the About page shows monograms. */
+export const LEADERSHIP = [
+  { name: "Mr. Jayant Tagore Madireddy", role: "Chairperson", initials: "JT" },
+  { name: "Mrs. Aishwarya", role: "Managing Director", initials: "A" },
+  { name: "Mr. Aryaman", role: "Director", initials: "A" },
+  { name: "Dr. Srinivas Kolupula", role: "Chief Scientific Officer", initials: "SK" },
+];
+
+/** PPT slide 5 ("Corporate"). */
+export const CORPORATE = [
+  { t: "Streamlined organisational framework", points: ["A clear hierarchy that enables fast decision-making", "Well-defined roles and responsibilities across functions and units"] },
+  { t: "Cross-functional collaboration", points: ["Integrated workflow between departments", "Shared KPIs that drive unified performance and goals"] },
+  { t: "Standardised, optimised & harmonised processes", points: ["Company-wide SOPs that improve consistency and reduce variation", "A continuous-improvement culture driven by ISO guidelines and lean practices"] },
+  { t: "High-performance culture", points: ["Talent development programmes", "Recognition systems that reinforce excellence"] },
+];
+export const FUNCTIONS = [
+  "Business Development & Marketing",
+  "Supply Chain Management",
+  "Regulatory Affairs",
+  "Finance, Accounts & Costing",
+  "Information Technology & ERP",
+  "Projects & Engineering",
+  "Human Resources, Learning & Skill Development",
+];
 
 export const CHAIRPERSON = {
   name: "Jayant Tagore Madireddy",
@@ -205,6 +376,81 @@ export const PILLARS = [
   { title: "Skilled workforce", body: "Highly skilled pharmaceutical scientists, regulatory affairs specialists, quality analysts and more." },
   { title: "Advanced products", body: "A portfolio of growth-oriented, stable APIs and intermediates in the global marketplace." },
 ];
+
+/* ------------------------------ Quality (PPT slides 21–23) ------------------------------ */
+/** Slide 22, with the slide's "SYNYHOKEM" typo and grammar corrected. */
+export const QUALITY_POLICY =
+  "Synthokem Labs is committed to meeting customer requirements by manufacturing high-quality pharmaceutical ingredients and delivering them to agreed schedules — implementing current Good Manufacturing Practices and continually improving the effectiveness of the Quality Management System.";
+
+/** Slide 23. */
+export const QUALITY_UNIT = [
+  "The Quality Unit is an independent department that reports directly to the Managing Director.",
+  "QA and QC departments are clearly defined and monitor the quality system.",
+  "Responsibilities and authorities of everyone working in the Quality Unit are prescribed and followed.",
+];
+export const QA_RESPONSIBILITIES = [
+  "Quality management system", "Document control", "Change control", "Deviation control", "Rejects & recalls",
+  "Product quality review", "Complaint handling", "Training", "Internal audits", "Batch release for commercial distribution",
+];
+
+/* ------------------------------ Environment, health & safety (PPT slides 24–29) ------------------------------ */
+export const EHS = {
+  // Slide 24 spells the name "Jayanth tagore"; slide 2 and the Chairperson page use "Jayant Tagore"
+  quote: { text: "My people are my real assets.", by: "Jayant Tagore Madireddy, Chairperson" },
+  intro: [
+    "With this belief, employee safety is always the top priority at Synthokem Labs.",
+    "Making APIs and intermediates means our people handle almost every major chemical and unit process in pharmaceutical chemistry. So we have built a stringent, risk-assessment-based health and safety process for a better and safer workplace, and run an active Occupational Health and Safety Management Programme.",
+  ],
+  /** Slide 24 flowchart: leadership & commitment drives six safeguards. */
+  safeguards: [
+    { t: "Separate solvent yard", icon: "drum" as const },
+    { t: "Fire hydrant system", icon: "flame" as const },
+    { t: "Emergency exits", icon: "exit" as const },
+    { t: "Green practices", icon: "leaf" as const },
+    { t: "ZLD facility", icon: "droplet" as const },
+    { t: "PPEs", icon: "hardHat" as const },
+  ],
+  /** Slide 25: the signed SHE Policy, transcribed (signature not reproduced). */
+  shePolicy: {
+    intro: "Synthokem Labs Private Limited is committed to protecting the environment, its employees and public health by:",
+    points: [
+      "Complying with all regulatory requirements, and taking any additional measures considered necessary.",
+      "Preventing pollution, maximising recycling, and reducing waste, discharges and emissions.",
+      "Training all employees, including contract labour, in safety, health and environment so operations are handled safely — and working on engineering controls to prevent injuries.",
+      "Defining objectives and monitoring their achievement and effectiveness against set target dates.",
+      "Continuing to look for new ways to conserve the natural resources used in our processes.",
+      "Following a systematic approach to environmental management to achieve continual performance improvement.",
+      "Periodically reviewing and redefining this policy in line with regulatory requirements.",
+    ],
+    signedBy: "Managing Director",
+  },
+  /** Slide 26. */
+  health: [
+    "Annual health check-ups for all employees, with records maintained.",
+    "Employees with ailments or diseases are identified and isolated from operations.",
+    "Written procedures for personal and work-area hygiene, with compliance ensured.",
+    "Employee welfare: canteen, provident fund, medical cards and free transport.",
+    "Insurance cover for all employees, supported by the company.",
+  ],
+  /** Slide 27. */
+  standards: [
+    { t: "Health & Safety Standards", d: "To uphold our commitment to the health and safety of our employees, contract workers and neighbours, Synthokem has established a set of Health & Safety Standards. They are the foundation of our health and safety management system across process safety, employee health, safety and emergency response." },
+    { t: "Process Safety Management", d: "Our Process Safety Management Standards ensure every Synthokem facility is designed, operated and maintained responsibly, complying with or exceeding regulatory requirements. They set out the principles and requirements for process safety management and effective emergency response, aligned with industry practice." },
+  ],
+};
+
+/** Slides 28–29. The slides' "Kw/hr" is a power rating, so it is shown as kW. */
+export const RENEWABLES = [
+  { unit: "Unit II", pvKW: 200, items: ["200 kW of solar PV panels for in-house power, generating 600–700 units a day", "Solar water heaters (15–20 KLD) pre-heating utilities — boilers and the hot-water system", "5 solar concentrators pre-heating the hot-oil system"] },
+  { unit: "Unit III", pvKW: 276, items: ["276 kW of solar PV panels for in-house power"] },
+];
+
+/* ------------------------------ CSR (PPT slide 30) ------------------------------ */
+export const CSR = {
+  policy: "Synthokem Labs' CSR policy sets out how the company undertakes CSR projects, programmes and activities under Schedule VII of the Companies Act, 2013 and the Companies (Corporate Social Responsibility Policy) Rules, 2014.",
+  support: "The company provides financial assistance, as donations, to education, nutrition, disease-control and social-welfare activities run by NGOs.",
+  supported: ["Akshaya Patra Foundation", "Teach for Change", "Orphanages", "Shanthiniketan", "Sri Prasanna Gajanana Sevaka Samajam", "PM CARES Fund", "Chief Minister's Relief Fund"],
+};
 
 /* ------------------------------ News / insights ------------------------------ */
 export interface NewsItem { slug: string; date: string; category: string; title: string; summary: string; body: string[] }

@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import Link from "next/link";
 import { Img } from "@/components/ui/Img";
 import { Icon } from "@/components/ui/Icon";
 import { ButtonLink, Container, SectionHeading, SplitWords } from "@/components/ui/primitives";
@@ -9,6 +10,7 @@ import { PortfolioMap } from "@/components/diagrams/PortfolioMap";
 import { ValueChain } from "@/components/diagrams/ValueChain";
 import { QualityLayers } from "@/components/diagrams/Diagrams";
 import { QuickLinks } from "@/components/sections/QuickLinks";
+import { ApprovalMark } from "@/components/sections/shared";
 import { ScrollStatement } from "@/components/sections/ScrollStatement";
 import { APPROVALS, COUNTRIES } from "@/data/company";
 import { HeroMolecules, type HeroMolecule } from "@/components/molecules/HeroMolecules";
@@ -119,7 +121,7 @@ export default function HomePage() {
                 </svg>
                 {/* Not a .zoom-parent: ScrollFX's 1.12 parallax scale would crop the signboard at the left edge */}
                 <div className="wipe-photo relative aspect-[544/316] overflow-hidden rounded-lg">
-                  <Img name="unit2-gate" width={544} height={316} sizes="(min-width:1024px) 40vw, 100vw" className="wipe-img absolute inset-0 h-full w-full object-cover" />
+                  <Img name="unit2-gate" width={1920} height={1116} sizes="(min-width:1024px) 40vw, 100vw" className="wipe-img absolute inset-0 h-full w-full object-cover" />
                   <span aria-hidden="true" className="wipe-panel" />
                   <span className="wipe-chip absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-1.5 font-mono text-[0.7rem] text-primary-ink shadow-sm backdrop-blur-sm">
                     <Icon name="pin" size={13} className="text-accent-strong" /> Unit II · Pashamylaram
@@ -196,14 +198,21 @@ export default function HomePage() {
 
           <Reveal className="mt-20">
             <h3 className="font-sans text-[0.74rem] font-semibold uppercase tracking-[0.16em] text-muted">Inspections, approvals & certifications</h3>
-            <ul className="mt-5 grid grid-cols-2 border-l border-t border-border sm:grid-cols-3 lg:grid-cols-5">
+            <ul className="mt-5 grid grid-cols-2 border-l border-t border-border sm:grid-cols-3 lg:grid-cols-6">
               {APPROVALS.map((a) => (
-                <li key={a.short} className="border-b border-r border-border p-5">
-                  <span className="block font-display text-lg font-semibold text-primary-ink">{a.short}</span>
+                <li key={a.short} className="group border-b border-r border-border p-5 transition-colors hover:bg-surface">
+                  <span className="flex h-12 items-center transition-transform duration-500 ease-out group-hover:scale-105"><ApprovalMark a={a} size="sm" /></span>
+                  <span className="mt-4 block font-display text-lg font-semibold text-primary-ink">{a.short}</span>
                   <span className="mt-1 block text-[0.82rem] leading-snug text-muted">{a.authority}</span>
-                  <span className="mt-3 block text-xs font-semibold tabular-nums text-accent-strong">Since {a.since}</span>
+                  {a.since && <span className="mt-3 block text-xs font-semibold tabular-nums text-accent-strong">Since {a.since}</span>}
                 </li>
               ))}
+              <li className="border-b border-r border-border">
+                <Link href="/quality/#approvals" className="group flex h-full min-h-40 flex-col justify-end gap-2 bg-primary p-5 text-white transition-colors hover:bg-primary-dark">
+                  <span className="font-display text-lg font-semibold">All approvals</span>
+                  <span className="inline-flex items-center gap-2 text-[0.82rem] text-on-dark-muted">Scope &amp; history <Icon name="arrowRight" size={15} className="arrow-nudge text-white" /></span>
+                </Link>
+              </li>
             </ul>
           </Reveal>
         </Container>
