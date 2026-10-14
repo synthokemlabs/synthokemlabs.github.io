@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { PageHero } from "@/components/layout/PageHero";
-import { ApprovalsGrid } from "@/components/sections/shared";
+import { ApprovalsRegister } from "@/components/sections/QualitySections";
+import { Reveal } from "@/components/ui/client";
 import { ButtonLink, Container, SectionHeading } from "@/components/ui/primitives";
 import { JOURNEY } from "@/data/company";
 import { PRODUCTS, REGULATORY_GLOSSARY, productHref, structureSrc } from "@/data/products";
@@ -23,8 +24,8 @@ export default function RegulatoryPage() {
 
       <section id="approvals" className="py-20 lg:py-28">
         <Container>
-          <SectionHeading eyebrow="Approvals & certifications" title="Inspections, approvals and certifications." lede="As documented in our company milestones. Certificates are available to customers on request." />
-          <div className="mt-12"><ApprovalsGrid /></div>
+          <SectionHeading eyebrow="Approvals & certifications" title="Inspections, approvals and certifications." lede="Eleven approvals and certifications across our units, as documented in our company milestones." />
+          <div className="mt-14"><ApprovalsRegister /></div>
         </Container>
       </section>
 
@@ -54,7 +55,7 @@ export default function RegulatoryPage() {
               </li>
             ))}
           </ul>
-          <div className="mt-12 hidden overflow-x-auto rounded-lg bg-white ring-1 ring-border md:block" role="region" aria-label="Regulatory status table" tabIndex={0}>
+          <Reveal className="mt-12 hidden overflow-x-auto rounded-lg bg-white ring-1 ring-border md:block"><div role="region" aria-label="Regulatory status table" tabIndex={0}>
             <table className="w-full min-w-[880px] text-left text-[0.92rem]">
               <caption className="sr-only">Regulatory status of commercial APIs</caption>
               <thead>
@@ -89,7 +90,7 @@ export default function RegulatoryPage() {
                 ))}
               </tbody>
             </table>
-          </div>
+          </div></Reveal>
           <dl className="mt-10 grid grid-cols-1 gap-x-10 gap-y-3 text-sm sm:grid-cols-2">
             {Object.entries(REGULATORY_GLOSSARY).map(([k, v]) => (
               <div key={k} className="grid grid-cols-[6.5rem_1fr] gap-3 border-b border-border py-2"><dt className="font-mono text-primary">{k}</dt><dd className="text-muted">{v}</dd></div>

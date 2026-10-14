@@ -637,6 +637,64 @@ html.lenis-on body { overscroll-behavior: none; }
   .ring-seg { transition: none; stroke-dashoffset: 0; }
 }
 
+/* ==========================================================================
+   Quality — policy marks, PDCA wheel, Quality Unit chart, lab gallery
+   ========================================================================== */
+/* Policy: a marker stroke runs under each key commitment in turn */
+.policy-mark { color: inherit; background: linear-gradient(transparent 58%, rgb(63 168 238 / 0.3) 58%, rgb(63 168 238 / 0.3) 90%, transparent 90%) no-repeat 0 0 / 0% 100%; -webkit-box-decoration-break: clone; box-decoration-break: clone; transition: background-size 1.1s var(--ease-out) var(--mark-delay, 0s); }
+.is-visible .policy-mark, .no-js .policy-mark { background-size: 100% 100%; }
+
+/* PDCA wheel: the light turns to each phase in turn; the active phase card fills */
+.pdca-orbit { transform-box: view-box; transform-origin: 50% 50%; animation: vmv-spin 90s linear infinite; }
+.pdca-orbit-r { animation-duration: 45s; animation-direction: reverse; }
+.pdca-comet { transform-box: view-box; transform-origin: 50% 50%; opacity: 0; transition: transform 1.2s cubic-bezier(0.65, 0, 0.35, 1), opacity 0.6s ease 1.3s; }
+.is-visible .pdca-comet, .no-js .pdca-comet { opacity: 1; }
+.pdca-head { filter: drop-shadow(0 0 6px rgb(63 168 238 / 0.9)); }
+.pdca-card { color: var(--primary-ink); transition: background-color 0.5s ease, color 0.5s ease, box-shadow 0.5s ease, transform 0.5s var(--ease-out); }
+.pdca-sub { color: var(--muted); transition: color 0.5s ease; }
+.pdca-node:hover .pdca-card { transform: translateY(-2px); }
+.pdca-node[aria-pressed="true"] .pdca-card { background-color: var(--primary); color: #fff; transform: scale(1.06); box-shadow: 0 0 0 6px rgb(63 168 238 / 0.18), 0 18px 34px -16px rgb(11 85 151 / 0.7); }
+.pdca-node[aria-pressed="true"] .pdca-sub { color: var(--on-dark-muted); }
+.pdca-caption { opacity: 0; transform: translateY(6px); transition: opacity 0.35s ease, transform 0.5s var(--ease-out); }
+.pdca-caption.is-on { opacity: 1; transform: none; transition-delay: 0.3s; }
+/* Desktop: inputs flow into the wheel, outputs flow out of it */
+@media (min-width: 1024px) {
+  .pdca-in::after, .pdca-out::before { content: ""; position: absolute; top: 50%; width: 2.5rem; height: 2px; background: repeating-linear-gradient(90deg, var(--accent) 0 6px, transparent 6px 12px) 0 0 / 24px 2px; opacity: 0.7; }
+  .pdca-in::after { left: 100%; }
+  .pdca-out::before { right: 100%; }
+  .is-visible .pdca-in::after, .is-visible .pdca-out::before { animation: pdca-flow 0.9s linear infinite; }
+}
+@keyframes pdca-flow { to { background-position: 24px 0; } }
+
+/* Quality Unit chart: reporting lines draw in, then a signal runs down them from the MD */
+.qu-line { background-color: var(--border-strong); background-repeat: no-repeat; transition: transform 0.5s var(--ease-out) var(--node-delay, 0s); }
+.qu-v { width: 2px; transform: scaleY(0); transform-origin: top; background-image: linear-gradient(to bottom, transparent, var(--accent), transparent); background-size: 100% 60%; background-position: 0 -150%; }
+.qu-h { height: 2px; transform: scaleX(0); background-image: linear-gradient(to right, transparent, var(--accent), transparent), linear-gradient(to right, transparent, var(--accent), transparent); background-size: 22% 100%; background-position: -40% 0, 140% 0; }
+.is-visible .qu-line, .settled .qu-line, .no-js .qu-line { transform: none; }
+.is-visible .qu-v { animation: qu-signal-v 3.2s ease-in-out calc(var(--node-delay, 0s) + 1.6s) infinite; }
+.is-visible .qu-h { animation: qu-signal-h 3.2s ease-in-out calc(var(--node-delay, 0s) + 1.6s) infinite; }
+@keyframes qu-signal-v { 0% { background-position: 0 -150%; } 30%, 100% { background-position: 0 250%; } }
+@keyframes qu-signal-h { 0% { background-position: 50% 0, 50% 0; } 30%, 100% { background-position: -40% 0, 140% 0; } }
+
+/* Approvals register: the detail panel cross-fades between entries */
+.reg-pane { opacity: 0; visibility: hidden; transform: translateY(10px); transition: opacity 0.3s ease, transform 0.5s var(--ease-out), visibility 0s linear 0.3s; }
+.reg-pane.is-on { opacity: 1; visibility: visible; transform: none; transition-delay: 0.12s, 0.12s, 0s; }
+
+/* Lab gallery (desktop): panels share the row; the hovered one — or the first, at rest — opens wide */
+@media (min-width: 768px) {
+  .lab-panel { flex: 1 1 0; min-width: 0; transition: flex-grow 0.8s var(--ease-out); }
+  .lab-gallery:not(:hover) .lab-panel:first-child, .lab-panel:hover { flex-grow: 4.2; }
+  .lab-caption-t { opacity: 0; transform: translateY(8px); transition: opacity 0.35s ease, transform 0.5s var(--ease-out); }
+  .lab-gallery:not(:hover) .lab-panel:first-child .lab-caption-t, .lab-panel:hover .lab-caption-t { opacity: 1; transform: none; transition-delay: 0.3s; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .policy-mark { transition: none; background-size: 100% 100%; }
+  .pdca-orbit, .is-visible .pdca-in::after, .is-visible .pdca-out::before, .is-visible .qu-v, .is-visible .qu-h { animation: none; }
+  .pdca-comet, .pdca-card, .pdca-caption, .qu-line, .lab-panel, .lab-caption-t, .reg-pane { transition: none; }
+  .qu-line { transform: none; }
+}
+
 /* Reveal v2 (site-wide): content sharpens from a soft blur as it rises in. Photo curtains and the
    wipe keep their own effects; .settled pins the final state if a transition stalls. */
 .reveal:not(.reveal-image):not(.reveal-wipe) { filter: blur(8px); transition-property: opacity, transform, filter; transition-duration: 0.9s, 1.1s, 0.9s; }
