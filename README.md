@@ -155,7 +155,7 @@ python scripts/compute-3d.py <slug>…     # computed 3D (RDKit) where PubChem h
 | 1, 31 | Title, contacts, "We deliver what we promise" | Footer promise line; contacts already on `/contact/` |
 | 2 | Company introduction, leadership | `/about/` overview (one paragraph, links to Guaifenesin and Methocarbamol) and the leadership list |
 | 3 | Vision, mission, values | `/about/#vision` (replaces the old website's vision and mission; the old mission is now the commitment on `/sustainability/`) |
-| 4 | Accolades (certification logos) | Approval tiles on `/quality/#approvals`, `/quality/regulatory-affairs/` and the home page |
+| 4 | Accolades (certification logos) | Home page strip — exactly the slide's eight logos; the full approval tiles live once, on `/quality/regulatory-affairs/` |
 | 5 | Corporate structure and functions | `/careers/` "How we work" row; functions added to the career areas |
 | 6 | CDMO | `/capabilities/#cdmo` (short band with four highlights) |
 | 7 | Synthetic chemistry capabilities | `/capabilities/#chemistry` (23 reactions as tags; the old site's 11 core ones highlighted) |
@@ -165,12 +165,14 @@ python scripts/compute-3d.py <slug>…     # computed 3D (RDKit) where PubChem h
 | 20 | Capacity (II: 250 KL, III: 125 KL, total 375 KL) | `/capabilities/manufacturing/#capacity` |
 | 21 | ISO 9001:2015 QMS diagram | `/quality/#qms`, redrawn as an animated SVG |
 | 22–23 | Quality policy, Quality Unit, QA responsibilities | `/quality/#policy` and `#assurance`, plus the QC lab photo strip |
-| 24–27 | EHS: safeguards flowchart, SHE policy, health and hygiene, standards | `/sustainability/#ehs` |
-| 28–29 | Solar PV, solar heaters and concentrators, ZLD, greenery | `/sustainability/#energy` |
-| 30 | CSR policy and organisations supported | `/sustainability/#community` |
+| 24–27 | EHS: safeguards flowchart, SHE policy, health and hygiene, standards | `/sustainability/#ehs` (flowchart, then three tabs) |
+| 28–29 | Solar PV, solar heaters and concentrators, ZLD, greenery | `/sustainability/#environment` (one section with the photos) |
+| 30 | CSR policy and organisations supported | `/sustainability/#community` (organisations listed once) |
 
 All text is in `src/data/company.ts`, with a "PPT slide N" note on each block. The photos are in `public/images`. Date stamps and phone watermarks were cropped off, and Unit II's main gate photo (`unit2-gate`) is now the full-resolution original.
 
 **Corrected from the slides:** "USFDA approved facility" → USFDA-inspected; the "FDA APPROVED" stamp left out; "SYNYHOKEM" → Synthokem; "Kw/hr" → kW; Unit III's degrees-minutes-seconds, which repeated Unit II's, recomputed from its own decimal coordinates; "Parwawada" → Parawada; "Jayanth tagore" → Jayant Tagore; "Emergency Exists" → exits; reaction names (Bischler–Napieralski, Darzens, Friedel–Crafts). OHSAS 18001 → ISO 45001:2018 and ISO 14001:2004 → 2015 everywhere they were stated as current.
+
+**Kept in one place only:** the approval tiles (Regulatory affairs), the filing and inspection history (Our journey, linked pre-filtered from Regulatory affairs with `?type=filing`), the "three layers" quality diagram (home page), the Chairperson's message (its own page). Each figure appears once per page, and no photo is repeated on a page.
 
 **Not used, as stock or filler:** the template slide with "This text is fully editable" placeholder text, stock and clip-art photos (baby feet, lab and laptop stock, a woman on a rock, a "Truworth wellness" health check-up graphic, CSR and QA clip art), coloured state maps (replaced by coordinates and distance lists), and the contact and social icons.

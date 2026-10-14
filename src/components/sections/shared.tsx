@@ -59,34 +59,6 @@ export function ApprovalsGrid({ limit }: { limit?: number }) {
   );
 }
 
-export const PROCESS_STEPS = [
-  { title: "Facility", body: "Two integrated manufacturing units, in Telangana and Andhra Pradesh." },
-  { title: "Technology", body: "World-class equipment, latest technologies and operational frameworks across all manufacturing units." },
-  { title: "Process", body: "A wide range of APIs and intermediates, having handled varied process reactions and high reactor volumes." },
-  { title: "Quality", body: "Excellent manufacturing, laboratory and documentation practices, consistently meeting Ph. Eur., USP and other standards." },
-  { title: "Delivery", body: "From gram level to multi-ton supplies — within the time frame stipulated by our customers." },
-];
-
-export function ProcessChain({ tone = "dark" }: { tone?: "dark" | "light" }) {
-  const dark = tone === "dark";
-  return (
-    <ol className="relative grid grid-cols-1 gap-8 md:grid-cols-5 md:gap-6">
-      <span aria-hidden="true" className={`absolute left-[19px] top-0 h-full w-px md:left-0 md:top-[19px] md:h-px md:w-full ${dark ? "bg-white/15" : "bg-border"}`} />
-      {PROCESS_STEPS.map((s, i) => (
-        <Reveal as="li" key={s.title} delay={i * 90} className="relative grid grid-cols-[40px_1fr] gap-5 md:block">
-          <span className={`relative z-10 grid h-10 w-10 place-items-center rounded-full font-mono text-xs ${dark ? "bg-deep text-accent-soft ring-1 ring-accent/60" : "bg-white text-primary ring-1 ring-primary/40"}`}>
-            0{i + 1}
-          </span>
-          <div className="md:mt-7">
-            <h3 className={`text-xl font-semibold ${dark ? "text-white" : "text-primary-ink"}`}>{s.title}</h3>
-            <p className={`mt-2.5 text-[0.93rem] leading-relaxed ${dark ? "text-on-dark-muted" : "text-muted"}`}>{s.body}</p>
-          </div>
-        </Reveal>
-      ))}
-    </ol>
-  );
-}
-
 /** Manufacturing units in depth (PPT slides 12–17): address, capacity, coordinates, connectivity and site photos. */
 export function UnitProfiles() {
   return (
@@ -107,16 +79,7 @@ export function UnitProfiles() {
               </div>
               <p className="mt-6 text-[1.02rem] leading-relaxed text-text">{f.summary}</p>
               <p className="mt-4 flex items-start gap-2.5 text-[0.92rem] leading-relaxed text-muted"><Icon name="pin" size={17} className="mt-0.5 shrink-0 text-accent-strong" />{f.address}</p>
-              <dl className="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-lg bg-border ring-1 ring-border">
-                <div className="bg-white p-4">
-                  <dt className="text-xs text-muted">Reactor capacity</dt>
-                  <dd className="mt-1 font-display text-2xl font-semibold text-primary">{f.capacityKL} KL</dd>
-                </div>
-                <div className="bg-white p-4">
-                  <dt className="text-xs text-muted">Coordinates</dt>
-                  <dd className="mt-1 font-mono text-[0.74rem] leading-snug text-primary-ink">{f.coords.lat}, {f.coords.lon}<span className="mt-0.5 block text-muted">{f.coords.dms}</span></dd>
-                </div>
-              </dl>
+              <p className="mt-5 flex items-start gap-2.5 font-mono text-[0.78rem] leading-relaxed text-muted"><Icon name="globe" size={16} className="mt-0.5 shrink-0 text-accent-strong" /><span>{f.coords.lat}, {f.coords.lon} · {f.coords.dms}</span></p>
               <ul className="mt-6 space-y-2">
                 {f.highlights.map((h) => (
                   <li key={h} className="flex gap-2.5 text-[0.92rem] text-text"><Icon name="check" size={16} className="mt-0.5 shrink-0 text-accent-strong" />{h}</li>

@@ -1,7 +1,9 @@
-import { PageHero, PageNav } from "@/components/layout/PageHero";
+import Link from "next/link";
+import { PageHero } from "@/components/layout/PageHero";
 import { LeadershipGrid } from "@/components/sections/Leadership";
-import { ButtonLink, Container, SectionHeading } from "@/components/ui/primitives";
+import { Container, SectionHeading } from "@/components/ui/primitives";
 import { Reveal } from "@/components/ui/client";
+import { Icon } from "@/components/ui/Icon";
 import { CHAIRPERSON, LEADERSHIP } from "@/data/company";
 import { pageMetadata } from "@/lib/seo";
 
@@ -15,29 +17,21 @@ export default function LeadershipPage() {
   return (
     <>
       <PageHero eyebrow="Leadership" title="The people leading Synthokem." lede="A board and management team guiding the company's growth in APIs and intermediates since 1978." crumbs={[{ name: "About", href: "/about/" }, { name: "Leadership", href: "/about/leadership/" }]} size="sm" />
-      <PageNav items={[{ id: "team", label: "Board & management" }, { id: "message", label: "Chairperson’s message" }]} />
 
       <section id="team" className="py-20 lg:py-28">
         <Container>
           <SectionHeading eyebrow="Leadership team" title="Board of Directors and management." size="md" />
           <div className="mt-14"><LeadershipGrid /></div>
-        </Container>
-      </section>
 
-      <section id="message" className="bg-surface py-20 lg:py-28">
-        <Container className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
-          <div className="lg:col-span-5">
-            <SectionHeading eyebrow="Message from the Chairperson" title={`${CHAIRPERSON.name}`} size="md" />
-            <p className="mt-3 text-muted">{CHAIRPERSON.title}, Synthokem Labs</p>
-          </div>
-          <Reveal className="lg:col-span-7">
-            <blockquote className="border-l-2 border-accent-strong pl-6 sm:pl-8">
-              <p className="font-display text-[1.6rem] font-medium leading-snug tracking-[-0.015em] text-primary-ink sm:text-[2rem]">“{CHAIRPERSON.quote}”</p>
-            </blockquote>
-            <div className="mt-8 space-y-4 text-[1.05rem] leading-relaxed text-muted">
-              {CHAIRPERSON.message.slice(0, 2).map((p) => <p key={p}>{p}</p>)}
-            </div>
-            <div className="mt-8"><ButtonLink href="/about/chairperson/">Read the Chairperson’s full message</ButtonLink></div>
+          {/* The message itself lives on its own page; this is only the way in */}
+          <Reveal className="mt-14">
+            <Link href="/about/chairperson/" className="group flex flex-col gap-5 rounded-xl bg-gradient-to-br from-primary to-accent-strong p-7 text-white transition-shadow duration-500 hover:shadow-[0_24px_48px_-26px_rgb(10_45_80/0.6)] sm:flex-row sm:items-center sm:justify-between sm:p-9">
+              <span>
+                <span className="text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-accent-soft">Message from the Chairperson</span>
+                <span className="mt-2 block font-display text-xl font-semibold sm:text-2xl">{CHAIRPERSON.name}</span>
+              </span>
+              <span className="inline-flex shrink-0 items-center gap-2 rounded-full bg-white px-5 py-2.5 text-sm font-semibold text-primary-ink">Read the message <Icon name="arrowRight" size={16} className="arrow-nudge" /></span>
+            </Link>
           </Reveal>
         </Container>
       </section>

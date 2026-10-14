@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { PageHero, PageNav } from "@/components/layout/PageHero";
 import { ChemistryCloud, LifecycleFlow } from "@/components/sections/CapabilitySections";
-import { RndTabs, type RndTab } from "@/components/sections/RndTabs";
+import { InfoTabs, type InfoTab } from "@/components/sections/InfoTabs";
 import { ButtonLink, Container, SectionHeading } from "@/components/ui/primitives";
 import { Counter, Reveal } from "@/components/ui/client";
 import { Img } from "@/components/ui/Img";
@@ -23,7 +23,7 @@ const FIGURES = [
 ];
 
 // PPT slides 8–10, as three tabs
-const RND: RndTab[] = [
+const RND: InfoTab[] = [
   { id: "synthesis", label: "Synthesis lab", short: "Synthesis", intro: `${RND_LABS[0].d} Route and process development before scale-up to the plant.`, groups: [{ title: "Facilities", items: RND_LABS[0].items }] },
   { id: "analytical", label: "Analytical R&D", short: "Analytical", intro: RND_LABS[1].d, groups: [{ title: "Instruments", items: RND_LABS[1].items }, { title: "Services", items: ANALYTICAL_DEVELOPMENT }] },
   { id: "team", label: "Team & literature", short: "Team", intro: `${RND_TEAM.stats[0].v}+ ${RND_TEAM.stats[0].l.toLowerCase()} averaging ${RND_TEAM.stats[1].v}+ years of experience. ${RND_TEAM.note}`, groups: [{ title: "Literature support", items: RND_TEAM.literature }] },
@@ -100,7 +100,7 @@ export default function CapabilitiesPage() {
             </Reveal>
           </div>
           <div className="lg:col-span-7 lg:pt-4">
-            <RndTabs tabs={RND} />
+            <InfoTabs tabs={RND} label="Research and development" />
           </div>
         </Container>
       </section>
@@ -110,7 +110,7 @@ export default function CapabilitiesPage() {
           <div className="grid grid-cols-1 gap-px overflow-hidden rounded-lg bg-white/10 md:grid-cols-2">
           {[
             { href: "/capabilities/manufacturing/", t: "Manufacturing", d: "Integrated facilities, from technology to delivery.", img: "cleanroom-processing" },
-            { href: "/quality/", t: "Quality systems", d: "Quality control, assurance and regulatory affairs.", img: "qc-analyst" },
+            { href: "/quality/", t: "Quality systems", d: "Quality control, assurance and regulatory affairs.", img: "qa-team" },
           ].map((x) => (
             <Link key={x.href} href={x.href} className="zoom-parent group relative isolate flex min-h-72 flex-col justify-end overflow-hidden p-8 sm:p-10">
               <Img name={x.img} sizes="(min-width:768px) 50vw, 100vw" className="zoom-img absolute inset-0 -z-20 h-full w-full object-cover" alt="" />

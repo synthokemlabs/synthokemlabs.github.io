@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { CSSProperties } from "react";
 import { Reveal } from "@/components/ui/client";
 import { Icon } from "@/components/ui/Icon";
-import { COUNTRIES, JOURNEY, TOTAL_CAPACITY_KL } from "@/data/company";
+import { JOURNEY } from "@/data/company";
 import { CATEGORIES, productsIn, structureSrc } from "@/data/products";
 
 /** The five product families, each with a representative structure — like the "What we deliver" row on peer API sites. */
@@ -39,17 +39,17 @@ export function EvolutionTimeline() {
   const pick = (year: number, title: string) => JOURNEY.find((m) => m.year === year && m.title === title)!;
   const items = [
     { year: "1978", title: "Founded in Hyderabad", d: pick(1978, "Incorporated").detail.replace(/^Synthokem Labs is incorporated/, "Incorporated") },
-    { year: "1993", title: "First USFDA filings", d: pick(1993, "First USFDA filings").detail },
+    { year: "1993", title: "First USFDA filings", d: "Drug Master Files for Methocarbamol and Guaifenesin." },
     { year: "2002", title: "WHO-GMP certified", d: "WHO-GMP certificate achieved — renewed to date." },
     { year: "2010", title: "Unit II in operation", d: "Our Pashamylaram site, home to the corporate office and R&D unit, comes into operation." },
-    { year: "Today", title: `Two units · ${COUNTRIES.length} countries`, d: `${TOTAL_CAPACITY_KL} KL of reactor capacity across Telangana and Andhra Pradesh.` },
+    { year: "2019", title: "CEP for Unit II", d: "EDQM Certificate of Suitability for Guaifenesin made at Unit II." },
   ];
   return (
     <Reveal>
       <ol className="relative grid grid-cols-1 gap-9 lg:grid-cols-5 lg:gap-6">
         <span aria-hidden="true" className="evo-rail absolute left-[11px] top-3 h-[calc(100%-1.5rem)] w-px bg-border-strong lg:left-0 lg:top-[11px] lg:h-px lg:w-full" />
         {items.map((m, i) => {
-          const now = i === items.length - 1;
+          const now = i === items.length - 1; // most recent milestone is highlighted
           return (
             <li key={m.year} className="node-pop relative pl-11 lg:pl-0 lg:pt-12" style={{ "--node-delay": `${0.35 + i * 0.18}s` } as CSSProperties}>
               <span className={`absolute left-0 top-0 grid h-6 w-6 place-items-center rounded-full ring-2 ${now ? "bg-primary ring-primary" : "bg-white ring-primary"}`}>

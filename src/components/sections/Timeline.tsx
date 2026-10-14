@@ -8,6 +8,12 @@ import { Reveal } from "@/components/ui/client";
 export function Timeline() {
   const [filter, setFilter] = useState<MilestoneType | "all">("all");
   const lineRef = useRef<HTMLDivElement>(null);
+
+  // Deep link: /about/journey/?type=filing opens the timeline pre-filtered (used by Regulatory affairs)
+  useEffect(() => {
+    const t = new URLSearchParams(window.location.search).get("type");
+    if (t && t in MILESTONE_LABEL) setFilter(t as MilestoneType);
+  }, []);
   const items = useMemo(() => JOURNEY.filter((m) => filter === "all" || m.type === filter), [filter]);
   const byYear = useMemo(() => {
     const map = new Map<number, typeof items>();

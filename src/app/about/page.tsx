@@ -61,9 +61,8 @@ export default function AboutPage() {
                 </ul>
               </div>
             </div>
-            {/* Not a .zoom-parent: the parallax scale would crop the signboard at the left edge */}
-            <Reveal variant="image" className="overflow-hidden rounded-lg lg:col-span-6">
-              <Img name="unit2-gate" width={1920} height={1116} sizes="(min-width:1024px) 45vw, 100vw" className="aspect-[1920/1116] w-full object-cover" />
+            <Reveal variant="image" className="zoom-parent overflow-hidden rounded-lg lg:col-span-6">
+              <Img name="unit3-block" sizes="(min-width:1024px) 45vw, 100vw" className="zoom-img aspect-[4/3] w-full object-cover" />
             </Reveal>
           </div>
           <dl className="mt-16 grid grid-cols-2 gap-x-6 gap-y-8 border-t border-border pt-10 sm:grid-cols-3 lg:grid-cols-5">

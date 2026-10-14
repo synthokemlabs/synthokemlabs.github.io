@@ -3,10 +3,10 @@
 import { useId, useRef, useState, type KeyboardEvent } from "react";
 import { Icon } from "@/components/ui/Icon";
 
-export interface RndTab { id: string; label: string; short: string; intro: string; groups: { title: string; items: string[] }[] }
+export interface InfoTab { id: string; label: string; short: string; intro: string; groups: { title: string; items: string[] }[] }
 
-/** Accessible tabs (arrow keys move between tabs) for the R&D labs, team and literature. */
-export function RndTabs({ tabs }: { tabs: RndTab[] }) {
+/** Accessible tabs (arrow keys move between tabs); used for R&D on Capabilities and EHS on Sustainability. */
+export function InfoTabs({ tabs, label }: { tabs: InfoTab[]; label: string }) {
   const [active, setActive] = useState(0);
   const base = useId();
   const refs = useRef<(HTMLButtonElement | null)[]>([]);
@@ -21,7 +21,7 @@ export function RndTabs({ tabs }: { tabs: RndTab[] }) {
   const tab = tabs[active];
   return (
     <div>
-      <div role="tablist" aria-label="R&D" onKeyDown={onKey} className="relative flex gap-1 rounded-full bg-surface p-1 ring-1 ring-border">
+      <div role="tablist" aria-label={label} onKeyDown={onKey} className="relative flex gap-1 rounded-full bg-surface p-1 ring-1 ring-border">
         {tabs.map((t, i) => (
           <button
             key={t.id}

@@ -1,6 +1,4 @@
-import Link from "next/link";
 import { Reveal } from "@/components/ui/client";
-import { Icon } from "@/components/ui/Icon";
 import { Img } from "@/components/ui/Img";
 import { LogoMark } from "@/components/ui/Logo";
 import { LEADERSHIP, type Leader } from "@/data/company";
@@ -20,7 +18,6 @@ export function PortraitPlaceholder({ className = "" }: { className?: string }) 
 }
 
 function LeaderCard({ p, delay }: { p: Leader; delay: number }) {
-  const chair = p.role === "Chairperson";
   return (
     <Reveal as="li" delay={delay} className="h-full">
       <article className="group flex h-full flex-col overflow-hidden rounded-xl bg-white ring-1 ring-border transition-[transform,box-shadow] duration-500 ease-out hover:-translate-y-1 hover:shadow-[0_24px_48px_-28px_rgb(10_45_80/0.45)]">
@@ -35,11 +32,6 @@ function LeaderCard({ p, delay }: { p: Leader; delay: number }) {
         <div className="flex flex-1 flex-col p-5 sm:p-6">
           <p className="text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-accent-strong">{p.role}</p>
           <h3 className="mt-1.5 text-lg font-semibold leading-snug text-primary-ink">{p.name}</h3>
-          {chair && (
-            <Link href="/about/chairperson/" className="mt-auto inline-flex items-center gap-2 pt-4 text-sm font-semibold text-primary">
-              <span className="link-u">Read the Chairperson’s message</span><Icon name="arrowRight" size={15} className="arrow-nudge" />
-            </Link>
-          )}
         </div>
       </article>
     </Reveal>

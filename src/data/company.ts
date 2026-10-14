@@ -217,23 +217,16 @@ export const SPECIALISATIONS: { name: string; core?: boolean }[] = [
 /* ------------------------------ R&D and CDMO ------------------------------ */
 /** PPT slide 6. The slide's "USFDA approved facility" is corrected to "USFDA-inspected" (see APPROVALS). */
 export const CDMO = {
-  lead: "Established Good Manufacturing Practices, a strong R&D team, systematic product development, a proven record of customer satisfaction, uncompromising ethics and flexible customer relationships — the approach behind Synthokem's growth over four decades.",
   /** Short form for the Capabilities page band. */
   short: "Established GMP practices, a strong R&D team and flexible customer relationships — open to co-development and CDMO partnerships.",
-  highlights: ["USFDA-inspected facility · Hyderabad", "WHO- and EU-compliant facility · near Visakhapatnam", "High-pressure reactions & hydrogenation", `About ${TOTAL_CAPACITY_KL} KL across two sites`],
-  points: [
-    { t: "Two locations", d: "A USFDA-inspected facility in Hyderabad and a WHO- and EU-compliant facility near Visakhapatnam.", icon: "factory" as const },
-    { t: "Demanding chemistry", d: "Process and support equipment for most kinds of reactions, including high-pressure reactions and hydrogenation.", icon: "flask" as const },
-    { t: "About 375 KL capacity", d: "Across both locations — batches from small volumes to high-volume output, with scope to expand for future projects.", icon: "grid" as const },
-    { t: "Shared expertise", d: "Our R&D team is open to co-development and CDMO partnerships, and happy to share its expertise.", icon: "users" as const },
-  ],
+  highlights: ["USFDA-inspected facility · Hyderabad", "WHO- and EU-compliant facility · near Visakhapatnam", "High-pressure reactions & hydrogenation", "Room to expand for new projects"],
 };
 
 /** Lab-to-market lifecycle on the Capabilities page, condensed from PPT slides 6, 8, 9 and 20 and the Journey (DMFs since 1993). */
 export const LIFECYCLE = [
   { t: "Process R&D", d: "Route and process development in our synthesis lab, from milligram to kilogram scale.", icon: "flask" as const },
   { t: "Analytical development", d: "Method development, validation and transfer to QC; structure elucidation and genotoxic impurity studies.", icon: "search" as const },
-  { t: "Scale-up & manufacturing", d: `Commercial batches across ${TOTAL_CAPACITY_KL} KL at two GMP units — including high-pressure reactions and hydrogenation.`, icon: "factory" as const },
+  { t: "Scale-up & manufacturing", d: "Commercial batches at two GMP units, from small volumes to high-volume output — including high-pressure reactions and hydrogenation.", icon: "factory" as const },
   { t: "Regulatory support", d: "DMF filings since 1993, responses to regulatory queries and GLP-compliant documentation.", icon: "shield" as const },
 ];
 
@@ -454,7 +447,6 @@ export const RENEWABLES = [
 /* ------------------------------ CSR (PPT slide 30) ------------------------------ */
 export const CSR = {
   policy: "Synthokem Labs' CSR policy sets out how the company undertakes CSR projects, programmes and activities under Schedule VII of the Companies Act, 2013 and the Companies (Corporate Social Responsibility Policy) Rules, 2014.",
-  support: "The company provides financial assistance, as donations, to education, nutrition, disease-control and social-welfare activities run by NGOs.",
   supported: ["Akshaya Patra Foundation", "Teach for Change", "Orphanages", "Shanthiniketan", "Sri Prasanna Gajanana Sevaka Samajam", "PM CARES Fund", "Chief Minister's Relief Fund"],
 };
 

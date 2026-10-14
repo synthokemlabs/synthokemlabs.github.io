@@ -4,7 +4,7 @@ import { ApprovalsGrid } from "@/components/sections/shared";
 import { ButtonLink, Container, SectionHeading } from "@/components/ui/primitives";
 import { JOURNEY } from "@/data/company";
 import { PRODUCTS, REGULATORY_GLOSSARY, productHref, structureSrc } from "@/data/products";
-import { SITE } from "@/data/site";
+import { Icon } from "@/components/ui/Icon";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
@@ -15,7 +15,8 @@ export const metadata = pageMetadata({
 
 export default function RegulatoryPage() {
   const commercialApis = PRODUCTS.filter((p) => p.category === "apis" && p.status === "commercial");
-  const filings = JOURNEY.filter((m) => m.type === "filing" || m.type === "inspection");
+  const filingCount = JOURNEY.filter((m) => m.type === "filing").length;
+  const firstFiling = Math.min(...JOURNEY.filter((m) => m.type === "filing").map((m) => m.year));
   return (
     <>
       <PageHero eyebrow="Regulatory affairs" title="Regulatory discipline, documented." lede="Having been successfully audited and recognised by global regulatory authorities, Synthokem delivers differentiated, high-quality products consistently." crumbs={[{ name: "Quality", href: "/quality/" }, { name: "Regulatory affairs", href: "/quality/regulatory-affairs/" }]} size="sm" />
@@ -97,36 +98,24 @@ export default function RegulatoryPage() {
         </Container>
       </section>
 
-      <section className="py-20 lg:py-28">
-        <Container className="grid grid-cols-1 gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-4">
-            <SectionHeading eyebrow="Filing & inspection history" title="Three decades of regulatory filings." size="md" />
-            <div className="mt-8 flex flex-wrap gap-3">
-              <ButtonLink href="/about/journey/">Full timeline</ButtonLink>
-              <ButtonLink href={SITE.productListPdf} variant="secondary" icon="download">Product list</ButtonLink>
-            </div>
+      {/* The filing and inspection history lives on Our journey (one copy); link to it pre-filtered */}
+      <section className="border-t border-border py-16">
+        <Container className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          <Link href="/about/journey/?type=filing" className="group flex items-center justify-between gap-6 rounded-xl bg-white p-7 ring-1 ring-border transition-[transform,box-shadow] duration-500 hover:-translate-y-1 hover:shadow-[0_22px_44px_-28px_rgb(10_45_80/0.45)]">
+            <span>
+              <span className="eyebrow block text-accent-strong">Filing & inspection history</span>
+              <span className="mt-2 block text-xl font-semibold text-primary-ink">{filingCount} regulatory filings since {firstFiling}</span>
+              <span className="mt-1 block text-sm text-muted">On our company timeline, with inspections and certifications</span>
+            </span>
+            <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-primary-tint text-primary"><Icon name="arrowRight" size={18} className="arrow-nudge" /></span>
+          </Link>
+          <div className="flex flex-col justify-center gap-4 rounded-xl bg-primary p-7 text-white sm:flex-row sm:items-center sm:justify-between">
+            <span>
+              <span className="block text-xl font-semibold">Need regulatory documentation?</span>
+              <span className="mt-1 block text-sm text-on-dark-muted">Certificates, DMF/CEP information and CoAs.</span>
+            </span>
+            <ButtonLink href="/enquiry/?type=technical" variant="light">Request documents</ButtonLink>
           </div>
-          <ol className="lg:col-span-8">
-            {filings.map((m) => (
-              <li key={m.year + m.title} className="grid grid-cols-[4.5rem_1fr] gap-4 border-t border-border py-5 last:border-b">
-                <span className="font-display text-2xl font-semibold text-primary">{m.year}</span>
-                <div>
-                  <p className="font-semibold text-primary-ink">{m.title}{m.unit ? <span className="ml-2 font-mono text-xs font-normal text-muted">{m.unit}</span> : null}</p>
-                  <p className="mt-1 text-[0.95rem] text-muted">{m.detail}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
-        </Container>
-      </section>
-
-      <section className="border-t border-border bg-surface py-16">
-        <Container className="flex flex-col justify-between gap-6 md:flex-row md:items-center">
-          <div>
-            <p className="display-md text-primary-ink">Need regulatory documentation?</p>
-            <p className="mt-2 text-muted">We support customers with their technical and regulatory queries.</p>
-          </div>
-          <ButtonLink href="/enquiry/?type=technical">Request documents</ButtonLink>
         </Container>
       </section>
     </>
