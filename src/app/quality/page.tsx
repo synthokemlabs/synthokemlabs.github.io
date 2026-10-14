@@ -1,5 +1,5 @@
 import { PageHero, PageNav } from "@/components/layout/PageHero";
-import { LabGallery, PdcaCycle, PolicyStatement, QualityUnitChart } from "@/components/sections/QualitySections";
+import { LabGallery, PolicyStatement, QmsStory, QualityUnitChart } from "@/components/sections/QualitySections";
 import { ButtonLink, Container, SectionHeading } from "@/components/ui/primitives";
 import { Counter, Reveal } from "@/components/ui/client";
 import { Icon } from "@/components/ui/Icon";
@@ -43,7 +43,7 @@ export default function QualityPage() {
       <section id="system" className="border-y border-border bg-surface py-20 lg:py-28">
         <Container>
           <SectionHeading eyebrow="Quality management system" title="A system built to keep improving." highlight="improving." lede="Certified to ISO 9001 since 2000. Requirements go in, a Plan–Do–Check–Act cycle runs without pause, and satisfied customers come out." />
-          <div className="mt-16"><PdcaCycle /></div>
+          <div className="mt-14"><QmsStory /></div>
         </Container>
       </section>
 
