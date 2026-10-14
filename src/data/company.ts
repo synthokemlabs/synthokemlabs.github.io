@@ -184,37 +184,43 @@ export const COMMON_EQUIPMENT = {
 };
 
 /* ------------------------------ Specialisation ------------------------------ */
-/** PPT slide 7 ("Synthetic chemistry — capabilities") plus cross-coupling (slide 6), alphabetised; names spelled per IUPAC usage. */
-export const SPECIALISATIONS: { name: string }[] = [
-  { name: "Aldol reaction" },
+/**
+ * PPT slide 7 ("Synthetic chemistry — capabilities") plus cross-coupling (slide 6), alphabetised; names spelled per IUPAC usage.
+ * `core` marks the areas of specialisation listed on the previous website.
+ */
+export const SPECIALISATIONS: { name: string; core?: boolean }[] = [
+  { name: "Aldol reaction", core: true },
   { name: "Alkylation" },
   { name: "Bischler–Napieralski reaction" },
-  { name: "Chloromethylation" },
+  { name: "Chloromethylation", core: true },
   { name: "Condensation" },
   { name: "Cross-coupling reactions" },
   { name: "Cyanation" },
   { name: "Cyclisation" },
-  { name: "Darzens (glycidic ester) reaction" },
+  { name: "Darzens (glycidic ester) reaction", core: true },
   { name: "Dealkylation" },
-  { name: "Esterification" },
-  { name: "Friedel–Crafts acylation" },
-  { name: "Halogenation" },
-  { name: "High-vacuum distillation" },
-  { name: "Hydrogenation" },
+  { name: "Esterification", core: true },
+  { name: "Friedel–Crafts acylation", core: true },
+  { name: "Halogenation", core: true },
+  { name: "High-vacuum distillation", core: true },
+  { name: "Hydrogenation", core: true },
   { name: "Nitration" },
   { name: "Oxidation" },
   { name: "Peptide amidation" },
   { name: "Polymerisation" },
-  { name: "Racemisation" },
-  { name: "Radical bromination" },
+  { name: "Racemisation", core: true },
+  { name: "Radical bromination", core: true },
   { name: "Sulfonation" },
-  { name: "Williamson synthesis" },
+  { name: "Williamson synthesis", core: true },
 ];
 
 /* ------------------------------ R&D and CDMO ------------------------------ */
 /** PPT slide 6. The slide's "USFDA approved facility" is corrected to "USFDA-inspected" (see APPROVALS). */
 export const CDMO = {
   lead: "Established Good Manufacturing Practices, a strong R&D team, systematic product development, a proven record of customer satisfaction, uncompromising ethics and flexible customer relationships — the approach behind Synthokem's growth over four decades.",
+  /** Short form for the Capabilities page band. */
+  short: "Established GMP practices, a strong R&D team and flexible customer relationships — open to co-development and CDMO partnerships.",
+  highlights: ["USFDA-inspected facility · Hyderabad", "WHO- and EU-compliant facility · near Visakhapatnam", "High-pressure reactions & hydrogenation", `About ${TOTAL_CAPACITY_KL} KL across two sites`],
   points: [
     { t: "Two locations", d: "A USFDA-inspected facility in Hyderabad and a WHO- and EU-compliant facility near Visakhapatnam.", icon: "factory" as const },
     { t: "Demanding chemistry", d: "Process and support equipment for most kinds of reactions, including high-pressure reactions and hydrogenation.", icon: "flask" as const },
@@ -222,6 +228,14 @@ export const CDMO = {
     { t: "Shared expertise", d: "Our R&D team is open to co-development and CDMO partnerships, and happy to share its expertise.", icon: "users" as const },
   ],
 };
+
+/** Lab-to-market lifecycle on the Capabilities page, condensed from PPT slides 6, 8, 9 and 20 and the Journey (DMFs since 1993). */
+export const LIFECYCLE = [
+  { t: "Process R&D", d: "Route and process development in our synthesis lab, from milligram to kilogram scale.", icon: "flask" as const },
+  { t: "Analytical development", d: "Method development, validation and transfer to QC; structure elucidation and genotoxic impurity studies.", icon: "search" as const },
+  { t: "Scale-up & manufacturing", d: `Commercial batches across ${TOTAL_CAPACITY_KL} KL at two GMP units — including high-pressure reactions and hydrogenation.`, icon: "factory" as const },
+  { t: "Regulatory support", d: "DMF filings since 1993, responses to regulatory queries and GLP-compliant documentation.", icon: "shield" as const },
+];
 
 /** PPT slide 8. */
 export const ANALYTICAL_DEVELOPMENT = [
@@ -368,12 +382,6 @@ export const CHAIRPERSON = {
     "I take this opportunity to thank all of our stakeholders whose continued patronage and confidence inspire us and I hope we continue to have mutually beneficial relationships that bring about sustainable growth in the society we live in.",
   ],
 };
-
-export const PILLARS = [
-  { title: "Scalable facilities", body: "World-class equipment, technologies and operational frameworks across all manufacturing units." },
-  { title: "Skilled workforce", body: "Highly skilled pharmaceutical scientists, regulatory affairs specialists, quality analysts and more." },
-  { title: "Advanced products", body: "A portfolio of growth-oriented, stable APIs and intermediates in the global marketplace." },
-];
 
 /* ------------------------------ Quality (PPT slides 21–23) ------------------------------ */
 /** Slide 22, with the slide's "SYNYHOKEM" typo and grammar corrected. */

@@ -529,3 +529,24 @@ html.lenis-on body { overscroll-behavior: none; }
 @media (min-width: 1024px) { .evo-rail { transform: scaleX(0); transform-origin: 0 50%; } }
 .is-visible .evo-rail, .settled .evo-rail, .no-js .evo-rail { transform: none; }
 @media (prefers-reduced-motion: reduce) { .evo-rail { transform: none; } }
+
+/* Capabilities: a dot travelling along the lab-to-market rail, from the first stage to the last (tablet and up).
+   The list is a size container, so 100cqw is its width; first icon centre is (100cqw - 72px) / 8 in, and the
+   last is 75cqw + 18px further along (four columns, 24px gaps). */
+.flow-host { container-type: inline-size; }
+.flow-dot { display: none; }
+@media (min-width: 768px) {
+  .flow-dot { display: block; position: absolute; z-index: 5; left: calc((100cqw - 72px) / 8 - 5px); top: 22px; width: 10px; height: 10px; border-radius: 9999px; background: var(--accent); box-shadow: 0 0 0 4px rgb(63 168 238 / 0.22); opacity: 0; pointer-events: none; }
+  .is-visible .flow-dot { animation: flow-across 5s cubic-bezier(0.45, 0, 0.55, 1) 1.8s infinite; }
+}
+@keyframes flow-across { 0% { opacity: 0; transform: translateX(0); } 8% { opacity: 1; } 90% { opacity: 1; } 100% { opacity: 0; transform: translateX(calc(75cqw + 18px)); } }
+
+/* Tab panels and their items ease in on every switch */
+@keyframes tab-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.tab-in { animation: tab-in 0.45s var(--ease-out) both; }
+.tab-item { animation: tab-in 0.5s var(--ease-out) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .flow-dot { display: none; }
+  .tab-in, .tab-item { animation: none; }
+}

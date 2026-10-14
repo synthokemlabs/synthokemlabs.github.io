@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
-import { APPROVALS, FACILITIES, SPECIALISATIONS, TOTAL_CAPACITY_KL, type Approval } from "@/data/company";
+import { APPROVALS, FACILITIES, TOTAL_CAPACITY_KL, type Approval } from "@/data/company";
 import { LOCATIONS } from "@/data/site";
 import { Icon } from "@/components/ui/Icon";
 import { Img } from "@/components/ui/Img";
@@ -84,29 +84,6 @@ export function ProcessChain({ tone = "dark" }: { tone?: "dark" | "light" }) {
         </Reveal>
       ))}
     </ol>
-  );
-}
-
-/** Reaction chemistries as a periodic-table style grid. */
-/** Reaction chemistries as a plain numbered index (no pseudo element symbols, which chemists would read as real elements). */
-export function SpecialisationGrid() {
-  return (
-    <div>
-      <ol className="grid grid-cols-1 border-t border-border-strong sm:grid-cols-2 sm:gap-x-10 lg:grid-cols-3">
-        {SPECIALISATIONS.map((s, i) => (
-          <Reveal as="li" key={s.name} delay={(i % 3) * 60} className="flex items-baseline gap-5 border-b border-border py-5">
-            <span className="w-6 shrink-0 font-mono text-xs text-muted">{String(i + 1).padStart(2, "0")}</span>
-            <span className="font-display text-lg font-semibold text-primary-ink sm:text-xl">{s.name}</span>
-          </Reveal>
-        ))}
-      </ol>
-      <div className="mt-10 flex flex-col gap-4 rounded-lg bg-primary px-6 py-6 text-white sm:flex-row sm:items-center sm:justify-between sm:px-8">
-        <p className="text-on-dark-muted"><span className="font-semibold text-white">Have a process in mind?</span> Tell us the chemistry, scale and timelines.</p>
-        <Link href="/contact/?intent=partner" className="group inline-flex min-h-12 shrink-0 items-center justify-center gap-2 rounded-md bg-white px-6 text-[0.92rem] font-semibold text-primary-ink transition-colors hover:bg-primary-tint">
-          Talk to us <Icon name="arrowRight" size={18} className="arrow-nudge" />
-        </Link>
-      </div>
-    </div>
   );
 }
 

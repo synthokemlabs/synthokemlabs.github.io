@@ -157,9 +157,9 @@ python scripts/compute-3d.py <slug>…     # computed 3D (RDKit) where PubChem h
 | 3 | Vision, mission, values | `/about/#vision` (replaces the old website's vision and mission; the old mission is now the commitment on `/sustainability/`) |
 | 4 | Accolades (certification logos) | Approval tiles on `/quality/#approvals`, `/quality/regulatory-affairs/` and the home page |
 | 5 | Corporate structure and functions | `/careers/` "How we work" row; functions added to the career areas |
-| 6 | CDMO | `/capabilities/#cdmo` |
-| 7 | Synthetic chemistry capabilities | `/capabilities/#specialisation` (23 reactions) |
-| 8–10 | Analytical development, R&D labs, team, literature support | `/capabilities/#rnd`, `#analytical`, `#team` |
+| 6 | CDMO | `/capabilities/#cdmo` (short band with four highlights) |
+| 7 | Synthetic chemistry capabilities | `/capabilities/#chemistry` (23 reactions as tags; the old site's 11 core ones highlighted) |
+| 8–10 | Analytical development, R&D labs, team, literature support | `/capabilities/#lifecycle` (lab-to-market flowchart) and `#rnd` (three tabs) |
 | 11–17 | Units II and III: address, coordinates, distances, photos | `/capabilities/manufacturing/#units` |
 | 18–19 | Common equipment | `/capabilities/manufacturing/#equipment` |
 | 20 | Capacity (II: 250 KL, III: 125 KL, total 375 KL) | `/capabilities/manufacturing/#capacity` |
