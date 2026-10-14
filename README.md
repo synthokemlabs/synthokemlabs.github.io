@@ -160,9 +160,9 @@ python scripts/compute-3d.py <slug>…     # computed 3D (RDKit) where PubChem h
 | 6 | CDMO | `/capabilities/#cdmo` (short band with four highlights) |
 | 7 | Synthetic chemistry capabilities | `/capabilities/#chemistry` (23 reactions as tags; the old site's 11 core ones highlighted) |
 | 8–10 | Analytical development, R&D labs, team, literature support | `/capabilities/#lifecycle` (lab-to-market flowchart) and `#rnd` (three tabs) |
-| 11–17 | Units II and III: address, coordinates, distances, photos | `/capabilities/manufacturing/#units` |
-| 18–19 | Common equipment | `/capabilities/manufacturing/#equipment` |
-| 20 | Capacity (II: 250 KL, III: 125 KL, total 375 KL) | `/capabilities/manufacturing/#capacity` |
+| 11–17 | Units II and III: address, coordinates, distances, photos | `/capabilities/manufacturing/#sites` (dotted India map pinned beside each unit as it scrolls) |
+| 18–19 | Common equipment | `/capabilities/manufacturing/#equipment` (animated process line + utilities grid) |
+| 20 | Capacity (II: 250 KL, III: 125 KL, total 375 KL) | `/capabilities/manufacturing/#capacity` (ring chart) |
 | 21 | ISO 9001:2015 QMS diagram | `/quality/#qms`, redrawn as an animated SVG |
 | 22–23 | Quality policy, Quality Unit, QA responsibilities | `/quality/#policy` and `#assurance`, plus the QC lab photo strip |
 | 24–27 | EHS: safeguards flowchart, SHE policy, health and hygiene, standards | `/sustainability/#ehs` (flowchart, then three tabs) |

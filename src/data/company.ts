@@ -107,7 +107,8 @@ export interface Facility {
   capacityKL: number;
   coords: { lat: number; lon: number; dms: string };
   /** Approximate distances, as given by the company (PPT slides 13 and 16). */
-  logistics: { kind: "airport" | "seaport"; name: string; km: number }[];
+  /** Map positions (lat/lon) are approximate, for the illustrative site map only. */
+  logistics: { kind: "airport" | "seaport"; name: string; short: string; km: number; lat: number; lon: number }[];
   /** Site photographs (Img names), first one leads. */
   photos: { name: string; caption: string }[];
 }
@@ -123,9 +124,9 @@ export const FACILITIES: Facility[] = [
     capacityKL: 250,
     coords: { lat: 17.536135, lon: 78.178622, dms: "17° 32′ 10.1″ N, 78° 10′ 43.0″ E" },
     logistics: [
-      { kind: "airport", name: "Rajiv Gandhi International Airport, Hyderabad", km: 40 },
-      { kind: "seaport", name: "Chennai Port", km: 634 },
-      { kind: "seaport", name: "Mumbai Port", km: 743 },
+      { kind: "airport", name: "Rajiv Gandhi International Airport, Hyderabad", short: "Hyderabad Airport", km: 40, lat: 17.24, lon: 78.43 },
+      { kind: "seaport", name: "Chennai Port", short: "Chennai Port", km: 634, lat: 13.1, lon: 80.29 },
+      { kind: "seaport", name: "Mumbai Port", short: "Mumbai Port", km: 743, lat: 18.94, lon: 72.84 },
     ],
     photos: [
       { name: "facility-aerial", caption: "Unit II from the air" },
@@ -147,10 +148,10 @@ export const FACILITIES: Facility[] = [
     // The slide repeated Unit II's degrees-minutes-seconds; these are converted from Unit III's own decimal coordinates
     coords: { lat: 17.65302, lon: 83.0731, dms: "17° 39′ 10.9″ N, 83° 04′ 23.2″ E" },
     logistics: [
-      { kind: "airport", name: "Visakhapatnam Airport (VTZ)", km: 31 },
-      { kind: "seaport", name: "Visakhapatnam Port", km: 36 },
-      { kind: "airport", name: "Alluri Sitarama Raju International Airport, Bhogapuram", km: 62 },
-      { kind: "airport", name: "Rajiv Gandhi International Airport, Hyderabad", km: 750 },
+      { kind: "airport", name: "Visakhapatnam Airport (VTZ)", short: "Vizag Airport", km: 31, lat: 17.72, lon: 83.22 },
+      { kind: "seaport", name: "Visakhapatnam Port", short: "Vizag Port", km: 36, lat: 17.69, lon: 83.29 },
+      { kind: "airport", name: "Alluri Sitarama Raju International Airport, Bhogapuram", short: "Bhogapuram Airport", km: 62, lat: 18.03, lon: 83.49 },
+      { kind: "airport", name: "Rajiv Gandhi International Airport, Hyderabad", short: "Hyderabad Airport", km: 750, lat: 17.24, lon: 78.43 },
     ],
     photos: [
       { name: "unit3-block", caption: "Unit III, JN Pharmacity" },
@@ -162,26 +163,29 @@ export const FACILITIES: Facility[] = [
 
 export const TOTAL_CAPACITY_KL = FACILITIES.reduce((sum, f) => sum + f.capacityKL, 0);
 
-/** PPT slides 18–19: equipment common to all units. */
-export const COMMON_EQUIPMENT = {
-  process: [
-    "Class 100,000 clean area for the finished product, from crystallisation onwards",
-    "Leaf filters and sparkler filters for in-process filtration",
-    "Centrifuges / ANFDs and fluid-bed dryers for separating and drying wet product",
-    "Multimill / pulveriser for homogenisation",
-    "Sifters for sieving the finished product",
-  ],
-  utilities: [
-    "PSA nitrogen system for inertisation",
-    "Air compressors for dry instrument air",
-    "Cooling towers for cooling water",
-    "Chillers for process and heat-exchanger cooling",
-    "Hot-oil boilers for high-vacuum distillation",
-    "Steam ejectors for vacuum and a boiler for steam",
-    "EDI water purification and supply system",
-    "DG sets for complete power back-up, and a fire-fighting system",
-  ],
-};
+/**
+ * PPT slides 18–19: equipment common to all units, arranged as the product's path through the plant
+ * (stages) and the utilities that serve it. Class 100,000 applies from crystallisation onwards.
+ */
+export const PROCESS_TRAIN = [
+  { t: "Reaction", d: "Process reactors, including high-pressure and hydrogenation", icon: "reactor" as const },
+  { t: "Filtration", d: "Leaf and sparkler filters for in-process filtration", icon: "filter" as const },
+  { t: "Separation", d: "Centrifuges and ANFDs separate the wet product", icon: "spin" as const },
+  { t: "Drying", d: "ANFDs and fluid-bed dryers", icon: "wind" as const },
+  { t: "Milling", d: "Multimill / pulveriser for homogenisation", icon: "cog" as const },
+  { t: "Sifting", d: "Sifters for sieving the finished product", icon: "grid" as const },
+];
+export const CLEAN_AREA = "Class 100,000 clean area for the finished product, from crystallisation onwards";
+export const UTILITIES = [
+  { t: "PSA nitrogen", d: "Nitrogen for inertisation", icon: "wind" as const },
+  { t: "Compressed air", d: "Dry instrument air", icon: "wind" as const },
+  { t: "Cooling towers", d: "Cooling water", icon: "droplet" as const },
+  { t: "Chillers", d: "Process and heat-exchanger cooling", icon: "snowflake" as const },
+  { t: "Hot-oil boilers", d: "For high-vacuum distillation", icon: "flame" as const },
+  { t: "Steam & vacuum", d: "Steam boiler and steam ejectors", icon: "spin" as const },
+  { t: "EDI water", d: "Purified water generation and supply", icon: "droplet" as const },
+  { t: "Power & fire safety", d: "DG back-up and fire-fighting system", icon: "zap" as const },
+];
 
 /* ------------------------------ Specialisation ------------------------------ */
 /**

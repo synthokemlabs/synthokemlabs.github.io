@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
-import { EHS, FACILITIES } from "@/data/company";
+import { EHS } from "@/data/company";
 import { Icon } from "@/components/ui/Icon";
 import { LogoMark } from "@/components/ui/Logo";
 import { Reveal } from "@/components/ui/client";
@@ -94,68 +94,6 @@ export function ValuesDiagram() {
           </foreignObject>
         </g>
       </svg>
-    </Reveal>
-  );
-}
-
-/* ------------------------------------------------------------------ */
-/* Facilities network — hub and spoke                                 */
-/* ------------------------------------------------------------------ */
-export function FacilitiesNetwork() {
-  const nodes = [
-    // As listed on the Product List cover: Corporate Office | R&D Unit, and manufacturing Units II and III
-    { id: "rnd", x: 160, y: 120, glyph: "R&D", label: "R&D unit", sub: "At the corporate office" },
-    { id: "unit-ii", x: 160, y: 300, glyph: "II", label: "Unit II", sub: "Pashamylaram, Telangana" },
-    { id: "unit-iii", x: 840, y: 120, glyph: "III", label: "Unit III", sub: "JN Pharmacity, Andhra Pradesh" },
-    { id: "world", x: 840, y: 300, glyph: "◎", label: "40 countries", sub: "Four regions worldwide" },
-  ];
-  return (
-    <Reveal>
-      <div className="relative mx-auto max-w-5xl">
-        {/* Mobile: stacked hub-and-spoke */}
-        <div className="md:hidden">
-          <div className="rounded-lg bg-primary p-6 text-white">
-            <p className="text-sm font-semibold text-accent-soft">Hub</p>
-            <p className="mt-1 font-display text-2xl font-semibold">Corporate office</p>
-            <p className="text-on-dark-muted">Pashamylaram, Telangana</p>
-          </div>
-          <ul className="ml-6 border-l-2 border-accent/50 pl-5 pt-4">
-            {nodes.map((n) => (
-              <li key={n.id} className="relative mb-3 rounded-lg bg-white p-4 ring-1 ring-border">
-                <span aria-hidden="true" className="absolute -left-5 top-1/2 h-[2px] w-5 bg-accent/50" />
-                <span className="block font-semibold text-primary-ink">{n.label}</span>
-                <span className="block text-sm text-muted">{n.sub}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <svg viewBox="0 0 1000 420" className="hidden w-full md:block" aria-hidden="true" >
-          {nodes.map((n, i) => {
-            const path = `M500 210 C ${(500 + n.x) / 2} 210, ${(500 + n.x) / 2} ${n.y}, ${n.x} ${n.y}`;
-            return (
-              <g key={n.id}>
-                <path d={path} fill="none" stroke="var(--border-strong)" strokeWidth="2" pathLength={1} className="draw-path" style={d(0.2 + i * 0.12)} />
-              </g>
-            );
-          })}
-          {nodes.map((n, i) => (
-            <g key={n.id} className="node-pop" style={d(0.6 + i * 0.12)}>
-              <rect x={n.x - 130} y={n.y - 38} width="260" height="76" rx="8" fill="#fff" stroke="var(--border)" />
-              <circle cx={n.x - 96} cy={n.y} r="18" fill="var(--primary-tint)" />
-              <text x={n.x - 96} y={n.y + 5} textAnchor="middle" fontSize={n.glyph.length > 2 ? 10 : 13} fontWeight="700" fill="var(--primary)" style={{ fontFamily: "var(--font-display)" }}>{n.glyph}</text>
-              <text x={n.x - 66} y={n.y - 4} fontSize="17" fontWeight="700" fill="var(--primary-ink)" style={{ fontFamily: "var(--font-display)" }}>{n.label}</text>
-              <text x={n.x - 66} y={n.y + 18} fontSize="12.5" fill="var(--muted)" style={{ fontFamily: "var(--font-sans)" }}>{n.sub}</text>
-            </g>
-          ))}
-          <g className="node-pop" style={d(0.3)}>
-            <circle cx="500" cy="210" r="86" fill="var(--primary)" />
-            <foreignObject x="470" y="146" width="60" height="50"><div style={{ display: "grid", placeItems: "center", height: "100%" }}><LogoMark className="h-9 w-auto" tone="light" /></div></foreignObject>
-            <text x="500" y="222" textAnchor="middle" fontSize="15" fontWeight="700" fill="#fff" style={{ fontFamily: "var(--font-display)" }}>Corporate office</text>
-            <text x="500" y="242" textAnchor="middle" fontSize="12" fill="var(--accent-soft)" style={{ fontFamily: "var(--font-sans)" }}>Pashamylaram, Telangana</text>
-          </g>
-        </svg>
-        <p className="sr-only">{FACILITIES.map((f) => `${f.name}: ${f.location}`).join(". ")}</p>
-      </div>
     </Reveal>
   );
 }

@@ -487,10 +487,6 @@ html.lenis-on body { overscroll-behavior: none; }
   .wipe-img, .wipe-chip, .wipe-line { animation: none !important; opacity: 1; transform: none; }
 }
 
-/* Capacity bars grow in from the left when their Reveal becomes visible */
-.bar-grow { transform: scaleX(0); transform-origin: 0 50%; transition: transform 1.2s var(--ease-out) var(--bar-delay, 0s); }
-.is-visible .bar-grow, .settled .bar-grow, .no-js .bar-grow { transform: none; }
-@media (prefers-reduced-motion: reduce) { .bar-grow { transform: none; } }
 
 /* ==========================================================================
    Vision, mission & values (About) — glass cards that flip up on the sky band,
@@ -550,3 +546,77 @@ html.lenis-on body { overscroll-behavior: none; }
   .flow-dot { display: none; }
   .tab-in, .tab-item { animation: none; }
 }
+
+/* ==========================================================================
+   Manufacturing — site map, capacity ring and process line
+   ========================================================================== */
+/* Map: dots ripple out from Unit II, pins drop in, the route draws, a traveller runs it;
+   the active site pulses and the dots around it light up */
+.map-dot { fill: var(--primary); fill-opacity: 0.22; transition: fill 0.6s ease, fill-opacity 0.6s ease; }
+.sites-map:not(.map-live) .map-dot { opacity: 0; }
+.map-live .map-dot { transform-box: fill-box; transform-origin: center; animation: map-dot-in 0.7s var(--ease-out) var(--d, 0ms) both; }
+@keyframes map-dot-in { from { opacity: 0; transform: scale(0.2); } to { opacity: 1; transform: none; } }
+[data-active="unit-ii"] .map-dot[data-near="unit-ii"], [data-active="unit-iii"] .map-dot[data-near="unit-iii"] { fill: var(--accent); fill-opacity: 0.75; }
+.map-route { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.map-live .map-route { animation: draw-path 1.4s var(--ease-out) 0.9s forwards; }
+.map-traveller { opacity: 0; }
+.map-live .map-traveller { animation: map-fade 0.4s ease 2.2s forwards; }
+@keyframes map-fade { to { opacity: 1; } }
+.map-pin-core { transform-box: fill-box; transform-origin: center; transition: fill 0.5s ease; }
+.sites-map:not(.map-live) .map-pin-core { transform: scale(0); }
+.map-live .map-pin-core { animation: map-pop 0.6s var(--ease-spring) 0.55s both; }
+.map-pin.is-active .map-pin-core { fill: var(--accent-strong); }
+@keyframes map-pop { from { transform: scale(0); } to { transform: none; } }
+.map-pulse { fill: var(--accent); fill-opacity: 0; transform-box: fill-box; transform-origin: center; }
+.map-pin.is-active .map-pulse { animation: map-pulse 2.2s ease-out infinite; }
+.map-pin.is-active .map-pulse-b { animation-delay: 1.1s; }
+@keyframes map-pulse { 0% { fill-opacity: 0.45; transform: scale(1); } 100% { fill-opacity: 0; transform: scale(3.4); } }
+.map-label { opacity: 0; }
+.map-live .map-label { animation: map-fade 0.5s ease 0.9s forwards; }
+.map-link { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.map-live .map-link { animation: draw-path 1.1s var(--ease-out) var(--link-delay, 0s) forwards; }
+.map-port { transform-box: fill-box; transform-origin: center; transform: scale(0); }
+.map-live .map-port { animation: map-pop 0.5s var(--ease-spring) var(--link-delay, 0s) both; }
+.map-callout { animation: tab-in 0.5s var(--ease-out) both; }
+
+/* Capacity ring: each unit's segment draws in turn */
+.ring-seg { stroke-dashoffset: var(--len); transition: stroke-dashoffset 1.3s cubic-bezier(0.65, 0, 0.35, 1) var(--seg-delay, 0s); }
+.is-visible .ring-seg, .settled .ring-seg, .no-js .ring-seg { stroke-dashoffset: 0; }
+
+/* Process line: a bead runs stage to stage (5s across, 1s pause) and each stage lights up on arrival.
+   Six columns with 16px gaps: first centre (100cqw - 80px) / 12, last 83.333cqw + 13.333px further. */
+.train-bead { display: none; }
+@media (min-width: 768px) {
+  .train-bead { display: block; position: absolute; z-index: 5; top: 30px; left: calc((100cqw - 80px) / 12 - 6px); width: 12px; height: 12px; border-radius: 9999px; background: var(--accent); box-shadow: 0 0 0 5px rgb(63 168 238 / 0.25), 0 0 18px rgb(63 168 238 / 0.6); opacity: 0; pointer-events: none; }
+  .is-visible .train-bead { animation: train-run 6s linear 1.2s infinite; }
+}
+@keyframes train-run {
+  0% { opacity: 0; transform: translateX(0); }
+  3% { opacity: 1; }
+  83.33% { opacity: 1; transform: translateX(calc(83.333cqw + 13.333px)); }
+  90%, 100% { opacity: 0; transform: translateX(calc(83.333cqw + 13.333px)); }
+}
+.is-visible .train-icon { animation: stage-glow 6s linear calc(1.2s + var(--i, 0) * 1s) infinite; }
+@keyframes stage-glow {
+  0% { background-color: var(--primary); color: #fff; transform: scale(1.08); box-shadow: 0 0 0 8px rgb(63 168 238 / 0.18), 0 16px 32px -14px rgb(17 104 173 / 0.7); }
+  16%, 100% { background-color: #fff; color: var(--primary); transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .map-live .map-dot, .map-live .map-pin-core, .map-live .map-port, .map-live .map-label { animation: none; opacity: 1; transform: none; }
+  .sites-map:not(.map-live) .map-dot, .sites-map:not(.map-live) .map-pin-core { opacity: 1; transform: none; }
+  .map-route, .map-link { stroke-dashoffset: 0; animation: none !important; }
+  .map-traveller, .train-bead { display: none; }
+  .map-pin.is-active .map-pulse, .is-visible .train-icon { animation: none; }
+  .ring-seg { transition: none; stroke-dashoffset: 0; }
+}
+/* Port labels wait for the map to come alive (their routes draw first) */
+.sites-map:not(.map-live) .map-port-label { opacity: 0 !important; }
+.map-port-label { transition-delay: 0.6s; }
+
+/* Reveal v2 (site-wide): content sharpens from a soft blur as it rises in. Photo curtains and the
+   wipe keep their own effects; .settled pins the final state if a transition stalls. */
+.reveal:not(.reveal-image):not(.reveal-wipe) { filter: blur(8px); transition-property: opacity, transform, filter; transition-duration: 0.9s, 1.1s, 0.9s; }
+.reveal.is-visible:not(.reveal-image):not(.reveal-wipe) { filter: none; }
+.reveal.settled, .no-js .reveal { filter: none !important; }
+@media (prefers-reduced-motion: reduce) { .reveal { filter: none !important; } }
