@@ -7,10 +7,7 @@ import { Img } from "@/components/ui/Img";
 import { Counter, Reveal } from "@/components/ui/client";
 import { asset } from "@/lib/asset";
 
-/**
- * The certifying body's logo (from the company presentation), or a designed seal where there is none —
- * including USFDA, whose "APPROVED" stamp on the slide misstates an inspection as an approval.
- */
+/** The certifying body's logo (from the company presentation), or a designed seal where the slide has none. */
 export function ApprovalMark({ a, size = "md" }: { a: Approval; size?: "sm" | "md" }) {
   const box = size === "sm" ? "h-12 w-28" : "h-16 w-40";
   if (a.logo) {

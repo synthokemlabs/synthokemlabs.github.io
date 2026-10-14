@@ -65,13 +65,11 @@ export interface Approval {
 const logo = (name: string, width: number, height: number) => ({ src: `/images/logos/${name}.png`, width, height });
 
 /**
- * PPT slide 4 ("Accolades") supplies the logos and the current standards: ISO 9001:2015, ISO 14001:2015,
- * ISO 45001:2018 (which replaced OHSAS 18001) and MSME ZED Gold. The slide's "FDA APPROVED" stamp is not
- * used: the USFDA inspects API facilities rather than approving them (the company's own wording, slide 2,
- * is "USFDA inspected"), so USFDA keeps a designed seal.
+ * Full regulatory record (Quality and Regulatory affairs pages). Logos come from PPT slide 4 ("Accolades"),
+ * including its FDA stamp, used at the company's request; bodies not on that slide get a designed seal.
  */
 export const APPROVALS: Approval[] = [
-  { short: "USFDA", authority: "US Food & Drug Administration", scope: "Unit I facility approval with regular inspections; Unit II inspection completed in 2018. DMFs filed since 1993.", since: "2005" },
+  { short: "USFDA", authority: "US Food & Drug Administration", scope: "Unit I facility approval with regular inspections; Unit II inspection completed in 2018. DMFs filed since 1993.", since: "2005", logo: logo("fda", 167, 167) },
   { short: "CEP", authority: "EDQM — Certificate of Suitability", scope: "Guaifenesin (Ph. Eur.) — Unit I in 2001, Unit II in 2019.", since: "2001", logo: logo("edqm", 450, 239) },
   { short: "WHO-GMP", authority: "World Health Organization GMP", scope: "Certified since 2002; Unit II certified in 2016. Renewed to date.", since: "2002", logo: logo("who-gmp", 158, 176) },
   { short: "KFDA", authority: "Korean FDA", scope: "Unit I inspected; certificate achieved for Methocarbamol.", since: "2012", logo: logo("kfda", 198, 77) },
@@ -82,6 +80,18 @@ export const APPROVALS: Approval[] = [
   { short: "ISO 45001:2018", authority: "Occupational Health & Safety Management", scope: "Unit II — certified for occupational health & safety since 2015 (OHSAS 18001, now ISO 45001:2018).", since: "2015", logo: logo("iso-45001", 383, 346) },
   { short: "ZED Gold", authority: "MSME — Zero Defect Zero Effect", scope: "Gold-level certification under the Government of India's MSME ZED scheme.", logo: logo("msme-zed-gold", 200, 200) },
   { short: "Kosher", authority: "Kosher certification", scope: "Guaifenesin, Unit I. Renewed to date.", since: "2010" },
+];
+
+/** Exactly the eight logos on PPT slide 4 ("Accolades"), in the slide's order: two rows of four. */
+export const ACCOLADES: { name: string; logo: { src: string; width: number; height: number } }[] = [
+  { name: "US FDA", logo: logo("fda", 167, 167) },
+  { name: "EDQM · Council of Europe", logo: logo("edqm", 450, 239) },
+  { name: "WHO-GMP", logo: logo("who-gmp", 158, 176) },
+  { name: "KFDA", logo: logo("kfda", 198, 77) },
+  { name: "ISO 9001:2015", logo: logo("iso-9001", 172, 172) },
+  { name: "ISO 45001:2018", logo: logo("iso-45001", 383, 346) },
+  { name: "ISO 14001:2015", logo: logo("iso-14001", 220, 223) },
+  { name: "MSME ZED Gold", logo: logo("msme-zed-gold", 200, 200) },
 ];
 
 /* ------------------------------ Facilities ------------------------------ */

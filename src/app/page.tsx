@@ -10,9 +10,9 @@ import { PortfolioMap } from "@/components/diagrams/PortfolioMap";
 import { ValueChain } from "@/components/diagrams/ValueChain";
 import { QualityLayers } from "@/components/diagrams/Diagrams";
 import { QuickLinks } from "@/components/sections/QuickLinks";
-import { ApprovalMark } from "@/components/sections/shared";
 import { ScrollStatement } from "@/components/sections/ScrollStatement";
-import { APPROVALS, COUNTRIES } from "@/data/company";
+import { ACCOLADES, COUNTRIES } from "@/data/company";
+import { asset } from "@/lib/asset";
 import { HeroMolecules, type HeroMolecule } from "@/components/molecules/HeroMolecules";
 import { MoleculeGallery, type GalleryItem } from "@/components/molecules/MoleculeGallery";
 import { getStructure } from "@/data/structures";
@@ -196,23 +196,29 @@ export default function HomePage() {
           </div>
           <div className="mt-14"><QualityLayers /></div>
 
+          {/* PPT slide 4 ("Accolades"): the same eight logos, in the slide's order and two rows of four */}
           <Reveal className="mt-20">
-            <h3 className="font-sans text-[0.74rem] font-semibold uppercase tracking-[0.16em] text-muted">Inspections, approvals & certifications</h3>
-            <ul className="mt-5 grid grid-cols-2 border-l border-t border-border sm:grid-cols-3 lg:grid-cols-6">
-              {APPROVALS.map((a) => (
-                <li key={a.short} className="group border-b border-r border-border p-5 transition-colors hover:bg-surface">
-                  <span className="flex h-12 items-center transition-transform duration-500 ease-out group-hover:scale-105"><ApprovalMark a={a} size="sm" /></span>
-                  <span className="mt-4 block font-display text-lg font-semibold text-primary-ink">{a.short}</span>
-                  <span className="mt-1 block text-[0.82rem] leading-snug text-muted">{a.authority}</span>
-                  {a.since && <span className="mt-3 block text-xs font-semibold tabular-nums text-accent-strong">Since {a.since}</span>}
-                </li>
-              ))}
-              <li className="border-b border-r border-border">
-                <Link href="/quality/#approvals" className="group flex h-full min-h-40 flex-col justify-end gap-2 bg-primary p-5 text-white transition-colors hover:bg-primary-dark">
-                  <span className="font-display text-lg font-semibold">All approvals</span>
-                  <span className="inline-flex items-center gap-2 text-[0.82rem] text-on-dark-muted">Scope &amp; history <Icon name="arrowRight" size={15} className="arrow-nudge text-white" /></span>
-                </Link>
-              </li>
+            <div className="flex flex-wrap items-baseline justify-between gap-4">
+              <h3 className="font-sans text-[0.74rem] font-semibold uppercase tracking-[0.16em] text-muted">Inspections, approvals & certifications</h3>
+              <Link href="/quality/#approvals" className="group inline-flex items-center gap-2 text-sm font-semibold text-primary">
+                <span className="link-u">View all approvals</span><Icon name="arrowRight" size={15} className="arrow-nudge" />
+              </Link>
+            </div>
+            <ul className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
+              {ACCOLADES.map((a, i) => {
+                // Only the very wide KFDA wordmark gets less height, so all eight read at a similar optical size;
+                // EDQM keeps full height because its two logos carry small text
+                const wide = a.logo.width / a.logo.height > 2.2;
+                return (
+                  <li key={a.name} className="node-pop group flex flex-col items-center rounded-xl bg-white px-4 pb-5 pt-6 text-center ring-1 ring-border transition-[transform,box-shadow] duration-500 ease-out hover:-translate-y-1 hover:shadow-[0_22px_44px_-28px_rgb(10_45_80/0.45)]" style={{ "--node-delay": `${0.1 + i * 0.07}s` } as CSSProperties}>
+                    <span className="flex h-24 w-full items-center justify-center">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={asset(a.logo.src)} alt={`${a.name} logo`} width={a.logo.width} height={a.logo.height} loading="lazy" decoding="async" className={`w-auto max-w-[85%] object-contain transition-transform duration-500 ease-out group-hover:scale-105 ${wide ? "max-h-[4.25rem]" : "max-h-24"}`} />
+                    </span>
+                    <span className="mt-4 text-[0.88rem] font-semibold leading-snug text-primary-ink">{a.name}</span>
+                  </li>
+                );
+              })}
             </ul>
           </Reveal>
         </Container>
