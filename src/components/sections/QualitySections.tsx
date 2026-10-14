@@ -211,7 +211,7 @@ export function QualityUnitChart() {
             <span><span className="block font-semibold text-primary-ink">Quality control</span><span className="text-xs text-muted">Responsible for all analysis</span></span>
           </div>
           <div className="node-pop mx-auto mt-7 max-w-lg" style={nd(1.55)}>
-            <p className="leading-relaxed text-muted">Qualified, well-trained analysts and sophisticated instruments check quality and consistency at every stage of the process — from raw materials to the finished API.</p>
+            <p className="leading-relaxed text-muted">Qualified, well-trained analysts and sophisticated instruments ensure product quality and consistency at every stage of the process.</p>
             <p className="mt-4 leading-relaxed text-muted">QC also gives customers analytical support and training during product and method development and validation.</p>
             <a href="#labs" className="group mt-5 inline-flex min-h-10 items-center gap-2 font-semibold text-primary"><span className="link-u">Inside our laboratories</span><Icon name="chevronDown" size={16} className="transition-transform duration-300 group-hover:translate-y-0.5" /></a>
           </div>
