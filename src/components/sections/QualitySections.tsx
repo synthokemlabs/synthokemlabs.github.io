@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useState, type CSSProperties } from "react";
+import { Fragment, useEffect, useRef, useState, type CSSProperties } from "react";
 import { Img } from "@/components/ui/Img";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/client";
@@ -35,13 +35,12 @@ export function PolicyStatement() {
 }
 
 /* ------------------------------------------------------------------ */
-/* ISO 9001:2015 quality management system (PPT slide 21), drawn as a */
-/* quality-manual figure: Inputs → Plan → Do → Check → Act → Outputs,  */
-/* each phase with its clause and the standard's sub-clause headings.  */
-/* On entry the process line draws across, each column appears as the */
-/* line reaches it, the letters are drawn in outline, and the          */
-/* continual-improvement loop runs back from Act to Plan. Afterwards a */
-/* single marker keeps travelling the cycle.                           */
+/* ISO 9001:2015 quality management system (PPT slide 21) as a dial.  */
+/* Desktop: the stage stays pinned while the page scrolls. The dial    */
+/* turns so each phase comes to the top under a fixed pointer, its arc */
+/* and dots light up, and the copy beside it changes; after Act it     */
+/* completes the turn back to Plan (continual improvement). The dot    */
+/* ring echoes the dotted map on Manufacturing. Phones: a column.      */
 /* ------------------------------------------------------------------ */
 const QMS_INPUTS = ["Organisation and its context", "Customer requirements", "Needs & expectations of interested parties"];
 const QMS_OUTPUTS = ["Customer satisfaction", "Results of the QMS", "Products & services"];
@@ -50,109 +49,160 @@ const PDCA = [
   { L: "P", title: "Plan", node: "Planning", clause: "Clause 6", d: "Set the course before work begins.", subs: [["6.1", "Actions to address risks and opportunities"], ["6.2", "Quality objectives and planning to achieve them"], ["6.3", "Planning of changes"]] },
   { L: "D", title: "Do", node: "Support & operation", clause: "Clauses 7–8", d: "Run every operation under control.", subs: [["7.1", "Resources"], ["7.2", "Competence"], ["7.5", "Documented information"], ["8.1", "Operational planning and control"]] },
   { L: "C", title: "Check", node: "Performance evaluation", clause: "Clause 9", d: "Measure how well the system performs.", subs: [["9.1", "Monitoring, measurement, analysis and evaluation"], ["9.2", "Internal audit"], ["9.3", "Management review"]] },
-  { L: "A", title: "Act", node: "Improvement", clause: "Clause 10", d: "Correct, learn and improve.", subs: [["10.2", "Nonconformity and corrective action"], ["10.3", "Continual improvement"]] },
+  { L: "A", title: "Act", node: "Improvement", clause: "Clause 10", d: "Correct, learn and improve — then begin again.", subs: [["10.2", "Nonconformity and corrective action"], ["10.3", "Continual improvement"]] },
 ];
-// When the 1.6 s line draw reaches each column (columns 0.85 : 1 : 1 : 1 : 1 : 0.85)
-const ARRIVE = [0.25, 0.55, 0.85, 1.15, 1.45, 1.7];
+const STAGES = [
+  { label: "Inputs", kicker: "Before the cycle", title: "Inputs", node: "What the system starts from", d: "Every cycle starts from the context we work in, what customers require and what interested parties expect.", list: QMS_INPUTS },
+  ...PDCA.map((s, i) => ({ label: s.title, kicker: `Step 0${i + 1} · ${s.clause}`, title: s.title, node: s.node, d: s.d, subs: s.subs })),
+  { label: "Outputs", kicker: "After each turn", title: "Outputs", node: "What the system delivers", d: "Each turn of the cycle delivers to agreed requirements — and makes the next turn better.", list: QMS_OUTPUTS },
+] as { label: string; kicker: string; title: string; node: string; d: string; list?: string[]; subs?: string[][] }[];
 
-function Letter({ ch, delay, className = "" }: { ch: string; delay: number; className?: string }) {
+// Dial geometry (viewBox 600): quadrants centred at the top, right, bottom and left, clockwise P → D → C → A
+const C0 = 300;
+const at = (deg: number, r: number) => [C0 + r * Math.cos((deg * Math.PI) / 180), C0 + r * Math.sin((deg * Math.PI) / 180)].map((n) => +n.toFixed(2));
+const QUAD = [-90, 0, 90, 180];
+const arc = (c: number, r: number) => { const [x1, y1] = at(c - 41, r); const [x2, y2] = at(c + 41, r); return `M ${x1} ${y1} A ${r} ${r} 0 0 1 ${x2} ${y2}`; };
+const DOTS = Array.from({ length: 96 }, (_, i) => { const deg = -90 + i * 3.75; const q = Math.round(((deg + 90 + 360) % 360) / 90) % 4; const [x, y] = at(deg, 262); return { x, y, q, i }; });
+const clamp = (n: number) => Math.min(1, Math.max(0, n));
+const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+
+function Dial({ phase, overview = false }: { phase: number; overview?: boolean }) {
+  // Quadrant q (0–3) is phase q + 1; during Outputs every quadrant is complete
+  const qState = (q: number) => (overview ? "is-done" : phase === q + 1 ? "is-active" : phase > q + 1 ? "is-done" : "");
   return (
-    <svg viewBox="0 0 72 84" className={`qms-letter ${className}`} aria-hidden="true">
-      <text x="0" y="72" style={{ "--d": `${delay}s` } as CSSProperties}>{ch}</text>
+    <svg viewBox="0 0 600 600" className="qd-dial h-full w-full" aria-hidden="true">
+      <circle cx={C0} cy={C0} r="228" fill="none" stroke="var(--border-strong)" strokeWidth="1" />
+      <circle cx={C0} cy={C0} r="150" fill="none" stroke="var(--border)" strokeWidth="1" strokeDasharray="2 6" />
+      <g className="qd-rot">
+        {[0, 1, 2, 3].map((q) => (
+          <g key={q} className={qState(q)}>
+            {DOTS.filter((d) => d.q === q).map((d) => <circle key={d.i} cx={d.x} cy={d.y} r="2.6" className="qd-dot" style={{ "--i": d.i } as CSSProperties} />)}
+            <path d={arc(QUAD[q], 196)} fill="none" strokeWidth="12" strokeLinecap="round" className="qd-arc" />
+            <path d={arc(QUAD[q], 196)} fill="none" strokeWidth="12" strokeLinecap="round" pathLength={1} className="qd-arc-on" />
+            <g transform={`translate(${at(QUAD[q], 128).join(" ")})`}><g className="qd-upright">
+              <text y="12" textAnchor="middle" className="qd-letter">{PDCA[q].L}</text>
+              <text y="36" textAnchor="middle" className="qd-name">{PDCA[q].title}</text>
+            </g></g>
+          </g>
+        ))}
+      </g>
+      {/* Fixed pointer at the top: the phase under it is the one being described */}
+      <path d={`M ${C0 - 8} 14 L ${C0 + 8} 14 L ${C0} 28 Z`} fill="var(--primary-ink)" />
+      <line x1={C0} y1="28" x2={C0} y2="96" stroke="var(--primary-ink)" strokeOpacity=".35" strokeWidth="1" />
+      {/* Centre: the ISO 9001 logo from the company presentation */}
+      <circle cx={C0} cy={C0} r="78" fill="#fff" className="qd-core" />
+      <image href={asset("/images/logos/iso-9001.png")} x={C0 - 48} y={C0 - 48} width="96" height="96" />
     </svg>
   );
 }
 
 export function QmsStory() {
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
+  const [phase, setPhase] = useState(0);
+
+  useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 1024px)");
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const wrap = wrapRef.current, stage = stageRef.current;
+      if (!desktop.matches || !wrap || !stage) return;
+      const r = wrap.getBoundingClientRect();
+      const top = parseFloat(getComputedStyle(stage).top) || 0;
+      const s = Math.min(5.999, clamp((top - r.top) / Math.max(1, r.height - stage.offsetHeight)) * 6);
+      // Each phase holds at the top for most of its share of the scroll, then the dial turns to the next;
+      // after Act it turns once more, back to Plan
+      const f = Math.min(4, Math.max(0, s - 1));
+      const k = Math.floor(f), t = f - k;
+      const rot = -90 * (k >= 4 ? 4 : k + (t < 0.6 ? 0 : ease((t - 0.6) / 0.4)));
+      stage.style.setProperty("--rot", `${rot.toFixed(2)}deg`);
+      stage.style.setProperty("--t", (s - Math.floor(s)).toFixed(3));
+      setPhase(Math.floor(s));
+    };
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    desktop.addEventListener("change", onScroll);
+    return () => { window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", onScroll); desktop.removeEventListener("change", onScroll); cancelAnimationFrame(raf); };
+  }, []);
+
+  const goto = (i: number) => {
+    const wrap = wrapRef.current, stage = stageRef.current;
+    if (!wrap || !stage) return;
+    const top = parseFloat(getComputedStyle(stage).top) || 0;
+    const y = wrap.getBoundingClientRect().top + window.scrollY - top + (wrap.offsetHeight - stage.offsetHeight) * ((i + 0.3) / 6);
+    const lenis = (window as unknown as { __lenis?: { scrollTo: (y: number) => void } }).__lenis;
+    if (lenis) lenis.scrollTo(y); else window.scrollTo({ top: y, behavior: "smooth" });
+  };
+
   return (
     <>
-      {/* Desktop and wide tablets: the figure */}
-      <Reveal className="qms-fig hidden lg:block">
-        <div className="qms-flow relative grid grid-cols-[minmax(0,0.85fr)_repeat(4,minmax(0,1fr))_minmax(0,0.85fr)]">
-          {/* The process line, its arrowheads, and the marker that keeps travelling it */}
-          <span aria-hidden="true" className="qms-line absolute left-[3%] right-[3%] top-7 h-px bg-primary/45" />
-          <span aria-hidden="true" className="qms-signal absolute top-7 h-1.5 w-1.5 rounded-full bg-accent-strong" />
-
-          <div className="pr-6">
-            <p className="flex h-14 items-center"><span className="flex items-center gap-2 bg-surface pr-2 text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-muted"><span className="qms-node node-pop" style={nd(ARRIVE[0])} />Inputs</span></p>
-            <ul className="node-pop mt-2 space-y-2.5" style={nd(ARRIVE[0] + 0.15)}>
-              {QMS_INPUTS.map((t) => <li key={t} className="border-t border-border pt-2.5 text-[0.88rem] leading-snug text-primary-ink">{t}</li>)}
-            </ul>
-          </div>
-
-          {PDCA.map((s, k) => (
-            <article key={s.L} className="qms-col group relative border-l border-border px-4 pb-6 xl:px-6">
-              <span aria-hidden="true" className="qms-arrow node-pop absolute -left-[5px] top-[23px]" style={nd(ARRIVE[k + 1] - 0.05)} />
-              <p className="flex h-14 items-center"><span className="flex items-center gap-2 bg-surface pr-2"><span className="qms-node node-pop" style={nd(ARRIVE[k + 1])} /><span className="node-pop font-mono text-[0.68rem] uppercase tracking-[0.12em] text-accent-strong" style={nd(ARRIVE[k + 1] + 0.05)}>{s.clause}</span></span></p>
-              <Letter ch={s.L} delay={ARRIVE[k + 1] + 0.05} className="mt-1 h-[5.25rem] w-auto" />
-              <div className="node-pop" style={nd(ARRIVE[k + 1] + 0.2)}>
-                <h3 className="mt-3 text-xl font-semibold text-primary-ink">{s.title}</h3>
-                <p className="text-sm font-medium text-muted">{s.node}</p>
-                <p className="mt-2 text-[0.92rem] leading-snug text-text">{s.d}</p>
-                <ul className="mt-5 border-t border-border">
-                  {s.subs.map(([n, t]) => (
-                    <li key={n} className="grid grid-cols-[2.4rem_1fr] gap-1 border-b border-border py-2 text-[0.83rem] leading-snug text-muted">
-                      <span className="font-mono text-[0.72rem] leading-[1.45] text-accent-strong">{n}</span>{t}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </article>
-          ))}
-
-          <div className="relative border-l border-border pl-6">
-            <span aria-hidden="true" className="qms-arrow node-pop absolute -left-[5px] top-[23px]" style={nd(ARRIVE[5] - 0.05)} />
-            <p className="flex h-14 items-center"><span className="flex items-center gap-2 bg-surface pr-2 text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-muted"><span className="qms-node qms-node-end node-pop" style={nd(ARRIVE[5])} />Outputs</span></p>
-            <ul className="node-pop mt-2 space-y-2.5" style={nd(ARRIVE[5] + 0.15)}>
-              {QMS_OUTPUTS.map((t) => <li key={t} className="border-t border-border pt-2.5 text-[0.88rem] leading-snug text-primary-ink">{t}</li>)}
-            </ul>
-          </div>
-        </div>
-
-        {/* Continual improvement: Act back to Plan, under the four phases */}
-        <div className="grid grid-cols-[minmax(0,0.85fr)_repeat(4,minmax(0,1fr))_minmax(0,0.85fr)]">
-          <span />
-          <div className="relative col-span-4 h-16">
-            <span aria-hidden="true" className="qms-loop absolute bottom-6 left-[12.5%] right-[12.5%] top-0 rounded-b-xl border border-t-0 border-primary/45" />
-            <span aria-hidden="true" className="qms-loop-head node-pop absolute left-[12.5%] top-0 -ml-[5px] -mt-[2px] border-x-[5px] border-b-[7px] border-x-transparent border-b-primary/70" style={nd(3)} />
-            <span aria-hidden="true" className="qms-signal-b absolute bottom-6 h-1.5 w-1.5 -translate-x-1/2 translate-y-1/2 rounded-full bg-accent-strong" />
-            <p className="node-pop absolute bottom-6 left-1/2 flex -translate-x-1/2 translate-y-1/2 items-center gap-2 whitespace-nowrap bg-surface px-3 text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-primary" style={nd(2.9)}>
-              <Icon name="history" size={14} />Continual improvement · 10.3
-            </p>
-          </div>
-          <span />
-        </div>
-      </Reveal>
-
-      {/* Phones and small tablets: the same figure as a column */}
-      <ol className="lg:hidden">
-        <Reveal as="li" className="border-l-2 border-primary/30 pb-8 pl-5">
-          <p className="text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-muted">Inputs</p>
-          <ul className="mt-2">{QMS_INPUTS.map((t) => <li key={t} className="border-b border-border py-2 text-[0.9rem] text-primary-ink">{t}</li>)}</ul>
-        </Reveal>
-        {PDCA.map((s) => (
-          <Reveal as="li" key={s.L} className="border-l-2 border-primary/30 pb-8 pl-5">
-            <div className="flex items-end gap-4">
-              <Letter ch={s.L} delay={0.2} className="h-14 w-auto shrink-0" />
-              <p className="pb-1">
-                <span className="block font-mono text-[0.68rem] uppercase tracking-[0.12em] text-accent-strong">{s.clause}</span>
-                <span className="block text-lg font-semibold text-primary-ink">{s.title}<span className="ml-2 text-sm font-medium text-muted">{s.node}</span></span>
-              </p>
-            </div>
-            <p className="mt-3 text-[0.95rem] text-text">{s.d}</p>
-            <ul className="mt-3 border-t border-border">
-              {s.subs.map(([n, t]) => <li key={n} className="grid grid-cols-[2.4rem_1fr] gap-1 border-b border-border py-2 text-[0.86rem] text-muted"><span className="font-mono text-[0.72rem] text-accent-strong">{n}</span>{t}</li>)}
-            </ul>
-          </Reveal>
-        ))}
-        <Reveal as="li" className="border-l-2 border-dashed border-primary/30 pb-8 pl-5">
-          <p className="flex items-center gap-2 text-[0.92rem] text-muted"><Icon name="history" size={16} className="text-primary" /><span><span className="font-semibold text-primary">Back to Plan.</span> Continual improvement (10.3) — the cycle starts again.</span></p>
-        </Reveal>
-        <Reveal as="li" className="border-l-2 border-primary/30 pl-5">
-          <p className="text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-muted">Outputs</p>
-          <ul className="mt-2">{QMS_OUTPUTS.map((t) => <li key={t} className="border-b border-border py-2 text-[0.9rem] text-primary-ink">{t}</li>)}</ul>
-        </Reveal>
+      {/* Screen readers (desktop): the whole cycle as text */}
+      <ol className="sr-only hidden lg:block">
+        {STAGES.map((s) => <li key={s.label}>{s.title} — {s.node}: {s.d} {(s.list ?? s.subs?.map((x) => x.join(" ")) ?? []).join("; ")}.</li>)}
       </ol>
+
+      {/* Desktop: pinned stage */}
+      <div ref={wrapRef} className="hidden lg:block lg:h-[340vh]">
+        <div ref={stageRef} className="qd-stage sticky top-28">
+        <Reveal>
+          <div aria-hidden="true" className="grid grid-cols-12 items-center gap-10 xl:gap-16">
+            <div className="col-span-5">
+              <div className="grid">
+                {STAGES.map((s, i) => (
+                  <div key={s.label} className={`qd-panel [grid-area:1/1] ${i === phase ? "is-on" : ""}`}>
+                    <p className="flex items-center gap-2.5 font-mono text-[0.72rem] uppercase tracking-[0.12em] text-accent-strong"><span className="h-2 w-2 rounded-full bg-accent-strong" />{s.kicker}</p>
+                    <p className="qd-title mt-4 font-display text-[clamp(3.5rem,5.6vw,5.75rem)] font-semibold leading-[0.95] tracking-[-0.035em] text-primary-ink">{s.title}</p>
+                    <p className="mt-3 text-lg font-medium text-muted">{s.node}</p>
+                    <p className="mt-6 max-w-md text-[1.1rem] leading-relaxed text-text">{s.d}</p>
+                    <ul className="mt-7 max-w-md border-t border-border">
+                      {s.subs
+                        ? s.subs.map(([n, t]) => <li key={n} className="grid grid-cols-[2.75rem_1fr] border-b border-border py-2.5 text-[0.9rem] text-muted"><span className="font-mono text-[0.75rem] leading-[1.6] text-accent-strong">{n}</span>{t}</li>)
+                        : s.list?.map((t) => <li key={t} className="border-b border-border py-2.5 text-[0.95rem] text-primary-ink">{t}</li>)}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="col-span-7">
+              <div className="mx-auto aspect-square w-full max-w-[min(34rem,62vh)]"><Dial phase={phase} /></div>
+            </div>
+          </div>
+          {/* Index: where you are in the cycle; the bar under the current phase fills as you scroll */}
+          <ol className="mt-6 grid grid-cols-6 gap-3 border-t border-border pt-4">
+            {STAGES.map((s, i) => (
+              <li key={s.label}>
+                <button type="button" tabIndex={-1} onClick={() => goto(i)} className={`qd-idx group w-full cursor-pointer text-left ${i === phase ? "is-on" : i < phase ? "is-done" : ""}`}>
+                  <span className="relative block h-0.5 overflow-hidden rounded-full bg-border"><span className="qd-idx-bar absolute inset-0 origin-left bg-primary" /></span>
+                  <span className="mt-2.5 flex items-baseline gap-2 text-[0.8rem]"><span className="font-mono text-[0.7rem]">0{i + 1}</span><span className="font-semibold">{s.label}</span></span>
+                </button>
+              </li>
+            ))}
+          </ol>
+        </Reveal>
+        </div>
+      </div>
+
+      {/* Phones and small tablets: the dial as an overview, then the phases in order */}
+      <div className="lg:hidden">
+        <Reveal className="mx-auto mb-10 aspect-square w-full max-w-[20rem]"><Dial phase={0} overview /></Reveal>
+        <ol>
+          {STAGES.map((s) => (
+            <Reveal as="li" key={s.label} className="border-l-2 border-primary/30 pb-8 pl-5 last:pb-0">
+              <p className="font-mono text-[0.68rem] uppercase tracking-[0.12em] text-accent-strong">{s.kicker}</p>
+              <p className="mt-1 font-display text-2xl font-semibold text-primary-ink">{s.title}<span className="ml-2 text-sm font-medium text-muted">{s.node}</span></p>
+              <p className="mt-2 text-[0.95rem] text-text">{s.d}</p>
+              <ul className="mt-3 border-t border-border">
+                {s.subs
+                  ? s.subs.map(([n, t]) => <li key={n} className="grid grid-cols-[2.6rem_1fr] border-b border-border py-2 text-[0.88rem] text-muted"><span className="font-mono text-[0.72rem] text-accent-strong">{n}</span>{t}</li>)
+                  : s.list?.map((t) => <li key={t} className="border-b border-border py-2 text-[0.9rem] text-primary-ink">{t}</li>)}
+              </ul>
+            </Reveal>
+          ))}
+        </ol>
+      </div>
     </>
   );
 }
