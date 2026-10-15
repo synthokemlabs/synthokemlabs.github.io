@@ -7,7 +7,6 @@ import { Img } from "@/components/ui/Img";
 import { Icon } from "@/components/ui/Icon";
 import { VisionMissionValues } from "@/components/sections/VisionMission";
 import { EvolutionTimeline, WhatWeDeliver } from "@/components/sections/AboutSections";
-import { LeadershipGrid } from "@/components/sections/Leadership";
 import { CHAIRPERSON, COUNTRIES, OVERVIEW, PARTNER_PRODUCTS, PHILOSOPHY, TOTAL_CAPACITY_KL } from "@/data/company";
 import { PRODUCTS, productHref } from "@/data/products";
 import { SITE } from "@/data/site";
@@ -117,7 +116,7 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* PPT slide 2: the quote and its button belong to the Chairperson; the whole team is below and on /about/leadership/ */}
+      {/* PPT slide 2: the quote and its button belong to the Chairperson; the whole team is on /about/leadership/ (one copy) */}
       <section id="leadership" className="py-20 lg:py-28">
         <Container>
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:items-end lg:gap-16">
@@ -133,15 +132,13 @@ export default function AboutPage() {
               <ButtonLink href="/about/leadership/" variant="secondary">Meet the leadership team</ButtonLink>
             </div>
           </div>
-          <div className="mt-14"><LeadershipGrid /></div>
         </Container>
       </section>
 
       <section id="more" className="border-t border-border bg-surface py-20">
         <Container>
-          <ul className="grid grid-cols-1 gap-px overflow-hidden rounded-lg bg-border ring-1 ring-border md:grid-cols-3">
+          <ul className="grid grid-cols-1 gap-px overflow-hidden rounded-lg bg-border ring-1 ring-border md:grid-cols-2">
             {[
-              { href: "/about/leadership/", t: "Leadership", d: "Our Board of Directors and management team.", icon: "users" as const },
               { href: "/about/global-presence/", t: "Global presence", d: `${COUNTRIES.length} countries across Europe, Asia-Pacific, the Middle East & Africa and the Americas.`, icon: "globe" as const },
               { href: "/quality/regulatory-affairs/", t: "Regulatory affairs", d: "Audited and recognised by global regulatory authorities.", icon: "shield" as const },
             ].map((x) => (

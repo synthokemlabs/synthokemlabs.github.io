@@ -43,7 +43,7 @@ export default function EnquiryPage() {
                 <p className="font-semibold text-primary-ink">Prefer to talk?</p>
                 <a href={SITE.phone.href} className="mt-3 flex min-h-11 items-center gap-3 text-primary-ink hover:text-primary"><Icon name="phone" size={17} className="text-accent-strong" />{SITE.phone.display}</a>
                 <div className="flex items-center justify-between">
-                  <a href={`mailto:${SITE.email}`} className="flex min-h-11 items-center gap-3 text-primary-ink hover:text-primary"><Icon name="mail" size={17} className="text-accent-strong" />{SITE.email}</a>
+                  <a href={`mailto:${SITE.email}`} className="flex min-h-11 min-w-0 items-center gap-3 text-primary-ink [overflow-wrap:anywhere] hover:text-primary"><Icon name="mail" size={17} className="shrink-0 text-accent-strong" />{SITE.email}</a>
                   <CopyButton text={SITE.email} label="Email address" />
                 </div>
                 <p className="mt-2 text-sm text-muted">{SITE.hours}</p>

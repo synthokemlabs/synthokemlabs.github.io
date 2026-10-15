@@ -7,8 +7,8 @@ import { Icon, type IconName } from "@/components/ui/Icon";
 export const VALUE_CHAIN: { title: string; short: string; body: string; icon: IconName; href: string }[] = [
   { title: "Process chemistry & R&D", short: "R&D", icon: "flask", href: "/capabilities/", body: "Evolving process chemistry and R&D capability — producing cutting-edge intermediates for new as well as off-patent APIs." },
   { title: "Manufacturing", short: "Make", icon: "factory", href: "/capabilities/manufacturing/", body: "Two integrated manufacturing units in Telangana and Andhra Pradesh, scaling from gram level to multi-ton supplies." },
-  { title: "Quality control", short: "Test", icon: "shield", href: "/quality/#control", body: "A qualified QC laboratory with sophisticated instruments, responsible for all analysis at every stage of the process." },
-  { title: "Quality assurance", short: "Assure", icon: "check", href: "/quality/#assurance", body: "Integrated quality systems that harmonise global quality and regulatory standards across functions." },
+  { title: "Quality control", short: "Test", icon: "shield", href: "/quality/#labs", body: "A qualified QC laboratory with sophisticated instruments, responsible for all analysis at every stage of the process." },
+  { title: "Quality assurance", short: "Assure", icon: "check", href: "/quality/#unit", body: "Integrated quality systems that harmonise global quality and regulatory standards across functions." },
   { title: "Regulatory affairs", short: "Comply", icon: "file", href: "/quality/regulatory-affairs/", body: "DMFs, CEPs, WHO-GMP and EU Written Confirmations — audited and recognised by global regulatory authorities." },
   { title: "Global supply", short: "Deliver", icon: "globe", href: "/about/global-presence/", body: "Delivered within the time frame stipulated by our customers, with a global presence across 40 countries in four regions." },
 ];

@@ -27,11 +27,11 @@ export default function ContactPage() {
             <span><span className="eyebrow block text-muted">Call</span><span className="mt-1 block font-semibold text-primary-ink group-hover:text-primary">{SITE.phone.display}</span></span>
           </a>
           <div className="flex min-h-24 items-center justify-between gap-4 py-5 lg:px-6">
-            <a href={`mailto:${SITE.email}`} className="group flex items-center gap-4">
+            <a href={`mailto:${SITE.email}`} className="group flex min-w-0 items-center gap-4">
               <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-primary text-white"><Icon name="mail" size={18} /></span>
-              <span><span className="eyebrow block text-muted">Email</span><span className="mt-1 block font-semibold text-primary-ink group-hover:text-primary">{SITE.email}</span></span>
+              <span><span className="eyebrow block text-muted">Email</span><span className="mt-1 block font-semibold text-primary-ink [overflow-wrap:anywhere] group-hover:text-primary">{SITE.email}</span></span>
             </a>
-            <CopyButton text={SITE.email} label="Email address" />
+            <CopyButton text={SITE.email} label="Email address" compact />
           </div>
           <div className="flex min-h-24 items-center gap-4 py-5 lg:px-6">
             <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-primary text-white"><Icon name="clock" size={18} /></span>

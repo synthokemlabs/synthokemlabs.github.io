@@ -5,9 +5,10 @@ import Link from "next/link";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/client";
+import { PRODUCTS } from "@/data/products";
 
 const PATHS: { title: string; body: string; href: string; img: string; alt: string }[] = [
-  { title: "Source a product", body: "Search 46 APIs, intermediates and chemicals by name or CAS number, then request a quote.", href: "/products/", img: "materials-store", alt: "Drums being moved in the materials store" },
+  { title: "Source a product", body: `Search ${PRODUCTS.length} APIs, intermediates and chemicals by name or CAS number, then request a quote.`, href: "/products/", img: "materials-store", alt: "Drums being moved in the materials store" },
   { title: "Check quality & compliance", body: "Our quality system, approvals and the regulatory status of each product.", href: "/quality/", img: "qc-analyst", alt: "Quality control analyst at a laboratory instrument" },
   { title: "Partner with us", body: "Process chemistry and manufacturing capabilities for development projects.", href: "/capabilities/", img: "reactor-operator", alt: "Operator in protective equipment at a reactor" },
   { title: "Build your career", body: "Join the team that has powered Synthokem’s growth for over four decades.", href: "/careers/", img: "lab-team", alt: "Chemists at work in the laboratory" },

@@ -207,7 +207,7 @@ export default async function ProductPage({ params }: Params) {
               <div className="mt-4 space-y-1">
                 <a href={SITE.phone.href} className="flex min-h-11 items-center gap-3 text-primary-ink hover:text-primary"><Icon name="phone" size={17} className="text-accent-strong" />{SITE.phone.display}</a>
                 <div className="flex items-center justify-between">
-                  <a href={`mailto:${SITE.email}?subject=${encodeURIComponent(`Enquiry: ${p.name}`)}`} className="flex min-h-11 items-center gap-3 text-primary-ink hover:text-primary"><Icon name="mail" size={17} className="text-accent-strong" />{SITE.email}</a>
+                  <a href={`mailto:${SITE.email}?subject=${encodeURIComponent(`Enquiry: ${p.name}`)}`} className="flex min-h-11 min-w-0 items-center gap-3 text-primary-ink [overflow-wrap:anywhere] hover:text-primary"><Icon name="mail" size={17} className="shrink-0 text-accent-strong" />{SITE.email}</a>
                   <CopyButton text={SITE.email} label="Email address" />
                 </div>
               </div>
