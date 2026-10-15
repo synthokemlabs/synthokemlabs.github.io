@@ -35,35 +35,30 @@ export function PolicyStatement() {
 }
 
 /* ------------------------------------------------------------------ */
-/* ISO 9001:2015 quality management system (PPT slide 21), told as a   */
-/* scroll story. Desktop: the diagram stays pinned while the page      */
-/* scrolls; the line fills from Inputs through Plan–Do–Check–Act to    */
-/* Outputs, the loop from Act back to Plan draws during Act, and the   */
-/* reading panel explains the current step. Phones: a vertical         */
-/* timeline whose line fills as it scrolls past.                       */
+/* ISO 9001:2015 quality management system (PPT slide 21) as a scroll- */
+/* driven control panel. Desktop: the panel stays pinned; as the page  */
+/* scrolls, Inputs light up, then each of Plan–Do–Check–Act opens in   */
+/* turn (its card widens to show the clause, summary and the clause's  */
+/* key activities), the continual-improvement loop runs back from Act  */
+/* to Plan, and Outputs light up. Phones: a vertical timeline.         */
 /* ------------------------------------------------------------------ */
 const QMS_INPUTS = ["Organisation and its context", "Customer requirements", "Needs & expectations of interested parties"];
 const QMS_OUTPUTS = ["Customer satisfaction", "Results of the QMS", "Products & services"];
-const STEPS = [
-  { n: "In", title: "Inputs", node: "What the system starts from", kicker: "Inputs", d: "Every cycle starts from what customers and other interested parties need, and from the context Synthokem works in.", items: QMS_INPUTS },
-  { n: "01", title: "Plan", node: "Planning", kicker: "Step 01 · Clause 6", d: "Risks and opportunities are assessed, and measurable quality objectives are set before work begins." },
-  { n: "02", title: "Do", node: "Support & operation", kicker: "Step 02 · Clauses 7 – 8", d: "Competent people, the right resources and documented procedures keep every operation under control." },
-  { n: "03", title: "Check", node: "Performance evaluation", kicker: "Step 03 · Clause 9", d: "Monitoring, analysis, internal audits and management review show how well the system is working." },
-  { n: "04", title: "Act", node: "Improvement", kicker: "Step 04 · Clause 10", d: "Nonconformities are corrected and the lessons go back into planning — so the cycle starts again, better." },
-  { n: "Out", title: "Outputs", node: "What the system delivers", kicker: "Outputs", d: "Products and services that meet requirements, satisfied customers, and measurable results of the quality system.", items: QMS_OUTPUTS },
+// Key activities are the ISO 9001:2015 sub-clause headings for each phase
+const PDCA = [
+  { n: "01", title: "Plan", node: "Planning", clause: "Clause 6", icon: "target" as const, d: "Set the course before work begins.", points: ["Actions on risks and opportunities", "Quality objectives and how to meet them", "Planning of changes"] },
+  { n: "02", title: "Do", node: "Support & operation", clause: "Clauses 7 – 8", icon: "cog" as const, d: "Run every operation under control.", points: ["Resources, competence and awareness", "Documented information", "Operational planning and control"] },
+  { n: "03", title: "Check", node: "Performance evaluation", clause: "Clause 9", icon: "search" as const, d: "Measure how well the system performs.", points: ["Monitoring, measurement and analysis", "Internal audit", "Management review"] },
+  { n: "04", title: "Act", node: "Improvement", clause: "Clause 10", icon: "spin" as const, d: "Correct, learn and improve — then begin again.", points: ["Nonconformity and corrective action", "Continual improvement"] },
 ];
+const PHASES = ["Inputs", ...PDCA.map((s) => s.title), "Outputs"];
 const clamp = (n: number) => Math.min(1, Math.max(0, n));
-// Track runs from the Inputs block to the Outputs block (columns 1.2 : 1 : 1 : 1 : 1 : 1.2); the four
-// step markers sit at 1/8, 3/8, 5/8 and 7/8 of it. Step s (0–6 of scroll) fills it marker by marker; during
-// Act the line holds while the improvement loop draws (s 4–4.7), then runs on to Outputs.
-const fillAt = (s: number) => (s < 1 ? s * 0.125 : s < 4 ? 0.125 + (s - 1) * 0.25 : s < 4.7 ? 0.875 : Math.min(1, 0.875 + ((s - 4.7) / 0.3) * 0.125));
-const loopAt = (s: number) => clamp((s - 4) / 0.7);
 
 export function QmsStory() {
   const wrapRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLOListElement>(null);
-  const [active, setActive] = useState(0);
+  const [phase, setPhase] = useState(0);
   const [reached, setReached] = useState(-1);
 
   useEffect(() => {
@@ -71,22 +66,19 @@ export function QmsStory() {
     let raf = 0;
     const update = () => {
       raf = 0;
-      const vh = window.innerHeight;
       const wrap = wrapRef.current, stage = stageRef.current, list = listRef.current;
       if (desktop.matches && wrap && stage) {
         const r = wrap.getBoundingClientRect();
-        const span = r.height - stage.offsetHeight;
         const top = parseFloat(getComputedStyle(stage).top) || 0;
-        const s = Math.min(5.999, clamp((top - r.top) / Math.max(1, span)) * 6);
-        stage.style.setProperty("--fill", String(fillAt(s)));
-        stage.style.setProperty("--loop", String(loopAt(s)));
-        setActive(Math.floor(s));
+        const p = clamp((top - r.top) / Math.max(1, r.height - stage.offsetHeight));
+        const s = Math.min(5.999, p * 6);
+        stage.style.setProperty("--p", p.toFixed(4));
+        stage.style.setProperty("--loop", clamp((s - 4) / 0.8).toFixed(4));
+        setPhase(Math.floor(s));
       } else if (list) {
-        // The line runs from the first dot to the last and fills to a little past the middle of the
-        // screen; each step lights up as the fill reaches its dot
         const rows = [...list.querySelectorAll<HTMLElement>("[data-step]")];
         const len = rows[rows.length - 1].offsetTop;
-        const f = clamp((vh * 0.62 - (list.getBoundingClientRect().top + 20)) / Math.max(1, len));
+        const f = clamp((window.innerHeight * 0.62 - (list.getBoundingClientRect().top + 20)) / Math.max(1, len));
         list.style.setProperty("--mlen", `${len}px`);
         list.style.setProperty("--mfill", String(f));
         setReached(rows.filter((row) => row.offsetTop <= f * len + 1).length - 1);
@@ -100,7 +92,7 @@ export function QmsStory() {
     return () => { window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", onScroll); desktop.removeEventListener("change", onScroll); cancelAnimationFrame(raf); };
   }, []);
 
-  // Clicking a step scrolls the page to the point where that step is explained
+  // Clicking a step scrolls the page to the point where that step is open
   const goto = (i: number) => {
     const wrap = wrapRef.current, stage = stageRef.current;
     if (!wrap || !stage) return;
@@ -109,77 +101,91 @@ export function QmsStory() {
     const lenis = (window as unknown as { __lenis?: { scrollTo: (y: number) => void } }).__lenis;
     if (lenis) lenis.scrollTo(y); else window.scrollTo({ top: y, behavior: "smooth" });
   };
-  const state = (i: number) => (i === active ? "is-active" : i < active ? "is-done" : "");
+  const state = (i: number) => (i === phase ? "is-active" : i < phase ? "is-done" : "");
 
   return (
     <>
-      {/* Screen readers (desktop): the whole cycle as text; the pinned diagram is visual only */}
+      {/* Screen readers (desktop): the whole cycle as text; the pinned panel is visual only */}
       <ol className="sr-only hidden lg:block">
-        {STEPS.map((s) => <li key={s.n}>{s.title} — {s.node}: {s.d}{s.items ? ` (${s.items.join(", ")})` : ""}</li>)}
+        <li>Inputs: {QMS_INPUTS.join(", ")}.</li>
+        {PDCA.map((s) => <li key={s.n}>{s.title} — {s.node} ({s.clause}): {s.d} {s.points.join("; ")}.</li>)}
+        <li>Outputs: {QMS_OUTPUTS.join(", ")}.</li>
       </ol>
 
-      {/* Desktop: pinned diagram + reading panel */}
-      <div ref={wrapRef} className="hidden lg:block lg:h-[270vh]">
-        <div ref={stageRef} aria-hidden="true" className="qms-stage sticky top-32">
-          <div className="rounded-2xl bg-white px-10 pb-9 pt-7 ring-1 ring-border shadow-[0_30px_60px_-45px_rgb(10_45_80/0.5)]">
-            <div className="flex items-center justify-between text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-muted">
-              <span>ISO 9001:2015 · Quality management system</span>
-              <span className="flex items-center gap-4">
-                <span className={`qms-hint flex items-center gap-1.5 normal-case tracking-normal ${active === 0 ? "" : "opacity-0"}`}>Scroll to follow the cycle<Icon name="chevronDown" size={14} /></span>
-                <span className="flex gap-1">{STEPS.map((s, i) => <span key={s.n} className={`h-1 w-5 rounded-full transition-colors duration-300 ${i <= active ? "bg-primary" : "bg-border"}`} />)}</span>
-              </span>
+      {/* Desktop: the pinned control panel */}
+      <div ref={wrapRef} className="hidden lg:block lg:h-[300vh]">
+        <div ref={stageRef} aria-hidden="true" className="qms-stage sticky top-28">
+          <div className="qms-panel rounded-3xl p-7 xl:p-8">
+            <div className="flex items-center justify-between gap-6">
+              <p className="flex items-center gap-3 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-white/60">
+                <span className="qms-live h-1.5 w-1.5 rounded-full bg-accent" />ISO 9001:2015 · Quality management system
+              </p>
+              <p className="flex items-center gap-4">
+                <span className="font-mono text-[0.72rem] text-white/70"><span className="text-accent-soft">{String(phase + 1).padStart(2, "0")}</span> / 06 · {PHASES[phase]}</span>
+                <span className="flex gap-1">{PHASES.map((t, i) => <span key={t} className={`h-1 w-6 rounded-full transition-colors duration-500 ${i <= phase ? "bg-accent" : "bg-white/15"}`} />)}</span>
+              </p>
             </div>
 
-            <div className="relative mt-7 grid min-h-[12.5rem] grid-cols-[1.2fr_1fr_1fr_1fr_1fr_1.2fr]">
-              {/* The line, and its fill */}
-              <span className="absolute left-[18.75%] right-[18.75%] top-7 h-0.5 bg-border" />
-              <span className="qms-fill absolute left-[18.75%] right-[18.75%] top-7 h-0.5 origin-left bg-primary" />
-              <span className={`absolute right-[18.75%] top-7 -mt-[5px] mr-px border-y-[6px] border-l-[8px] border-y-transparent transition-colors duration-300 ${active === 5 ? "border-l-primary" : "border-l-border-strong"}`} />
-              {/* Continual improvement: Act back to Plan, drawn during the Act step */}
-              <div className="absolute left-[26.5625%] right-[26.5625%] top-[8.6rem] h-11">
-                <span className="absolute inset-0 rounded-b-2xl border-2 border-t-0 border-dashed border-border-strong" />
-                <span className="qms-loop absolute inset-0 rounded-b-2xl border-2 border-t-0 border-primary" />
-                <span className={`absolute -left-[7px] -top-2 border-x-[7px] border-b-[9px] border-x-transparent transition-colors duration-300 ${active >= 5 ? "border-b-primary" : "border-b-border-strong"}`} />
-                <span className={`absolute bottom-0 left-1/2 flex -translate-x-1/2 translate-y-1/2 items-center gap-1.5 whitespace-nowrap bg-white px-3 text-[0.75rem] font-semibold transition-colors duration-300 ${active >= 4 ? "text-primary" : "text-muted"}`}><Icon name="history" size={14} />Continual improvement</span>
-              </div>
-
+            <div className="mt-6 grid grid-cols-[9.5rem_minmax(0,1fr)_9.5rem] gap-6 xl:grid-cols-[11rem_minmax(0,1fr)_11rem]">
               {/* Inputs */}
-              <div className={`qms-io self-start overflow-hidden rounded-xl border ${state(0)}`}>
-                <p className="qms-io-head flex h-14 items-center gap-2 px-4 text-[0.68rem] font-semibold uppercase tracking-[0.14em]"><Icon name="arrowRight" size={14} />Inputs</p>
-                <ul className="divide-y divide-border border-t border-border bg-white px-4">
-                  {QMS_INPUTS.map((t) => <li key={t} className="py-2 text-[0.8rem] leading-snug text-primary-ink">{t}</li>)}
-                </ul>
+              <div className={`qms-port qms-port-in relative flex flex-col rounded-2xl p-4 ${state(0)}`}>
+                <p className="flex items-center gap-2 text-[0.66rem] font-semibold uppercase tracking-[0.16em] text-accent-soft"><Icon name="arrowRight" size={13} />Inputs</p>
+                <p className="mt-1 text-[0.72rem] text-white/50">What the system starts from</p>
+                <ul className="mt-auto space-y-2 pt-4">{QMS_INPUTS.map((t) => <li key={t} className="border-t border-white/10 pt-2 text-[0.8rem] leading-snug text-white/85">{t}</li>)}</ul>
               </div>
 
-              {STEPS.slice(1, 5).map((s, k) => (
-                <button key={s.n} type="button" tabIndex={-1} onClick={() => goto(k + 1)} className={`qms-step group flex cursor-pointer flex-col items-center text-center ${state(k + 1)}`}>
-                  <span className="qms-dot relative z-10 grid h-14 w-14 place-items-center rounded-full font-mono text-sm font-semibold">{s.n}</span>
-                  <span className="qms-title mt-3.5 font-display text-xl font-semibold">{s.title}</span>
-                  <span className="mt-0.5 max-w-[9rem] text-[0.74rem] leading-snug text-muted">{s.node}</span>
-                </button>
-              ))}
+              {/* Plan – Do – Check – Act */}
+              <div className="flex h-[19.5rem] gap-2.5">
+                {PDCA.map((s, k) => (
+                  <button key={s.n} type="button" tabIndex={-1} onClick={() => goto(k + 1)} className={`qms-card relative cursor-pointer overflow-hidden rounded-2xl text-left ${state(k + 1)}`}>
+                    <span className="qms-card-bar absolute inset-x-0 top-0 h-[3px]" />
+                    {/* Folded: number, icon and a vertical title */}
+                    <span className="qms-mini absolute inset-0 flex flex-col items-center justify-between py-5">
+                      <span className="font-mono text-[0.7rem] text-white/50">{s.n}</span>
+                      <span className="qms-mini-icon grid h-10 w-10 place-items-center rounded-full"><Icon name={s.icon} size={18} /></span>
+                      <span className="rotate-180 font-display text-lg font-semibold tracking-wide text-white/85 [writing-mode:vertical-rl]">{s.title}</span>
+                    </span>
+                    {/* Open: fixed-width content revealed as the card widens */}
+                    <span className="qms-full absolute inset-y-0 left-0 flex w-[17.5rem] flex-col p-6 xl:w-[21rem]">
+                      <span className="flex items-center justify-between">
+                        <span className="grid h-11 w-11 place-items-center rounded-xl bg-white/10 text-accent-soft ring-1 ring-white/15"><Icon name={s.icon} size={20} /></span>
+                        <span className="font-mono text-[0.68rem] uppercase tracking-[0.12em] text-accent-soft">{s.clause}</span>
+                      </span>
+                      <span className="mt-5 flex items-baseline gap-3"><span className="font-display text-[2rem] font-semibold leading-none text-white">{s.title}</span><span className="text-sm text-white/60">{s.node}</span></span>
+                      <span className="mt-2.5 text-[0.95rem] leading-snug text-white/85">{s.d}</span>
+                      <span className="mt-auto block space-y-2 border-t border-white/10 pt-4">
+                        {s.points.map((pt, j) => (
+                          <span key={pt} className="qms-pt flex items-start gap-2.5 text-[0.82rem] leading-snug text-white/75" style={{ "--k": j } as CSSProperties}>
+                            <Icon name="check" size={14} className="mt-0.5 shrink-0 text-accent" />{pt}
+                          </span>
+                        ))}
+                      </span>
+                    </span>
+                  </button>
+                ))}
+              </div>
 
               {/* Outputs */}
-              <div className={`qms-io qms-out self-start overflow-hidden rounded-xl border ${state(5)}`}>
-                <p className="qms-io-head flex h-14 items-center gap-2 px-4 text-[0.68rem] font-semibold uppercase tracking-[0.14em]"><Icon name="check" size={14} />Outputs</p>
-                <ul className="divide-y divide-border border-t border-border bg-white px-4">
-                  {QMS_OUTPUTS.map((t) => <li key={t} className="py-2 text-[0.8rem] leading-snug text-primary-ink">{t}</li>)}
-                </ul>
+              <div className={`qms-port qms-port-out relative flex flex-col rounded-2xl p-4 ${state(5)}`}>
+                <p className="flex items-center gap-2 text-[0.66rem] font-semibold uppercase tracking-[0.16em] text-accent-soft"><Icon name="check" size={13} />Outputs</p>
+                <p className="mt-1 text-[0.72rem] text-white/50">What it delivers</p>
+                <ul className="mt-auto space-y-2 pt-4">{QMS_OUTPUTS.map((t) => <li key={t} className="border-t border-white/10 pt-2 text-[0.8rem] leading-snug text-white/85">{t}</li>)}</ul>
               </div>
             </div>
 
-            {/* Reading panel: all six share one cell, so it never changes height */}
-            <div className="mt-6 grid border-t border-border pt-7">
-              {STEPS.map((s, i) => (
-                <div key={s.n} className={`qms-read [grid-area:1/1] grid grid-cols-12 items-baseline gap-8 ${i === active ? "is-on" : ""}`}>
-                  <div className="col-span-4">
-                    <p className="font-mono text-[0.72rem] uppercase tracking-[0.1em] text-accent-strong">{s.kicker}</p>
-                    <p className="mt-1.5 font-display text-[1.7rem] font-semibold leading-tight text-primary-ink">{s.title}</p>
-                    {i > 0 && i < 5 && <p className="mt-0.5 text-sm text-muted">{s.node}</p>}
-                  </div>
-                  <p className="col-span-8 text-[1.08rem] leading-relaxed text-text">{s.d}</p>
-                </div>
-              ))}
+            {/* Progress rail under the cycle, and the loop from Act back to Plan */}
+            <div className="mt-5 grid grid-cols-[9.5rem_minmax(0,1fr)_9.5rem] gap-6 xl:grid-cols-[11rem_minmax(0,1fr)_11rem]">
+              <span />
+              <div className="relative h-14">
+                <span className="absolute inset-x-0 top-0 h-px bg-white/15" />
+                <span className="qms-rail absolute inset-x-0 top-0 h-px origin-left bg-gradient-to-r from-accent/40 via-accent to-accent-soft" />
+                <span className="qms-head absolute top-0 -ml-1 -mt-1 h-2 w-2 rounded-full bg-accent-soft" />
+                <span className="absolute inset-x-6 bottom-3 top-4 rounded-b-2xl border-2 border-t-0 border-dashed border-white/15" />
+                <span className="qms-loop absolute inset-x-6 bottom-3 top-4 rounded-b-2xl border-2 border-t-0 border-accent" />
+                <span className={`absolute -top-0 left-6 -ml-[7px] mt-1.5 border-x-[7px] border-b-[9px] border-x-transparent transition-colors duration-300 ${phase >= 5 ? "border-b-accent" : "border-b-white/25"}`} />
+                <span className={`absolute bottom-3 left-1/2 flex -translate-x-1/2 translate-y-1/2 items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-0.5 text-[0.72rem] font-semibold transition-colors duration-500 ${phase >= 4 ? "bg-accent text-[#06223d]" : "bg-[#0a2744] text-white/60"}`}><Icon name="history" size={13} />Continual improvement</span>
+              </div>
+              <span />
             </div>
           </div>
         </div>
@@ -187,32 +193,41 @@ export function QmsStory() {
 
       {/* Phones and tablets: a vertical timeline */}
       <ol ref={listRef} className="qms-list relative lg:hidden">
-        <span aria-hidden="true" className="qms-mtrack absolute left-5 top-5 w-0.5 -translate-x-1/2 bg-border" />
-        <span aria-hidden="true" className="qms-mtrack qms-mfill absolute left-5 top-5 w-0.5 origin-top -translate-x-1/2 bg-primary" />
-        {STEPS.map((s, i) => (
+        <span aria-hidden="true" className="qms-mtrack absolute left-5 top-5 w-0.5 -translate-x-1/2 bg-white/15" />
+        <span aria-hidden="true" className="qms-mtrack qms-mfill absolute left-5 top-5 w-0.5 origin-top -translate-x-1/2 bg-accent" />
+        <li data-step={0} className={`qms-row relative flex gap-5 pb-9 ${reached >= 0 ? "is-done" : ""}`}>
+          <span aria-hidden="true" className="qms-dot relative z-10 grid h-10 w-10 shrink-0 place-items-center rounded-full font-mono text-[0.7rem] font-semibold">In</span>
+          <div className="min-w-0 pt-1">
+            <p className="font-display text-xl font-semibold text-white">Inputs</p>
+            <ul className="mt-3 divide-y divide-white/10 rounded-xl bg-white/5 px-4 ring-1 ring-white/10">{QMS_INPUTS.map((t) => <li key={t} className="py-2 text-[0.88rem] text-white/85">{t}</li>)}</ul>
+          </div>
+        </li>
+        {PDCA.map((s, k) => (
           <Fragment key={s.n}>
-            <li data-step={i} className={`qms-row relative flex gap-5 pb-9 ${i <= reached ? "is-done" : ""}`}>
-              <span aria-hidden="true" className="qms-dot relative z-10 grid h-10 w-10 shrink-0 place-items-center rounded-full font-mono text-[0.72rem] font-semibold">{s.n}</span>
+            <li data-step={k + 1} className={`qms-row relative flex gap-5 pb-9 ${k + 1 <= reached ? "is-done" : ""}`}>
+              <span aria-hidden="true" className="qms-dot relative z-10 grid h-10 w-10 shrink-0 place-items-center rounded-full"><Icon name={s.icon} size={17} /></span>
               <div className="min-w-0 pt-1">
-                <p className="font-mono text-[0.68rem] uppercase tracking-[0.1em] text-accent-strong">{s.kicker}</p>
-                <p className="mt-1 font-display text-xl font-semibold text-primary-ink">{s.title}{i > 0 && i < 5 && <span className="text-muted"> · {s.node}</span>}</p>
-                {s.items ? (
-                  <ul className="mt-3 divide-y divide-border rounded-lg bg-white px-4 ring-1 ring-border">
-                    {s.items.map((t) => <li key={t} className="py-2 text-[0.88rem] text-primary-ink">{t}</li>)}
-                  </ul>
-                ) : (
-                  <p className="mt-2 text-[0.95rem] leading-relaxed text-muted">{s.d}</p>
-                )}
+                <p className="font-mono text-[0.68rem] uppercase tracking-[0.1em] text-accent-soft">Step {s.n} · {s.clause}</p>
+                <p className="mt-1 font-display text-xl font-semibold text-white">{s.title}<span className="text-white/55"> · {s.node}</span></p>
+                <p className="mt-2 text-[0.95rem] leading-relaxed text-white/75">{s.d}</p>
+                <ul className="mt-3 space-y-1.5">{s.points.map((pt) => <li key={pt} className="flex gap-2 text-[0.86rem] text-white/70"><Icon name="check" size={14} className="mt-0.5 shrink-0 text-accent" />{pt}</li>)}</ul>
               </div>
             </li>
-            {i === 4 && (
+            {k === 3 && (
               <li className="relative flex gap-5 pb-9">
-                <span aria-hidden="true" className="relative z-10 grid h-10 w-10 shrink-0 place-items-center rounded-full border-2 border-dashed border-primary/40 bg-surface text-primary"><Icon name="history" size={17} /></span>
-                <p className="pt-2.5 text-[0.92rem] text-muted"><span className="font-semibold text-primary">Back to Plan.</span> Continual improvement — the cycle starts again.</p>
+                <span aria-hidden="true" className="relative z-10 grid h-10 w-10 shrink-0 place-items-center rounded-full border-2 border-dashed border-accent/50 bg-[#0a2744] text-accent"><Icon name="history" size={17} /></span>
+                <p className="pt-2.5 text-[0.92rem] text-white/70"><span className="font-semibold text-accent-soft">Back to Plan.</span> Continual improvement — the cycle starts again.</p>
               </li>
             )}
           </Fragment>
         ))}
+        <li data-step={5} className={`qms-row relative flex gap-5 ${reached >= 5 ? "is-done" : ""}`}>
+          <span aria-hidden="true" className="qms-dot relative z-10 grid h-10 w-10 shrink-0 place-items-center rounded-full font-mono text-[0.7rem] font-semibold">Out</span>
+          <div className="min-w-0 pt-1">
+            <p className="font-display text-xl font-semibold text-white">Outputs</p>
+            <ul className="mt-3 divide-y divide-white/10 rounded-xl bg-white/5 px-4 ring-1 ring-white/10">{QMS_OUTPUTS.map((t) => <li key={t} className="py-2 text-[0.88rem] text-white/85">{t}</li>)}</ul>
+          </div>
+        </li>
       </ol>
     </>
   );

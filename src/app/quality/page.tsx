@@ -40,9 +40,9 @@ export default function QualityPage() {
       </section>
 
       {/* PPT slide 21 */}
-      <section id="system" className="border-y border-border bg-surface py-20 lg:py-28">
+      <section id="system" className="qms-band on-dark relative isolate overflow-x-clip py-20 text-white lg:py-28">
         <Container>
-          <SectionHeading eyebrow="Quality management system" title="A system built to keep improving." highlight="improving." lede="Certified to ISO 9001 since 2000. Requirements go in, a Plan–Do–Check–Act cycle runs without pause, and satisfied customers come out." />
+          <SectionHeading tone="light" eyebrow="Quality management system" title="A system built to keep improving." highlight="improving." lede="Certified to ISO 9001 since 2000. Requirements go in, a Plan–Do–Check–Act cycle runs without pause, and satisfied customers come out." />
           <div className="mt-14"><QmsStory /></div>
         </Container>
       </section>
