@@ -430,18 +430,15 @@ html.lenis-on body { overscroll-behavior: none; }
 }
 
 /* ==========================================================================
-   Photo wipe (home statement photo) — outline draws in, a sky panel sweeps
+   Photo wipe (home statement photo) — a sky panel sweeps
    left→right to reveal the photo as it settles from a zoom, the chip and
    caption follow, then the photo drifts slowly. Timeline is relative to
    --reveal-delay and finishes before Reveal's .settled safety net (2.2s).
    ========================================================================== */
 .reveal.reveal-wipe { opacity: 1; transform: none; }
 
-.wipe-outline { translate: 10px 10px; transition: translate 0.6s var(--ease-out); }
-@media (min-width: 1024px) { .wipe-outline { translate: 14px 14px; } }
 .wipe-photo { transition: transform 0.6s var(--ease-out), box-shadow 0.6s var(--ease-out); }
-.wipe-frame:hover .wipe-outline { translate: 5px 5px; }
-.wipe-frame:hover .wipe-photo { transform: translate(-3px, -3px); box-shadow: 0 24px 44px -26px rgb(10 45 80 / 0.5); }
+.wipe-frame:hover .wipe-photo { transform: translateY(-4px); box-shadow: 0 34px 60px -32px rgb(10 45 80 / 0.6); }
 
 .wipe-panel { position: absolute; inset: 0; z-index: 2; pointer-events: none; transform: scaleX(0); background: linear-gradient(115deg, var(--primary) 0%, var(--accent) 100%); }
 .is-visible .wipe-panel { animation: wipe-panel 1.15s calc(var(--reveal-delay, 0ms) + 0.1s) both; }
@@ -480,7 +477,6 @@ html.lenis-on body { overscroll-behavior: none; }
 .reveal-wipe.settled .wipe-chip, .reveal-wipe.settled .wipe-line { animation: none; opacity: 1; transform: none; }
 .no-js .wipe-panel { display: none; }
 .no-js .wipe-img, .no-js .wipe-chip, .no-js .wipe-line { opacity: 1; transform: none; }
-.no-js .reveal-wipe .draw-path { stroke-dashoffset: 0; }
 
 @media (prefers-reduced-motion: reduce) {
   .wipe-panel { display: none; }

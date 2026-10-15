@@ -112,21 +112,17 @@ export default function HomePage() {
               <p className="text-[0.74rem] font-semibold uppercase tracking-[0.16em] text-muted">Synthokem Labs</p>
               <p className="font-mono text-xs text-muted">Hyderabad · Est. 1978</p>
             </Reveal>
-            {/* Unit II gate: outline draws in, a sky panel sweeps across to reveal the photo, chip and caption follow,
-                then a slow drift (globals.css "Photo wipe"). Landscape frame keeps both the signboard and the logo wall. */}
+            {/* Unit II gate: a sky panel sweeps across to reveal the photo, chip and caption follow, then a slow
+                drift (globals.css "Photo wipe"). Landscape frame keeps both the signboard and the logo wall. */}
             <Reveal variant="wipe" delay={120} className="wipe-frame mt-6">
-              <div className="relative">
-                <svg aria-hidden="true" className="wipe-outline pointer-events-none absolute inset-0 h-full w-full overflow-visible text-accent">
-                  <rect className="draw-path" x="0" y="0" width="100%" height="100%" rx="8" pathLength={1} fill="none" stroke="currentColor" strokeWidth="1.5" style={{ "--draw-delay": "0.2s" } as CSSProperties} />
-                </svg>
-                {/* Not a .zoom-parent: ScrollFX's 1.12 parallax scale would crop the signboard at the left edge */}
-                <div className="wipe-photo relative aspect-[544/316] overflow-hidden rounded-lg">
-                  <Img name="unit2-gate" width={1920} height={1116} sizes="(min-width:1024px) 40vw, 100vw" className="wipe-img absolute inset-0 h-full w-full object-cover" />
-                  <span aria-hidden="true" className="wipe-panel" />
-                  <span className="wipe-chip absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-1.5 font-mono text-[0.7rem] text-primary-ink shadow-sm backdrop-blur-sm">
-                    <Icon name="pin" size={13} className="text-accent-strong" /> Unit II · Pashamylaram
-                  </span>
-                </div>
+              {/* Not a .zoom-parent: ScrollFX's 1.12 parallax scale would crop the signboard at the left edge */}
+              <div className="wipe-photo relative aspect-[544/316] overflow-hidden rounded-xl bg-surface shadow-[0_26px_50px_-30px_rgb(10_45_80/0.55)]">
+                <Img name="unit2-gate" width={1920} height={1116} sizes="(min-width:1024px) 40vw, 100vw" className="wipe-img absolute inset-0 h-full w-full object-cover" />
+                <span aria-hidden="true" className="wipe-panel" />
+                <span aria-hidden="true" className="pointer-events-none absolute inset-0 z-[1] rounded-xl ring-1 ring-inset ring-black/10" />
+                <span className="wipe-chip absolute right-3 top-3 z-[3] inline-flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-1.5 font-mono text-[0.7rem] text-primary-ink shadow-sm backdrop-blur-sm">
+                  <Icon name="pin" size={13} className="text-accent-strong" /> Unit II · Pashamylaram
+                </span>
               </div>
               <p className="mt-7">
                 <span className="wipe-mask"><span className="wipe-line font-mono text-xs text-muted" style={{ "--l": 0 } as CSSProperties}>Two units · Telangana &amp; Andhra Pradesh</span></span>
