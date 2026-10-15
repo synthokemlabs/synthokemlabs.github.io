@@ -3,6 +3,7 @@ import { LabGallery, PolicyStatement, QmsStory, QualityUnitChart } from "@/compo
 import { ButtonLink, Container, SectionHeading } from "@/components/ui/primitives";
 import { Counter, Reveal } from "@/components/ui/client";
 import { Icon } from "@/components/ui/Icon";
+import { ApprovalMark } from "@/components/sections/shared";
 import { APPROVALS, JOURNEY } from "@/data/company";
 import { SITE } from "@/data/site";
 import { pageMetadata } from "@/lib/seo";
@@ -15,6 +16,7 @@ export const metadata = pageMetadata({
 });
 
 export default function QualityPage() {
+  const iso = APPROVALS.find((a) => a.short.startsWith("ISO 9001"));
   const filings = JOURNEY.filter((m) => m.type === "filing");
   const stats = [
     { value: Math.min(...filings.map((m) => m.year)), label: "First USFDA drug master files" },
@@ -40,10 +42,24 @@ export default function QualityPage() {
       </section>
 
       {/* PPT slide 21 */}
-      <section id="system" className="qms-band on-dark relative isolate overflow-x-clip py-20 text-white lg:py-28">
+      <section id="system" className="border-y border-border bg-surface py-20 lg:py-28">
         <Container>
-          <SectionHeading tone="light" eyebrow="Quality management system" title="A system built to keep improving." highlight="improving." lede="Certified to ISO 9001 since 2000. Requirements go in, a Plan–Do–Check–Act cycle runs without pause, and satisfied customers come out." />
-          <div className="mt-14"><QmsStory /></div>
+          <div className="grid grid-cols-1 items-end gap-10 lg:grid-cols-12">
+            <div className="lg:col-span-8">
+              <SectionHeading eyebrow="Quality management system" title="A system built to keep improving." highlight="improving." lede="The ISO 9001:2015 model as we run it: requirements go in, a Plan–Do–Check–Act cycle turns them into controlled work, and every turn of the cycle improves the next." />
+            </div>
+            {iso && (
+              <Reveal delay={150} className="flex items-center gap-5 justify-self-start rounded-2xl bg-white py-4 pl-4 pr-6 ring-1 ring-border lg:col-span-4 lg:justify-self-end">
+                <ApprovalMark a={iso} size="sm" />
+                <p className="border-l border-border pl-5 leading-snug">
+                  <span className="block text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-muted">Certified</span>
+                  <span className="mt-1 block font-semibold text-primary-ink">{iso.short} · DNV GL</span>
+                  <span className="block text-sm text-muted">Since {iso.since} · renewed to date</span>
+                </p>
+              </Reveal>
+            )}
+          </div>
+          <div className="mt-16"><QmsStory /></div>
         </Container>
       </section>
 

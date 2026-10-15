@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useEffect, useRef, useState, type CSSProperties } from "react";
+import { Fragment, useState, type CSSProperties } from "react";
 import { Img } from "@/components/ui/Img";
 import { Icon } from "@/components/ui/Icon";
 import { Reveal } from "@/components/ui/client";
@@ -35,199 +35,123 @@ export function PolicyStatement() {
 }
 
 /* ------------------------------------------------------------------ */
-/* ISO 9001:2015 quality management system (PPT slide 21) as a scroll- */
-/* driven control panel. Desktop: the panel stays pinned; as the page  */
-/* scrolls, Inputs light up, then each of Plan–Do–Check–Act opens in   */
-/* turn (its card widens to show the clause, summary and the clause's  */
-/* key activities), the continual-improvement loop runs back from Act  */
-/* to Plan, and Outputs light up. Phones: a vertical timeline.         */
+/* ISO 9001:2015 quality management system (PPT slide 21), drawn as a */
+/* quality-manual figure: Inputs → Plan → Do → Check → Act → Outputs,  */
+/* each phase with its clause and the standard's sub-clause headings.  */
+/* On entry the process line draws across, each column appears as the */
+/* line reaches it, the letters are drawn in outline, and the          */
+/* continual-improvement loop runs back from Act to Plan. Afterwards a */
+/* single marker keeps travelling the cycle.                           */
 /* ------------------------------------------------------------------ */
 const QMS_INPUTS = ["Organisation and its context", "Customer requirements", "Needs & expectations of interested parties"];
 const QMS_OUTPUTS = ["Customer satisfaction", "Results of the QMS", "Products & services"];
-// Key activities are the ISO 9001:2015 sub-clause headings for each phase
+// Sub-clause numbers and titles as published in ISO 9001:2015
 const PDCA = [
-  { n: "01", title: "Plan", node: "Planning", clause: "Clause 6", icon: "target" as const, d: "Set the course before work begins.", points: ["Actions on risks and opportunities", "Quality objectives and how to meet them", "Planning of changes"] },
-  { n: "02", title: "Do", node: "Support & operation", clause: "Clauses 7 – 8", icon: "cog" as const, d: "Run every operation under control.", points: ["Resources, competence and awareness", "Documented information", "Operational planning and control"] },
-  { n: "03", title: "Check", node: "Performance evaluation", clause: "Clause 9", icon: "search" as const, d: "Measure how well the system performs.", points: ["Monitoring, measurement and analysis", "Internal audit", "Management review"] },
-  { n: "04", title: "Act", node: "Improvement", clause: "Clause 10", icon: "spin" as const, d: "Correct, learn and improve — then begin again.", points: ["Nonconformity and corrective action", "Continual improvement"] },
+  { L: "P", title: "Plan", node: "Planning", clause: "Clause 6", d: "Set the course before work begins.", subs: [["6.1", "Actions to address risks and opportunities"], ["6.2", "Quality objectives and planning to achieve them"], ["6.3", "Planning of changes"]] },
+  { L: "D", title: "Do", node: "Support & operation", clause: "Clauses 7–8", d: "Run every operation under control.", subs: [["7.1", "Resources"], ["7.2", "Competence"], ["7.5", "Documented information"], ["8.1", "Operational planning and control"]] },
+  { L: "C", title: "Check", node: "Performance evaluation", clause: "Clause 9", d: "Measure how well the system performs.", subs: [["9.1", "Monitoring, measurement, analysis and evaluation"], ["9.2", "Internal audit"], ["9.3", "Management review"]] },
+  { L: "A", title: "Act", node: "Improvement", clause: "Clause 10", d: "Correct, learn and improve.", subs: [["10.2", "Nonconformity and corrective action"], ["10.3", "Continual improvement"]] },
 ];
-const PHASES = ["Inputs", ...PDCA.map((s) => s.title), "Outputs"];
-const clamp = (n: number) => Math.min(1, Math.max(0, n));
+// When the 1.6 s line draw reaches each column (columns 0.85 : 1 : 1 : 1 : 1 : 0.85)
+const ARRIVE = [0.25, 0.55, 0.85, 1.15, 1.45, 1.7];
+
+function Letter({ ch, delay, className = "" }: { ch: string; delay: number; className?: string }) {
+  return (
+    <svg viewBox="0 0 72 84" className={`qms-letter ${className}`} aria-hidden="true">
+      <text x="0" y="72" style={{ "--d": `${delay}s` } as CSSProperties}>{ch}</text>
+    </svg>
+  );
+}
 
 export function QmsStory() {
-  const wrapRef = useRef<HTMLDivElement>(null);
-  const stageRef = useRef<HTMLDivElement>(null);
-  const listRef = useRef<HTMLOListElement>(null);
-  const [phase, setPhase] = useState(0);
-  const [reached, setReached] = useState(-1);
-
-  useEffect(() => {
-    const desktop = window.matchMedia("(min-width: 1024px)");
-    let raf = 0;
-    const update = () => {
-      raf = 0;
-      const wrap = wrapRef.current, stage = stageRef.current, list = listRef.current;
-      if (desktop.matches && wrap && stage) {
-        const r = wrap.getBoundingClientRect();
-        const top = parseFloat(getComputedStyle(stage).top) || 0;
-        const p = clamp((top - r.top) / Math.max(1, r.height - stage.offsetHeight));
-        const s = Math.min(5.999, p * 6);
-        stage.style.setProperty("--p", p.toFixed(4));
-        stage.style.setProperty("--loop", clamp((s - 4) / 0.8).toFixed(4));
-        setPhase(Math.floor(s));
-      } else if (list) {
-        const rows = [...list.querySelectorAll<HTMLElement>("[data-step]")];
-        const len = rows[rows.length - 1].offsetTop;
-        const f = clamp((window.innerHeight * 0.62 - (list.getBoundingClientRect().top + 20)) / Math.max(1, len));
-        list.style.setProperty("--mlen", `${len}px`);
-        list.style.setProperty("--mfill", String(f));
-        setReached(rows.filter((row) => row.offsetTop <= f * len + 1).length - 1);
-      }
-    };
-    const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
-    update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll);
-    desktop.addEventListener("change", onScroll);
-    return () => { window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", onScroll); desktop.removeEventListener("change", onScroll); cancelAnimationFrame(raf); };
-  }, []);
-
-  // Clicking a step scrolls the page to the point where that step is open
-  const goto = (i: number) => {
-    const wrap = wrapRef.current, stage = stageRef.current;
-    if (!wrap || !stage) return;
-    const top = parseFloat(getComputedStyle(stage).top) || 0;
-    const y = wrap.getBoundingClientRect().top + window.scrollY - top + (wrap.offsetHeight - stage.offsetHeight) * ((i + 0.5) / 6);
-    const lenis = (window as unknown as { __lenis?: { scrollTo: (y: number) => void } }).__lenis;
-    if (lenis) lenis.scrollTo(y); else window.scrollTo({ top: y, behavior: "smooth" });
-  };
-  const state = (i: number) => (i === phase ? "is-active" : i < phase ? "is-done" : "");
-
   return (
     <>
-      {/* Screen readers (desktop): the whole cycle as text; the pinned panel is visual only */}
-      <ol className="sr-only hidden lg:block">
-        <li>Inputs: {QMS_INPUTS.join(", ")}.</li>
-        {PDCA.map((s) => <li key={s.n}>{s.title} — {s.node} ({s.clause}): {s.d} {s.points.join("; ")}.</li>)}
-        <li>Outputs: {QMS_OUTPUTS.join(", ")}.</li>
-      </ol>
+      {/* Desktop and wide tablets: the figure */}
+      <Reveal className="qms-fig hidden lg:block">
+        <div className="qms-flow relative grid grid-cols-[minmax(0,0.85fr)_repeat(4,minmax(0,1fr))_minmax(0,0.85fr)]">
+          {/* The process line, its arrowheads, and the marker that keeps travelling it */}
+          <span aria-hidden="true" className="qms-line absolute left-[3%] right-[3%] top-7 h-px bg-primary/45" />
+          <span aria-hidden="true" className="qms-signal absolute top-7 h-1.5 w-1.5 rounded-full bg-accent-strong" />
 
-      {/* Desktop: the pinned control panel */}
-      <div ref={wrapRef} className="hidden lg:block lg:h-[300vh]">
-        <div ref={stageRef} aria-hidden="true" className="qms-stage sticky top-28">
-          <div className="qms-panel rounded-3xl p-7 xl:p-8">
-            <div className="flex items-center justify-between gap-6">
-              <p className="flex items-center gap-3 text-[0.7rem] font-semibold uppercase tracking-[0.18em] text-white/60">
-                <span className="qms-live h-1.5 w-1.5 rounded-full bg-accent" />ISO 9001:2015 · Quality management system
-              </p>
-              <p className="flex items-center gap-4">
-                <span className="font-mono text-[0.72rem] text-white/70"><span className="text-accent-soft">{String(phase + 1).padStart(2, "0")}</span> / 06 · {PHASES[phase]}</span>
-                <span className="flex gap-1">{PHASES.map((t, i) => <span key={t} className={`h-1 w-6 rounded-full transition-colors duration-500 ${i <= phase ? "bg-accent" : "bg-white/15"}`} />)}</span>
-              </p>
-            </div>
+          <div className="pr-6">
+            <p className="flex h-14 items-center"><span className="flex items-center gap-2 bg-surface pr-2 text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-muted"><span className="qms-node node-pop" style={nd(ARRIVE[0])} />Inputs</span></p>
+            <ul className="node-pop mt-2 space-y-2.5" style={nd(ARRIVE[0] + 0.15)}>
+              {QMS_INPUTS.map((t) => <li key={t} className="border-t border-border pt-2.5 text-[0.88rem] leading-snug text-primary-ink">{t}</li>)}
+            </ul>
+          </div>
 
-            <div className="mt-6 grid grid-cols-[9.5rem_minmax(0,1fr)_9.5rem] gap-6 xl:grid-cols-[11rem_minmax(0,1fr)_11rem]">
-              {/* Inputs */}
-              <div className={`qms-port qms-port-in relative flex flex-col rounded-2xl p-4 ${state(0)}`}>
-                <p className="flex items-center gap-2 text-[0.66rem] font-semibold uppercase tracking-[0.16em] text-accent-soft"><Icon name="arrowRight" size={13} />Inputs</p>
-                <p className="mt-1 text-[0.72rem] text-white/50">What the system starts from</p>
-                <ul className="mt-auto space-y-2 pt-4">{QMS_INPUTS.map((t) => <li key={t} className="border-t border-white/10 pt-2 text-[0.8rem] leading-snug text-white/85">{t}</li>)}</ul>
+          {PDCA.map((s, k) => (
+            <article key={s.L} className="qms-col group relative border-l border-border px-4 pb-6 xl:px-6">
+              <span aria-hidden="true" className="qms-arrow node-pop absolute -left-[5px] top-[23px]" style={nd(ARRIVE[k + 1] - 0.05)} />
+              <p className="flex h-14 items-center"><span className="flex items-center gap-2 bg-surface pr-2"><span className="qms-node node-pop" style={nd(ARRIVE[k + 1])} /><span className="node-pop font-mono text-[0.68rem] uppercase tracking-[0.12em] text-accent-strong" style={nd(ARRIVE[k + 1] + 0.05)}>{s.clause}</span></span></p>
+              <Letter ch={s.L} delay={ARRIVE[k + 1] + 0.05} className="mt-1 h-[5.25rem] w-auto" />
+              <div className="node-pop" style={nd(ARRIVE[k + 1] + 0.2)}>
+                <h3 className="mt-3 text-xl font-semibold text-primary-ink">{s.title}</h3>
+                <p className="text-sm font-medium text-muted">{s.node}</p>
+                <p className="mt-2 text-[0.92rem] leading-snug text-text">{s.d}</p>
+                <ul className="mt-5 border-t border-border">
+                  {s.subs.map(([n, t]) => (
+                    <li key={n} className="grid grid-cols-[2.4rem_1fr] gap-1 border-b border-border py-2 text-[0.83rem] leading-snug text-muted">
+                      <span className="font-mono text-[0.72rem] leading-[1.45] text-accent-strong">{n}</span>{t}
+                    </li>
+                  ))}
+                </ul>
               </div>
+            </article>
+          ))}
 
-              {/* Plan – Do – Check – Act */}
-              <div className="flex h-[19.5rem] gap-2.5">
-                {PDCA.map((s, k) => (
-                  <button key={s.n} type="button" tabIndex={-1} onClick={() => goto(k + 1)} className={`qms-card relative cursor-pointer overflow-hidden rounded-2xl text-left ${state(k + 1)}`}>
-                    <span className="qms-card-bar absolute inset-x-0 top-0 h-[3px]" />
-                    {/* Folded: number, icon and a vertical title */}
-                    <span className="qms-mini absolute inset-0 flex flex-col items-center justify-between py-5">
-                      <span className="font-mono text-[0.7rem] text-white/50">{s.n}</span>
-                      <span className="qms-mini-icon grid h-10 w-10 place-items-center rounded-full"><Icon name={s.icon} size={18} /></span>
-                      <span className="rotate-180 font-display text-lg font-semibold tracking-wide text-white/85 [writing-mode:vertical-rl]">{s.title}</span>
-                    </span>
-                    {/* Open: fixed-width content revealed as the card widens */}
-                    <span className="qms-full absolute inset-y-0 left-0 flex w-[17.5rem] flex-col p-6 xl:w-[21rem]">
-                      <span className="flex items-center justify-between">
-                        <span className="grid h-11 w-11 place-items-center rounded-xl bg-white/10 text-accent-soft ring-1 ring-white/15"><Icon name={s.icon} size={20} /></span>
-                        <span className="font-mono text-[0.68rem] uppercase tracking-[0.12em] text-accent-soft">{s.clause}</span>
-                      </span>
-                      <span className="mt-5 flex items-baseline gap-3"><span className="font-display text-[2rem] font-semibold leading-none text-white">{s.title}</span><span className="text-sm text-white/60">{s.node}</span></span>
-                      <span className="mt-2.5 text-[0.95rem] leading-snug text-white/85">{s.d}</span>
-                      <span className="mt-auto block space-y-2 border-t border-white/10 pt-4">
-                        {s.points.map((pt, j) => (
-                          <span key={pt} className="qms-pt flex items-start gap-2.5 text-[0.82rem] leading-snug text-white/75" style={{ "--k": j } as CSSProperties}>
-                            <Icon name="check" size={14} className="mt-0.5 shrink-0 text-accent" />{pt}
-                          </span>
-                        ))}
-                      </span>
-                    </span>
-                  </button>
-                ))}
-              </div>
-
-              {/* Outputs */}
-              <div className={`qms-port qms-port-out relative flex flex-col rounded-2xl p-4 ${state(5)}`}>
-                <p className="flex items-center gap-2 text-[0.66rem] font-semibold uppercase tracking-[0.16em] text-accent-soft"><Icon name="check" size={13} />Outputs</p>
-                <p className="mt-1 text-[0.72rem] text-white/50">What it delivers</p>
-                <ul className="mt-auto space-y-2 pt-4">{QMS_OUTPUTS.map((t) => <li key={t} className="border-t border-white/10 pt-2 text-[0.8rem] leading-snug text-white/85">{t}</li>)}</ul>
-              </div>
-            </div>
-
-            {/* Progress rail under the cycle, and the loop from Act back to Plan */}
-            <div className="mt-5 grid grid-cols-[9.5rem_minmax(0,1fr)_9.5rem] gap-6 xl:grid-cols-[11rem_minmax(0,1fr)_11rem]">
-              <span />
-              <div className="relative h-14">
-                <span className="absolute inset-x-0 top-0 h-px bg-white/15" />
-                <span className="qms-rail absolute inset-x-0 top-0 h-px origin-left bg-gradient-to-r from-accent/40 via-accent to-accent-soft" />
-                <span className="qms-head absolute top-0 -ml-1 -mt-1 h-2 w-2 rounded-full bg-accent-soft" />
-                <span className="absolute inset-x-6 bottom-3 top-4 rounded-b-2xl border-2 border-t-0 border-dashed border-white/15" />
-                <span className="qms-loop absolute inset-x-6 bottom-3 top-4 rounded-b-2xl border-2 border-t-0 border-accent" />
-                <span className={`absolute -top-0 left-6 -ml-[7px] mt-1.5 border-x-[7px] border-b-[9px] border-x-transparent transition-colors duration-300 ${phase >= 5 ? "border-b-accent" : "border-b-white/25"}`} />
-                <span className={`absolute bottom-3 left-1/2 flex -translate-x-1/2 translate-y-1/2 items-center gap-1.5 whitespace-nowrap rounded-full px-3 py-0.5 text-[0.72rem] font-semibold transition-colors duration-500 ${phase >= 4 ? "bg-accent text-[#06223d]" : "bg-[#0a2744] text-white/60"}`}><Icon name="history" size={13} />Continual improvement</span>
-              </div>
-              <span />
-            </div>
+          <div className="relative border-l border-border pl-6">
+            <span aria-hidden="true" className="qms-arrow node-pop absolute -left-[5px] top-[23px]" style={nd(ARRIVE[5] - 0.05)} />
+            <p className="flex h-14 items-center"><span className="flex items-center gap-2 bg-surface pr-2 text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-muted"><span className="qms-node qms-node-end node-pop" style={nd(ARRIVE[5])} />Outputs</span></p>
+            <ul className="node-pop mt-2 space-y-2.5" style={nd(ARRIVE[5] + 0.15)}>
+              {QMS_OUTPUTS.map((t) => <li key={t} className="border-t border-border pt-2.5 text-[0.88rem] leading-snug text-primary-ink">{t}</li>)}
+            </ul>
           </div>
         </div>
-      </div>
 
-      {/* Phones and tablets: a vertical timeline */}
-      <ol ref={listRef} className="qms-list relative lg:hidden">
-        <span aria-hidden="true" className="qms-mtrack absolute left-5 top-5 w-0.5 -translate-x-1/2 bg-white/15" />
-        <span aria-hidden="true" className="qms-mtrack qms-mfill absolute left-5 top-5 w-0.5 origin-top -translate-x-1/2 bg-accent" />
-        <li data-step={0} className={`qms-row relative flex gap-5 pb-9 ${reached >= 0 ? "is-done" : ""}`}>
-          <span aria-hidden="true" className="qms-dot relative z-10 grid h-10 w-10 shrink-0 place-items-center rounded-full font-mono text-[0.7rem] font-semibold">In</span>
-          <div className="min-w-0 pt-1">
-            <p className="font-display text-xl font-semibold text-white">Inputs</p>
-            <ul className="mt-3 divide-y divide-white/10 rounded-xl bg-white/5 px-4 ring-1 ring-white/10">{QMS_INPUTS.map((t) => <li key={t} className="py-2 text-[0.88rem] text-white/85">{t}</li>)}</ul>
+        {/* Continual improvement: Act back to Plan, under the four phases */}
+        <div className="grid grid-cols-[minmax(0,0.85fr)_repeat(4,minmax(0,1fr))_minmax(0,0.85fr)]">
+          <span />
+          <div className="relative col-span-4 h-16">
+            <span aria-hidden="true" className="qms-loop absolute bottom-6 left-[12.5%] right-[12.5%] top-0 rounded-b-xl border border-t-0 border-primary/45" />
+            <span aria-hidden="true" className="qms-loop-head node-pop absolute left-[12.5%] top-0 -ml-[5px] -mt-[2px] border-x-[5px] border-b-[7px] border-x-transparent border-b-primary/70" style={nd(3)} />
+            <span aria-hidden="true" className="qms-signal-b absolute bottom-6 h-1.5 w-1.5 -translate-x-1/2 translate-y-1/2 rounded-full bg-accent-strong" />
+            <p className="node-pop absolute bottom-6 left-1/2 flex -translate-x-1/2 translate-y-1/2 items-center gap-2 whitespace-nowrap bg-surface px-3 text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-primary" style={nd(2.9)}>
+              <Icon name="history" size={14} />Continual improvement · 10.3
+            </p>
           </div>
-        </li>
-        {PDCA.map((s, k) => (
-          <Fragment key={s.n}>
-            <li data-step={k + 1} className={`qms-row relative flex gap-5 pb-9 ${k + 1 <= reached ? "is-done" : ""}`}>
-              <span aria-hidden="true" className="qms-dot relative z-10 grid h-10 w-10 shrink-0 place-items-center rounded-full"><Icon name={s.icon} size={17} /></span>
-              <div className="min-w-0 pt-1">
-                <p className="font-mono text-[0.68rem] uppercase tracking-[0.1em] text-accent-soft">Step {s.n} · {s.clause}</p>
-                <p className="mt-1 font-display text-xl font-semibold text-white">{s.title}<span className="text-white/55"> · {s.node}</span></p>
-                <p className="mt-2 text-[0.95rem] leading-relaxed text-white/75">{s.d}</p>
-                <ul className="mt-3 space-y-1.5">{s.points.map((pt) => <li key={pt} className="flex gap-2 text-[0.86rem] text-white/70"><Icon name="check" size={14} className="mt-0.5 shrink-0 text-accent" />{pt}</li>)}</ul>
-              </div>
-            </li>
-            {k === 3 && (
-              <li className="relative flex gap-5 pb-9">
-                <span aria-hidden="true" className="relative z-10 grid h-10 w-10 shrink-0 place-items-center rounded-full border-2 border-dashed border-accent/50 bg-[#0a2744] text-accent"><Icon name="history" size={17} /></span>
-                <p className="pt-2.5 text-[0.92rem] text-white/70"><span className="font-semibold text-accent-soft">Back to Plan.</span> Continual improvement — the cycle starts again.</p>
-              </li>
-            )}
-          </Fragment>
+          <span />
+        </div>
+      </Reveal>
+
+      {/* Phones and small tablets: the same figure as a column */}
+      <ol className="lg:hidden">
+        <Reveal as="li" className="border-l-2 border-primary/30 pb-8 pl-5">
+          <p className="text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-muted">Inputs</p>
+          <ul className="mt-2">{QMS_INPUTS.map((t) => <li key={t} className="border-b border-border py-2 text-[0.9rem] text-primary-ink">{t}</li>)}</ul>
+        </Reveal>
+        {PDCA.map((s) => (
+          <Reveal as="li" key={s.L} className="border-l-2 border-primary/30 pb-8 pl-5">
+            <div className="flex items-end gap-4">
+              <Letter ch={s.L} delay={0.2} className="h-14 w-auto shrink-0" />
+              <p className="pb-1">
+                <span className="block font-mono text-[0.68rem] uppercase tracking-[0.12em] text-accent-strong">{s.clause}</span>
+                <span className="block text-lg font-semibold text-primary-ink">{s.title}<span className="ml-2 text-sm font-medium text-muted">{s.node}</span></span>
+              </p>
+            </div>
+            <p className="mt-3 text-[0.95rem] text-text">{s.d}</p>
+            <ul className="mt-3 border-t border-border">
+              {s.subs.map(([n, t]) => <li key={n} className="grid grid-cols-[2.4rem_1fr] gap-1 border-b border-border py-2 text-[0.86rem] text-muted"><span className="font-mono text-[0.72rem] text-accent-strong">{n}</span>{t}</li>)}
+            </ul>
+          </Reveal>
         ))}
-        <li data-step={5} className={`qms-row relative flex gap-5 ${reached >= 5 ? "is-done" : ""}`}>
-          <span aria-hidden="true" className="qms-dot relative z-10 grid h-10 w-10 shrink-0 place-items-center rounded-full font-mono text-[0.7rem] font-semibold">Out</span>
-          <div className="min-w-0 pt-1">
-            <p className="font-display text-xl font-semibold text-white">Outputs</p>
-            <ul className="mt-3 divide-y divide-white/10 rounded-xl bg-white/5 px-4 ring-1 ring-white/10">{QMS_OUTPUTS.map((t) => <li key={t} className="py-2 text-[0.88rem] text-white/85">{t}</li>)}</ul>
-          </div>
-        </li>
+        <Reveal as="li" className="border-l-2 border-dashed border-primary/30 pb-8 pl-5">
+          <p className="flex items-center gap-2 text-[0.92rem] text-muted"><Icon name="history" size={16} className="text-primary" /><span><span className="font-semibold text-primary">Back to Plan.</span> Continual improvement (10.3) — the cycle starts again.</span></p>
+        </Reveal>
+        <Reveal as="li" className="border-l-2 border-primary/30 pl-5">
+          <p className="text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-muted">Outputs</p>
+          <ul className="mt-2">{QMS_OUTPUTS.map((t) => <li key={t} className="border-b border-border py-2 text-[0.9rem] text-primary-ink">{t}</li>)}</ul>
+        </Reveal>
       </ol>
     </>
   );
