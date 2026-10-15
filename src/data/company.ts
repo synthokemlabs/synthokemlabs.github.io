@@ -59,14 +59,14 @@ export interface Approval {
   short: string;
   scope: string;
   since?: string;
-  /** Logo from the "Accolades" slide (PPT slide 4), in /public/images/logos. Entries without one get a designed seal. */
+  /** Logo from the "Accolades" slide (PPT slide 4), in /public/images/logos. Only the slide's logos are used; entries without one show none. */
   logo?: { src: string; width: number; height: number };
 }
 const logo = (name: string, width: number, height: number) => ({ src: `/images/logos/${name}.png`, width, height });
 
 /**
  * Full regulatory record (Quality and Regulatory affairs pages). Logos come from PPT slide 4 ("Accolades"),
- * including its FDA stamp, used at the company's request; bodies not on that slide get a designed seal.
+ * including its FDA stamp, used at the company's request; bodies not on that slide are listed without a logo.
  */
 export const APPROVALS: Approval[] = [
   { short: "USFDA", authority: "US Food & Drug Administration", scope: "Unit I facility approval with regular inspections; Unit II inspection completed in 2018. DMFs filed since 1993.", since: "2005", logo: logo("fda", 167, 167) },

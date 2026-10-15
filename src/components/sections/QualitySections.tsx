@@ -367,8 +367,8 @@ export function ApprovalsRegister() {
           <div className="grid p-10">
             {APPROVALS.map((a) => (
               <div key={a.short} aria-hidden={a.short !== active} className={`reg-pane [grid-area:1/1] ${a.short === active ? "is-on" : ""}`}>
-                <div className="flex h-24 items-center"><ApprovalMark a={a} size="lg" /></div>
-                <div className="mt-6 flex flex-wrap items-baseline gap-x-4 gap-y-1">
+                {a.logo && <div className="mb-6 flex h-24 items-center"><ApprovalMark a={a} size="lg" /></div>}
+                <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
                   <p className="font-display text-3xl font-semibold tracking-tight text-primary-ink">{a.short}</p>
                   {a.since && <p className="rounded-full bg-primary-tint px-3 py-1 font-mono text-[0.72rem] text-primary">Since {a.since}</p>}
                 </div>
