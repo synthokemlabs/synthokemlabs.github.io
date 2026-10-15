@@ -1,6 +1,4 @@
-import Link from "next/link";
 import type { CSSProperties } from "react";
-import { EHS } from "@/data/company";
 import { Icon } from "@/components/ui/Icon";
 import { LogoMark } from "@/components/ui/Logo";
 import { Reveal } from "@/components/ui/client";
@@ -97,30 +95,3 @@ export function ValuesDiagram() {
     </Reveal>
   );
 }
-
-/* ------------------------------------------------------------------ */
-/* EHS — leadership & commitment drives six safeguards (PPT slide 24)  */
-/* ------------------------------------------------------------------ */
-export function EhsFlow() {
-  return (
-    <Reveal>
-      <div className="node-pop mx-auto w-fit rounded-lg bg-gradient-to-br from-primary to-accent-strong px-7 py-4 text-center text-white shadow-lg shadow-primary/20" style={d(0.1)}>
-        <p className="text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-accent-soft">Driven by</p>
-        <p className="mt-1 font-display text-xl font-semibold">Leadership &amp; commitment</p>
-      </div>
-      <span aria-hidden="true" className="mx-auto block h-8 w-px bg-border-strong" />
-      <ul className="relative grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-6 md:gap-4 md:pt-8">
-        {/* Rail joining the six branches (desktop) */}
-        <span aria-hidden="true" className="absolute left-[8%] right-[8%] top-0 hidden h-px bg-border-strong md:block" />
-        {EHS.safeguards.map((s, i) => (
-          <li key={s.t} className="node-pop relative flex flex-col items-center rounded-lg bg-white p-4 text-center ring-1 ring-border" style={d(0.35 + i * 0.1)}>
-            <span aria-hidden="true" className="absolute -top-8 left-1/2 hidden h-8 w-px bg-border-strong md:block" />
-            <span className="grid h-12 w-12 place-items-center rounded-full bg-primary-tint text-primary"><Icon name={s.icon} size={22} strokeWidth={1.5} /></span>
-            <span className="mt-3 text-[0.9rem] font-semibold leading-snug text-primary-ink">{s.t}</span>
-          </li>
-        ))}
-      </ul>
-    </Reveal>
-  );
-}
-

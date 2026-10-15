@@ -698,6 +698,22 @@ html.lenis-on body { overscroll-behavior: none; }
   .qu-line { transform: none; }
 }
 
+/* ==========================================================================
+   Sustainability — solar split, ring meters, safeguards hub, signed policy
+   ========================================================================== */
+.solar-bar, .sign-line { transform: scaleX(0); transition: transform 1.2s var(--ease-out) var(--node-delay, 0s); }
+.is-visible .solar-bar, .is-visible .sign-line, .no-js .solar-bar, .no-js .sign-line { transform: none; }
+.ring-meter { stroke-dasharray: 100; stroke-dashoffset: 100; transition: stroke-dashoffset 1.6s var(--ease-out) var(--node-delay, 0s); }
+.is-visible .ring-meter, .no-js .ring-meter { stroke-dashoffset: var(--off, 0); }
+/* Hub: after the spokes draw, a pulse runs out along each one in turn, clockwise */
+.hub-pulse { stroke-dasharray: 0.14 1; stroke-dashoffset: 0.14; opacity: 0; }
+.is-visible .hub-pulse { animation: hub-pulse 4.8s ease-in calc(1.8s + var(--i, 0) * 0.8s) infinite; }
+@keyframes hub-pulse { 0% { stroke-dashoffset: 0.14; opacity: 1; } 15% { stroke-dashoffset: -0.86; opacity: 1; } 15.1%, 100% { stroke-dashoffset: -0.86; opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .solar-bar, .sign-line, .ring-meter { transition: none; }
+  .is-visible .hub-pulse { animation: none; }
+}
+
 /* Reveal v2 (site-wide): content sharpens from a soft blur as it rises in. Photo curtains and the
    wipe keep their own effects; .settled pins the final state if a transition stalls. */
 .reveal:not(.reveal-image):not(.reveal-wipe) { filter: blur(8px); transition-property: opacity, transform, filter; transition-duration: 0.9s, 1.1s, 0.9s; }
