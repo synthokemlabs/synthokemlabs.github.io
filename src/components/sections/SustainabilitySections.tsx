@@ -98,6 +98,32 @@ export function ResourceColumns() {
 }
 
 /* ------------------------------------------------------------------ */
+/* Greenery (slide 29): the planted green belts at our units.          */
+/* ------------------------------------------------------------------ */
+const GREENERY = [
+  { name: "unit2-greenbelt", caption: "Green belt at Unit II" },
+  { name: "green-belt", caption: "Planted green belt along a site road" },
+];
+
+export function GreeneryStrip() {
+  return (
+    <Reveal className="grid grid-cols-1 gap-5 md:grid-cols-12">
+      <article className="node-pop flex flex-col rounded-2xl bg-white p-6 ring-1 ring-border md:col-span-4" style={nd(0.1)}>
+        <p className="flex items-center gap-2 text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-accent-strong"><Icon name="leaf" size={15} />Greenery</p>
+        <h3 className="mt-2 text-xl font-semibold text-primary-ink">Green belts at our units</h3>
+        <p className="mt-4 border-t border-border pt-3 text-[0.9rem] leading-relaxed text-muted">Planted green belts and landscaped greenery are part of how our sites are run — alongside solar power and zero liquid discharge.</p>
+      </article>
+      {GREENERY.map((g, i) => (
+        <figure key={g.name} className="node-pop zoom-parent relative aspect-[4/3] overflow-hidden rounded-2xl md:col-span-4 md:aspect-auto md:min-h-[14rem]" style={nd(0.2 + i * 0.12)}>
+          <Img name={g.name} sizes="(min-width:768px) 32vw, 100vw" className="zoom-img absolute inset-0 h-full w-full object-cover" />
+          <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/65 to-transparent px-4 pb-3 pt-10 text-[0.82rem] font-medium text-white">{g.caption}</figcaption>
+        </figure>
+      ))}
+    </Reveal>
+  );
+}
+
+/* ------------------------------------------------------------------ */
 /* Slide 24 flowchart as a hub: leadership & commitment at the centre, */
 /* the six safeguards it drives around it. Spokes draw out, then a     */
 /* pulse runs along each in turn. Phones: centre card + a grid.        */

@@ -222,7 +222,7 @@ export const SPECIALISATIONS: { name: string; core?: boolean }[] = [
 /** PPT slide 6. The slide's "USFDA approved facility" is corrected to "USFDA-inspected" (see APPROVALS). */
 export const CDMO = {
   /** Short form for the Capabilities page band. */
-  short: "Established GMP practices, a strong R&D team and flexible customer relationships — open to co-development and CDMO partnerships.",
+  short: "Established GMP practices, a strong R&D team and a proven record of customer satisfaction — with uncompromising ethical values, flexible customer relationships and an openness to co-development and CDMO partnerships.",
   highlights: ["USFDA-inspected facility · Hyderabad", "WHO- and EU-compliant facility · near Visakhapatnam", "High-pressure reactions & hydrogenation", "Room to expand for new projects"],
 };
 
@@ -451,6 +451,8 @@ export const RENEWABLES = [
 /* ------------------------------ CSR (PPT slide 30) ------------------------------ */
 export const CSR = {
   policy: "Synthokem Labs' CSR policy sets out how the company undertakes CSR projects, programmes and activities under Schedule VII of the Companies Act, 2013 and the Companies (Corporate Social Responsibility Policy) Rules, 2014.",
+  /** Slide 30: how the company contributes. */
+  support: "We give financial assistance, as donations, to NGOs working in education, nutrition, combating disease and social welfare.",
   supported: ["Akshaya Patra Foundation", "Teach for Change", "Orphanages", "Shanthiniketan", "Sri Prasanna Gajanana Sevaka Samajam", "PM CARES Fund", "Chief Minister's Relief Fund"],
 };
 
@@ -470,8 +472,8 @@ export const CAREER_AREAS = [
   "Quality Control & Assurance",
   "Regulatory Affairs",
   "Supply Chain",
-  "Export Marketing",
-  "Domestic Marketing",
+  "Business Development",
+  "Export & Domestic Marketing",
   "Purchase",
   // Further functions listed on PPT slide 5
   "Finance, Accounts & Costing",

@@ -1,6 +1,6 @@
 import type { CSSProperties } from "react";
 import { PageHero, PageNav } from "@/components/layout/PageHero";
-import { ResourceColumns, SafeguardsHub, SafetyDetail, ShePolicy, SOLAR_KW, SolarBanner } from "@/components/sections/SustainabilitySections";
+import { GreeneryStrip, ResourceColumns, SafeguardsHub, SafetyDetail, ShePolicy, SOLAR_KW, SolarBanner } from "@/components/sections/SustainabilitySections";
 import { ButtonLink, Container, SectionHeading } from "@/components/ui/primitives";
 import { Reveal } from "@/components/ui/client";
 import { Img } from "@/components/ui/Img";
@@ -53,6 +53,7 @@ export default function SustainabilityPage() {
           </div>
           <div className="mt-12"><SolarBanner /></div>
           <div className="mt-5"><ResourceColumns /></div>
+          <div className="mt-5"><GreeneryStrip /></div>
         </Container>
       </section>
 
@@ -104,6 +105,7 @@ export default function SustainabilityPage() {
           </div>
           <div className="lg:col-span-7">
             <SectionHeading eyebrow="People & community" title="Empowering people through meaningful initiatives." size="md" lede={CSR.policy} />
+            <Reveal delay={120}><p className="mt-4 leading-relaxed text-muted">{CSR.support}</p></Reveal>
             <ol className="mt-10">
               {SOCIAL.map((x, i) => (
                 <Reveal as="li" key={x.t} delay={i * 80} className="grid grid-cols-[3rem_1fr] gap-3 border-t border-border py-6">
