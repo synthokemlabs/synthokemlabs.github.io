@@ -334,7 +334,7 @@ export function LabGallery() {
 /* groups beside one detail panel. Desktop: hover or select a row to   */
 /* show it in the panel. Phones: the selected row opens in place.      */
 /* ------------------------------------------------------------------ */
-const isCert = (a: Approval) => /^(ISO|ZED|Kosher)/.test(a.short);
+const isCert = (a: Approval) => /^(ISO|ZED)/.test(a.short);
 const GROUPS = [
   { title: "Regulatory approvals", items: APPROVALS.filter((a) => !isCert(a)) },
   { title: "Certifications", items: APPROVALS.filter(isCert) },

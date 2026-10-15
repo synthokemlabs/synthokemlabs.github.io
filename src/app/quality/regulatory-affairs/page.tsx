@@ -10,7 +10,7 @@ import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
   title: "Regulatory Affairs — DMFs, CEPs, Approvals & Certifications",
-  description: "Synthokem Labs regulatory record: USDMF filings since 1993, CEP for Guaifenesin, USFDA facility approval, WHO-GMP, EU Written Confirmation, KFDA, COFEPRIS, ISO 9001:2015, ISO 14001:2015, ISO 45001:2018 and MSME ZED Gold — with regulatory status by product.",
+  description: "Synthokem Labs regulatory record: USDMF filings since 1993, CEP for Guaifenesin, USFDA facility approval, WHO-GMP, KFDA, ISO 9001:2015, ISO 14001:2015, ISO 45001:2018 and MSME ZED Gold — with regulatory status by product.",
   path: "/quality/regulatory-affairs/",
 });
 
@@ -24,7 +24,7 @@ export default function RegulatoryPage() {
 
       <section id="approvals" className="py-20 lg:py-28">
         <Container>
-          <SectionHeading eyebrow="Approvals & certifications" title="Inspections, approvals and certifications." lede="Eleven approvals and certifications across our units, as documented in our company milestones." />
+          <SectionHeading eyebrow="Approvals & certifications" title="Inspections, approvals and certifications." lede="Regulatory approvals and management-system certifications across our units. Every filing and inspection is on our company timeline." />
           <div className="mt-14"><ApprovalsRegister /></div>
         </Container>
       </section>

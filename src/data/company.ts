@@ -59,27 +59,25 @@ export interface Approval {
   short: string;
   scope: string;
   since?: string;
-  /** Logo from the "Accolades" slide (PPT slide 4), in /public/images/logos. Only the slide's logos are used; entries without one show none. */
-  logo?: { src: string; width: number; height: number };
+  /** Logo from the "Accolades" slide (PPT slide 4), in /public/images/logos. Only bodies with a logo on that slide are listed. */
+  logo: { src: string; width: number; height: number };
 }
 const logo = (name: string, width: number, height: number) => ({ src: `/images/logos/${name}.png`, width, height });
 
 /**
  * Full regulatory record (Quality and Regulatory affairs pages). Logos come from PPT slide 4 ("Accolades"),
- * including its FDA stamp, used at the company's request; bodies not on that slide are listed without a logo.
+ * including its FDA stamp, used at the company's request. EU Written Confirmation, COFEPRIS and Kosher (no logo on the
+ * slide) stay on the company timeline (JOURNEY) rather than here.
  */
 export const APPROVALS: Approval[] = [
   { short: "USFDA", authority: "US Food & Drug Administration", scope: "Unit I facility approval with regular inspections; Unit II inspection completed in 2018. DMFs filed since 1993.", since: "2005", logo: logo("fda", 167, 167) },
   { short: "CEP", authority: "EDQM — Certificate of Suitability", scope: "Guaifenesin (Ph. Eur.) — Unit I in 2001, Unit II in 2019.", since: "2001", logo: logo("edqm", 450, 239) },
   { short: "WHO-GMP", authority: "World Health Organization GMP", scope: "Certified since 2002; Unit II certified in 2016. Renewed to date.", since: "2002", logo: logo("who-gmp", 158, 176) },
   { short: "KFDA", authority: "Korean FDA", scope: "Unit I inspected; certificate achieved for Methocarbamol.", since: "2012", logo: logo("kfda", 198, 77) },
-  { short: "EU WC", authority: "EU Written Confirmation", scope: "Unit I (2013) and Unit II (2016), per Art. 46b(2)(b) of 2001/83/EC.", since: "2013" },
-  { short: "COFEPRIS", authority: "Mexican Health Authority", scope: "Unit I inspected for Methocarbamol and Guaifenesin; approved in 2016.", since: "2016" },
   { short: "ISO 9001:2015", authority: "Quality Management System — DNV GL", scope: "Certified since 2000; Unit II since 2013. Renewed to date.", since: "2000", logo: logo("iso-9001", 172, 172) },
   { short: "ISO 14001:2015", authority: "Environmental Management System — DNV GL", scope: "Unit II, certified since 2015 and renewed to date.", since: "2015", logo: logo("iso-14001", 220, 223) },
   { short: "ISO 45001:2018", authority: "Occupational Health & Safety Management", scope: "Unit II — certified for occupational health & safety since 2015 (OHSAS 18001, now ISO 45001:2018).", since: "2015", logo: logo("iso-45001", 383, 346) },
   { short: "ZED Gold", authority: "MSME — Zero Defect Zero Effect", scope: "Gold-level certification under the Government of India's MSME ZED scheme.", logo: logo("msme-zed-gold", 200, 200) },
-  { short: "Kosher", authority: "Kosher certification", scope: "Guaifenesin, Unit I. Renewed to date.", since: "2010" },
 ];
 
 /** Exactly the eight logos on PPT slide 4 ("Accolades"), in the slide's order: two rows of four. */
