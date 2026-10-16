@@ -56,12 +56,15 @@ export default function HomePage() {
   return (
     <>
       {/* ───────────── HERO ───────────── */}
-      <section className="hero-play on-dark relative isolate flex min-h-[100svh] flex-col overflow-hidden bg-deep text-white" aria-labelledby="hero-title">
-        <Parallax speed={0.22} className="absolute inset-0 -z-20">
-          <Img name="hero-cleanroom" priority sizes="100vw" className="ken-burns h-full w-full object-cover object-[72%_center]" alt="" />
-        </Parallax>
-        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgb(8_64_118/0.93)_0%,rgb(12_88_155/0.88)_100%)] lg:bg-[linear-gradient(100deg,rgb(8_64_118/0.95)_0%,rgb(12_88_155/0.86)_40%,rgb(30_128_200/0.6)_72%,rgb(63_168_238/0.38)_100%)]" />
-        <div aria-hidden="true" className="absolute inset-x-0 bottom-0 -z-10 h-1/2 bg-gradient-to-t from-[#0a4c8a] via-[#0a4c8a]/70 to-transparent" />
+      {/* Only the background layers are clipped, so the search suggestions can open over the next section */}
+      <section className="hero-play on-dark relative isolate z-10 flex min-h-[100svh] flex-col overflow-x-clip bg-deep text-white" aria-labelledby="hero-title">
+        <div aria-hidden="true" className="absolute inset-0 -z-10 overflow-hidden">
+          <Parallax speed={0.22} className="absolute inset-0 -z-20">
+            <Img name="hero-cleanroom" priority sizes="100vw" className="ken-burns h-full w-full object-cover object-[72%_center]" alt="" />
+          </Parallax>
+          <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgb(8_64_118/0.93)_0%,rgb(12_88_155/0.88)_100%)] lg:bg-[linear-gradient(100deg,rgb(8_64_118/0.95)_0%,rgb(12_88_155/0.86)_40%,rgb(30_128_200/0.6)_72%,rgb(63_168_238/0.38)_100%)]" />
+          <div className="absolute inset-x-0 bottom-0 -z-10 h-1/2 bg-gradient-to-t from-[#0a4c8a] via-[#0a4c8a]/70 to-transparent" />
+        </div>
 
         <Container className="grid grid-cols-1 flex-1 items-center gap-12 pb-10 pt-32 lg:grid-cols-12 lg:pb-12">
           <div className="lg:col-span-7" data-hero-fade>

@@ -719,6 +719,18 @@ html.lenis-on body { overscroll-behavior: none; }
   .is-visible .hub-pulse { animation: none; }
 }
 
+/* Home search: a solid bar that lifts and takes a ring when in use; panels drop in quickly; rows follow */
+.hs-bar { box-shadow: 0 22px 50px -26px rgb(3 25 50 / 0.75), 0 0 0 1px rgb(255 255 255 / 0.35); transition: box-shadow 0.3s ease, transform 0.3s var(--ease-out); }
+.hs-bar:focus-within, .hs-bar.is-open { box-shadow: 0 26px 60px -24px rgb(3 25 50 / 0.8), 0 0 0 4px rgb(63 168 238 / 0.45); }
+.hs-bar input:focus-visible { outline: none; }
+.hs-pop { --hs-from: -6px; animation: hs-pop 0.18s var(--ease-out) both; transform-origin: top center; }
+.hs-pop.is-up { --hs-from: 6px; transform-origin: bottom center; }
+@keyframes hs-pop { from { opacity: 0; transform: translateY(var(--hs-from)) scale(0.99); } to { opacity: 1; transform: none; } }
+.hs-row { animation: hs-row 0.28s var(--ease-out) calc(var(--i, 0) * 28ms) both; }
+@keyframes hs-row { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+.hs-kbd { display: inline-grid; min-width: 1.35rem; place-items: center; border-radius: 0.3rem; background: #fff; padding: 0 0.3rem; font-family: var(--font-mono); font-size: 0.68rem; line-height: 1.3rem; color: var(--primary-ink); box-shadow: inset 0 0 0 1px var(--border-strong), 0 1px 0 var(--border-strong); }
+@media (prefers-reduced-motion: reduce) { .hs-pop, .hs-row { animation: none; } }
+
 /* Reveal v2 (site-wide): content sharpens from a soft blur as it rises in. Photo curtains and the
    wipe keep their own effects; .settled pins the final state if a transition stalls. */
 .reveal:not(.reveal-image):not(.reveal-wipe) { filter: blur(8px); transition-property: opacity, transform, filter; transition-duration: 0.9s, 1.1s, 0.9s; }
