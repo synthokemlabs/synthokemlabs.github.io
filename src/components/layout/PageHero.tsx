@@ -20,7 +20,7 @@ export function Breadcrumbs({ items, tone = "light" }: { items: Crumb[]; tone?: 
               {i === all.length - 1 ? (
                 <span aria-current="page" className={tone === "light" ? "text-white" : "text-primary-ink"}>{c.name}</span>
               ) : (
-                <Link href={c.href} className={`inline-flex min-h-6 items-center ${tone === "light" ? "hover:text-white" : "hover:text-primary"}`}>{c.name}</Link>
+                <Link href={c.href} className={`-my-2 inline-flex min-h-10 items-center ${tone === "light" ? "hover:text-white" : "hover:text-primary"}`}>{c.name}</Link>
               )}
             </li>
           ))}

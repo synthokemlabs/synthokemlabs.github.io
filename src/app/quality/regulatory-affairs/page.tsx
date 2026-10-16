@@ -78,7 +78,7 @@ export default function RegulatoryPage() {
                         )}
                       </span>
                     </td>
-                    <th scope="row" className="px-5 py-4 font-semibold"><Link href={productHref(p)} className="text-primary-ink hover:text-primary hover:underline">{p.name}</Link></th>
+                    <th scope="row" className="px-5 py-4 font-semibold"><Link href={productHref(p)} className="-my-2 inline-block py-2 text-primary-ink hover:text-primary hover:underline">{p.name}</Link></th>
                     <td className="whitespace-nowrap px-5 py-4 font-mono text-[0.85rem]">{p.cas}</td>
                     <td className="px-5 py-4 font-mono text-[0.8rem] text-muted">{p.grades?.join(" / ")}</td>
                     <td className="px-5 py-4">

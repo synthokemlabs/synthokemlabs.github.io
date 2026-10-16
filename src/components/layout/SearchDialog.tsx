@@ -46,7 +46,7 @@ export function SearchDialog({ open, onClose }: { open: boolean; onClose: () => 
       className="m-0 mx-auto mt-[8vh] w-[min(720px,calc(100vw-2rem))] max-w-none rounded-lg bg-white p-0 text-text shadow-2xl backdrop:bg-primary-ink/60 backdrop:backdrop-blur-sm"
     >
       <div className="flex items-center gap-3 border-b border-border px-5">
-        <Icon name="search" size={20} className="text-muted" />
+        <Icon name="search" size={20} className="shrink-0 text-muted" />
         <label htmlFor="site-search" className="sr-only">Search products and pages</label>
         <input
           id="site-search"
@@ -68,10 +68,10 @@ export function SearchDialog({ open, onClose }: { open: boolean; onClose: () => 
           aria-activedescendant={results[active] ? `${listId}-${active}` : undefined}
           autoComplete="off"
           placeholder="Search APIs, intermediates, CAS numbers…"
-          className="min-h-16 flex-1 bg-transparent text-lg outline-none placeholder:text-muted"
+          className="min-h-16 min-w-0 flex-1 bg-transparent text-lg outline-none placeholder:text-muted"
         />
-        <button type="button" onClick={onClose} className="inline-flex min-h-11 cursor-pointer items-center rounded-lg px-2 font-mono text-xs text-muted hover:bg-surface" aria-label="Close search">
-          ESC
+        <button type="button" onClick={onClose} className="-mr-2 inline-flex min-h-11 min-w-11 shrink-0 cursor-pointer items-center justify-center rounded-lg px-2 text-muted hover:bg-surface" aria-label="Close search">
+          <span className="hidden sm:inline"><kbd className="hs-kbd">esc</kbd></span><Icon name="close" size={20} className="sm:hidden" />
         </button>
       </div>
 
@@ -118,19 +118,19 @@ export function SearchDialog({ open, onClose }: { open: boolean; onClose: () => 
                       )}
                     </span>
                     <span className="min-w-0">
-                      <span className="block truncate font-semibold text-primary-ink">{r.title}</span>
+                      <span className="block font-semibold text-primary-ink sm:truncate">{r.title}</span>
                       <span className="block truncate font-mono text-xs text-muted">{r.meta}</span>
                     </span>
                   </span>
-                  <span className="shrink-0 font-mono text-[0.68rem] uppercase tracking-wider text-muted">{r.kind}</span>
+                  <span className="hidden shrink-0 font-mono text-[0.68rem] uppercase tracking-wider text-muted sm:block">{r.kind}</span>
                 </button>
               </li>
             ))}
           </ul>
         )}
       </div>
-      <div className="flex items-center justify-between border-t border-border px-5 py-3 font-mono text-[0.7rem] text-muted">
-        <span>↑ ↓ to navigate · Enter to open</span>
+      <div className="flex items-center justify-between gap-4 border-t border-border px-5 py-3 font-mono text-[0.7rem] text-muted">
+        <span className="hidden sm:inline">↑ ↓ to navigate · Enter to open</span>
         <span>{PRODUCTS.length} products indexed</span>
       </div>
     </dialog>

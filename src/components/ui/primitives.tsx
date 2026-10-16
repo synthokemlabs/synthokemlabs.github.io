@@ -113,3 +113,9 @@ export function SpecRow({ label, children, mono }: { label: string; children: Re
     </div>
   );
 }
+
+/** An email address that wraps only before the "@" when space is short, never mid-word. */
+export function EmailText({ email }: { email: string }) {
+  const [user, domain] = email.split("@");
+  return <span className="[overflow-wrap:break-word]">{user}<wbr />@{domain}</span>;
+}

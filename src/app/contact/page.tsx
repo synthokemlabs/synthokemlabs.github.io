@@ -1,7 +1,7 @@
 import { PageHero } from "@/components/layout/PageHero";
 import { ContactExperience } from "@/components/forms/ContactExperience";
 import { MapFacade } from "@/components/sections/MapFacade";
-import { Container, JsonLd } from "@/components/ui/primitives";
+import { Container, EmailText, JsonLd } from "@/components/ui/primitives";
 import { CopyButton } from "@/components/ui/client";
 import { Icon } from "@/components/ui/Icon";
 import { LOCATIONS, SITE } from "@/data/site";
@@ -29,7 +29,7 @@ export default function ContactPage() {
           <div className="flex min-h-24 items-center justify-between gap-4 py-5 lg:px-6">
             <a href={`mailto:${SITE.email}`} className="group flex min-w-0 items-center gap-4">
               <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-primary text-white"><Icon name="mail" size={18} /></span>
-              <span><span className="eyebrow block text-muted">Email</span><span className="mt-1 block font-semibold text-primary-ink [overflow-wrap:break-word] group-hover:text-primary">{SITE.email.split("@")[0]}<wbr />@{SITE.email.split("@")[1]}</span></span>
+              <span><span className="eyebrow block text-muted">Email</span><span className="mt-1 block font-semibold text-primary-ink group-hover:text-primary"><EmailText email={SITE.email} /></span></span>
             </a>
             <CopyButton text={SITE.email} label="Email address" compact />
           </div>

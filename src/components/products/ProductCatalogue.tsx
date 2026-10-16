@@ -119,7 +119,8 @@ export function ProductCatalogue({ lockedCategory }: { lockedCategory?: Category
   const toggleCategory = (c: CategorySlug) => { setCategories((cs) => (cs.includes(c) ? cs.filter((x) => x !== c) : [...cs, c])); setTherapy("all"); };
 
   return (
-    <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
+    // No scroll anchoring: opening the filters on a phone should push the results down, not grow off-screen upwards
+    <div className="grid grid-cols-1 gap-10 [overflow-anchor:none] lg:grid-cols-12">
       {/* Filters */}
       <aside className="lg:col-span-3" aria-label="Product filters">
         <div className="lg:sticky lg:top-28">
@@ -183,7 +184,7 @@ export function ProductCatalogue({ lockedCategory }: { lockedCategory?: Category
                 <label htmlFor="therapy" className="eyebrow mb-3 block text-muted">Therapeutic category</label>
                 <div className="relative">
                   <select id="therapy" value={therapy} onChange={(e) => setTherapy(e.target.value)}
-                    className="min-h-12 w-full cursor-pointer appearance-none rounded-lg bg-white px-3 pr-10 text-[0.95rem] ring-1 ring-border-strong focus:ring-primary">
+                    className="min-h-12 w-full cursor-pointer appearance-none rounded-lg bg-white px-3 pr-10 text-base ring-1 sm:text-[0.95rem] ring-border-strong focus:ring-primary">
                     <option value="all">All therapeutic categories</option>
                     {therapies.map((t) => <option key={t} value={t}>{t}</option>)}
                   </select>
@@ -222,7 +223,7 @@ export function ProductCatalogue({ lockedCategory }: { lockedCategory?: Category
           <div className="relative">
             <label htmlFor="sort" className="sr-only">Sort products</label>
             <select id="sort" value={sort} onChange={(e) => setSort(e.target.value as Sort)} disabled={!!q.trim()}
-              className="min-h-14 w-full cursor-pointer appearance-none rounded-lg bg-white pl-4 pr-10 text-[0.95rem] ring-1 ring-border-strong disabled:cursor-not-allowed disabled:opacity-60 sm:w-48">
+              className="min-h-14 w-full cursor-pointer appearance-none rounded-lg bg-white pl-4 pr-10 text-base ring-1 sm:text-[0.95rem] ring-border-strong disabled:cursor-not-allowed disabled:opacity-60 sm:w-48">
               <option value="category">Sort: by category</option>
               <option value="az">Sort: A → Z</option>
               <option value="za">Sort: Z → A</option>
@@ -255,7 +256,7 @@ export function ProductCatalogue({ lockedCategory }: { lockedCategory?: Category
           </div>
         ) : (
           view === "grid" ? (
-            <ul ref={listRef} className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
+            <ul ref={listRef} className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-5 xl:grid-cols-3">
               {results.map((p) => <ProductCard key={p.category + p.slug} p={p} showCategory={!lockedCategory} />)}
             </ul>
           ) : (
@@ -296,22 +297,23 @@ function ProductCard({ p, showCategory }: { p: Product; showCategory: boolean })
   const detail = p.therapeuticCategory ?? p.usedIn?.join(", ") ?? p.applications?.join(", ");
   return (
     <li data-k={p.category + p.slug}>
-      <Link href={productHref(p)} className="card-hover group flex h-full flex-col overflow-hidden rounded-lg border border-border bg-white hover:border-primary/40">
+      {/* Phones: a compact row with the structure on the left; from sm, a card with the structure on top */}
+      <Link href={productHref(p)} className="card-hover group grid h-full grid-cols-[6.5rem_minmax(0,1fr)] overflow-hidden rounded-lg border border-border bg-white hover:border-primary/40 sm:flex sm:flex-col">
         {/* Label row sits above the drawing so nothing ever overlaps the structure */}
-        <span className="flex min-h-11 flex-wrap items-center justify-between gap-x-2 gap-y-1 border-b border-border bg-white px-4 py-2.5">
+        <span className="col-start-2 row-start-1 flex flex-wrap items-center justify-between gap-x-2 gap-y-1 bg-white px-4 pt-3 sm:min-h-11 sm:border-b sm:border-border sm:py-2.5">
           <span className="text-[0.72rem] font-semibold uppercase leading-tight tracking-[0.08em] text-muted">
             {showCategory ? cat.shortName : ""}{p.use === "veterinary" ? (showCategory ? " · Vet" : "Veterinary") : ""}
           </span>
           {p.status && <Badge tone={p.status === "commercial" ? "green" : "amber"}>{STATUS_LABEL[p.status]}</Badge>}
         </span>
-        <span className="grid-paper relative grid h-44 place-items-center overflow-hidden">
-          <StructureThumb p={p} className="h-auto max-h-[136px] w-auto max-w-[84%] transition-transform duration-700 group-hover:scale-105" />
+        <span className="grid-paper relative col-start-1 row-span-2 row-start-1 grid place-items-center overflow-hidden border-r border-border sm:h-44 sm:border-r-0">
+          <StructureThumb p={p} className="h-auto max-h-[78px] w-auto max-w-[84%] transition-transform duration-700 group-hover:scale-105 sm:max-h-[136px]" />
         </span>
-        <span className="flex flex-1 flex-col border-t border-border p-5">
-          <ProductName slug={p.slug} className="font-display text-[1.05rem] font-semibold leading-snug text-primary-ink group-hover:text-primary">{p.name}</ProductName>
+        <span className="col-start-2 row-start-2 flex flex-1 flex-col px-4 pb-4 pt-1.5 sm:border-t sm:border-border sm:p-5">
+          <ProductName slug={p.slug} className="font-display text-[1rem] font-semibold leading-snug text-primary-ink group-hover:text-primary sm:text-[1.05rem]">{p.name}</ProductName>
           <span className="mt-1 font-mono text-xs text-muted">{p.cas ? `CAS ${p.cas}` : "CAS on request"}{meta.formula ? ` · ${formatFormula(meta.formula)}` : ""}</span>
-          {detail && <span className="mt-3 line-clamp-2 flex-1 text-[0.88rem] text-muted">{detail}</span>}
-          <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-primary">View details <Icon name="arrowRight" size={15} className="transition-transform group-hover:translate-x-1" /></span>
+          {detail && <span className="mt-2 line-clamp-2 flex-1 text-[0.88rem] text-muted sm:mt-3">{detail}</span>}
+          <span className="mt-4 hidden items-center gap-2 text-sm font-semibold text-primary sm:inline-flex">View details <Icon name="arrowRight" size={15} className="transition-transform group-hover:translate-x-1" /></span>
         </span>
       </Link>
     </li>
@@ -373,9 +375,9 @@ export function RecentlyViewed() {
       <ul className="mt-4 flex flex-wrap gap-2">
         {items.map((p) => (
           <li key={p.category + p.slug}>
-            <Link href={productHref(p)} className="inline-flex min-h-10 items-center gap-2 rounded-full bg-white px-4 text-sm font-medium text-primary-ink ring-1 ring-border hover:ring-primary">
+            <Link href={productHref(p)} className="inline-flex min-h-10 flex-wrap items-center gap-x-2 rounded-full bg-white px-4 py-1.5 text-sm font-medium text-primary-ink ring-1 ring-border hover:ring-primary">
               {p.name}
-              {p.cas && <span className="font-mono text-xs text-muted">{p.cas}</span>}
+              {p.cas && <span className="whitespace-nowrap font-mono text-xs text-muted">{p.cas}</span>}
             </Link>
           </li>
         ))}

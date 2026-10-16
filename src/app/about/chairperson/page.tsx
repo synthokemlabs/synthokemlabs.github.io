@@ -17,11 +17,14 @@ export default function ChairpersonPage() {
       <article className="py-20 lg:py-28">
         <Container className="grid grid-cols-1 gap-14 lg:grid-cols-12">
           <aside className="lg:col-span-4">
-            <div className="lg:sticky lg:top-28">
+            {/* Phones and tablets: the portrait sits beside the name; on desktop it heads a sticky column */}
+            <div className="flex items-center gap-5 lg:sticky lg:top-28 lg:block">
               {/* Same portrait placeholder as the leadership cards, until a headshot is supplied */}
-              <PortraitPlaceholder className="relative aspect-[4/5] rounded-xl ring-1 ring-border" />
-              <p className="mt-6 text-xl font-semibold text-primary-ink">{CHAIRPERSON.name}</p>
-              <p className="eyebrow mt-1 text-muted">{CHAIRPERSON.title}, Synthokem Labs</p>
+              <PortraitPlaceholder className="relative aspect-[4/5] w-24 shrink-0 rounded-xl ring-1 ring-border sm:w-32 lg:w-auto" />
+              <div>
+                <p className="text-xl font-semibold text-primary-ink lg:mt-6">{CHAIRPERSON.name}</p>
+                <p className="eyebrow mt-1 text-muted">{CHAIRPERSON.title}, Synthokem Labs</p>
+              </div>
             </div>
           </aside>
           <div className="lg:col-span-8">

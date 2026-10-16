@@ -88,7 +88,7 @@ export function GlobalMap({ tone = "dark" }: { tone?: "dark" | "light" }) {
           <circle cx={px(HUB.lon)} cy={py(HUB.lat)} r="5" fill="none" stroke={dark ? "#3fa8ee" : "#0f69b4"} strokeWidth="0.5" className="molecule-node" />
           <circle cx={px(HUB.lon)} cy={py(HUB.lat)} r="2.4" fill={dark ? "#3fa8ee" : "#0f69b4"} />
         </svg>
-        <p className={`absolute -translate-x-1/2 rounded px-1.5 py-0.5 font-mono text-[0.62rem] uppercase tracking-[0.14em] sm:text-[0.7rem] ${dark ? "bg-deep/85 text-accent-soft" : "bg-surface/90 text-accent-strong"}`} style={{ left: `${(px(HUB.lon) / W) * 100}%`, top: `${(py(HUB.lat) / H) * 100 + 3.2}%` }}>
+        <p className={`absolute -translate-x-1/2 whitespace-nowrap rounded px-1.5 py-0.5 font-mono text-[0.68rem] uppercase tracking-[0.14em] sm:text-[0.7rem] ${dark ? "bg-deep/85 text-accent-soft" : "bg-surface/90 text-accent-strong"}`} style={{ left: `${(px(HUB.lon) / W) * 100}%`, top: `${(py(HUB.lat) / H) * 100 + 3.2}%` }}>
           Hyderabad HQ
         </p>
       </div>

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { PageHero } from "@/components/layout/PageHero";
 import { EnquiryForm } from "@/components/forms/EnquiryForm";
-import { Container } from "@/components/ui/primitives";
+import { Container, EmailText } from "@/components/ui/primitives";
 import { CopyButton } from "@/components/ui/client";
 import { Icon } from "@/components/ui/Icon";
 import { SITE } from "@/data/site";
@@ -43,8 +43,8 @@ export default function EnquiryPage() {
                 <p className="font-semibold text-primary-ink">Prefer to talk?</p>
                 <a href={SITE.phone.href} className="mt-3 flex min-h-11 items-center gap-3 text-primary-ink hover:text-primary"><Icon name="phone" size={17} className="text-accent-strong" />{SITE.phone.display}</a>
                 <div className="flex items-center justify-between">
-                  <a href={`mailto:${SITE.email}`} className="flex min-h-11 min-w-0 items-center gap-3 text-primary-ink [overflow-wrap:anywhere] hover:text-primary"><Icon name="mail" size={17} className="shrink-0 text-accent-strong" />{SITE.email}</a>
-                  <CopyButton text={SITE.email} label="Email address" />
+                  <a href={`mailto:${SITE.email}`} className="flex min-h-11 min-w-0 items-center gap-3 text-primary-ink hover:text-primary"><Icon name="mail" size={17} className="shrink-0 text-accent-strong" /><EmailText email={SITE.email} /></a>
+                  <CopyButton text={SITE.email} label="Email address" compact />
                 </div>
                 <p className="mt-2 text-sm text-muted">{SITE.hours}</p>
               </div>

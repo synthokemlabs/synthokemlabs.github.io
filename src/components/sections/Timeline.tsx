@@ -61,16 +61,18 @@ export function Timeline() {
       </div>
 
       <div ref={lineRef} className="relative mt-14" style={{ ["--progress" as string]: 0 }}>
-        <div aria-hidden="true" className="absolute bottom-0 left-[4.5rem] top-0 w-px bg-border sm:left-[7.5rem]" />
-        <div aria-hidden="true" className="absolute left-[4.5rem] top-0 w-px origin-top bg-primary sm:left-[7.5rem]" style={{ height: "100%", transform: "scaleY(var(--progress))" }} />
+        <div aria-hidden="true" className="absolute bottom-0 left-px top-0 w-px bg-border sm:left-[7.5rem]" />
+        <div aria-hidden="true" className="absolute left-px top-0 w-px origin-top bg-primary sm:left-[7.5rem]" style={{ height: "100%", transform: "scaleY(var(--progress))" }} />
         <ol className="space-y-2">
           {byYear.map(([year, ms]) => (
-            <Reveal as="li" key={`${filter}-${year}`} className="relative grid grid-cols-[4.5rem_1fr] sm:grid-cols-[7.5rem_1fr]">
-              <div className="pr-5 pt-6 text-right sm:pr-10">
+            <Reveal as="li" key={`${filter}-${year}`} className="relative grid grid-cols-1 sm:grid-cols-[7.5rem_1fr]">
+              {/* Phones: the year sits above its cards; from sm it gets its own column */}
+              <div className="relative pl-7 pt-6 sm:pl-0 sm:pr-10 sm:text-right">
+                <span aria-hidden="true" className="absolute -left-[3px] top-[2.2rem] h-[10px] w-[10px] rounded-full border-2 border-primary bg-white sm:hidden" />
                 <span className="font-display text-2xl font-semibold tracking-tight text-primary-ink sm:text-4xl">{year}</span>
               </div>
-              <div className="relative pb-6 pl-6 pt-6 sm:pl-12">
-                <span aria-hidden="true" className="absolute -left-[5px] top-[2.1rem] h-[10px] w-[10px] rounded-full border-2 border-primary bg-white sm:top-[2.6rem]" />
+              <div className="relative pb-6 pl-7 pt-3 sm:pl-12 sm:pt-6">
+                <span aria-hidden="true" className="absolute -left-[5px] top-[2.6rem] hidden h-[10px] w-[10px] rounded-full border-2 border-primary bg-white sm:block" />
                 <ul className="space-y-4">
                   {ms.map((m) => (
                     <li key={m.title} className="rounded-lg bg-white p-5 ring-1 ring-border sm:p-6">
@@ -86,10 +88,13 @@ export function Timeline() {
               </div>
             </Reveal>
           ))}
-          <li className="relative grid grid-cols-[4.5rem_1fr] sm:grid-cols-[7.5rem_1fr]">
-            <div className="pr-5 pt-6 text-right sm:pr-10"><span className="font-display text-2xl font-semibold text-accent-strong sm:text-4xl">Today</span></div>
-            <div className="relative pb-2 pl-6 pt-6 sm:pl-12">
-              <span aria-hidden="true" className="absolute -left-[6px] top-[2.1rem] h-3 w-3 rounded-full bg-primary sm:top-[2.6rem]" />
+          <li className="relative grid grid-cols-1 sm:grid-cols-[7.5rem_1fr]">
+            <div className="relative pl-7 pt-6 sm:pl-0 sm:pr-10 sm:text-right">
+              <span aria-hidden="true" className="absolute -left-[4px] top-[2.15rem] h-3 w-3 rounded-full bg-primary sm:hidden" />
+              <span className="font-display text-2xl font-semibold text-accent-strong sm:text-4xl">Today</span>
+            </div>
+            <div className="relative pb-2 pl-7 pt-3 sm:pl-12 sm:pt-6">
+              <span aria-hidden="true" className="absolute -left-[6px] top-[2.6rem] hidden h-3 w-3 rounded-full bg-primary sm:block" />
               <p className="max-w-xl text-[1.05rem] leading-relaxed text-text">
                 From a single unit with 10 employees to two manufacturing units and over 300 people — serving customers across 40 countries.
               </p>

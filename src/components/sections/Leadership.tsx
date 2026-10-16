@@ -20,16 +20,17 @@ export function PortraitPlaceholder({ className = "" }: { className?: string }) 
 function LeaderCard({ p, delay }: { p: Leader; delay: number }) {
   return (
     <Reveal as="li" delay={delay} className="h-full">
-      <article className="group flex h-full flex-col overflow-hidden rounded-xl bg-white ring-1 ring-border transition-[transform,box-shadow] duration-500 ease-out hover:-translate-y-1 hover:shadow-[0_24px_48px_-28px_rgb(10_45_80/0.45)]">
-        <div className="relative aspect-[4/5] overflow-hidden">
+      {/* Phones: a compact row (portrait beside the name); from sm, a portrait card */}
+      <article className="group flex h-full overflow-hidden rounded-xl bg-white ring-1 ring-border sm:flex-col transition-[transform,box-shadow] duration-500 ease-out hover:-translate-y-1 hover:shadow-[0_24px_48px_-28px_rgb(10_45_80/0.45)]">
+        <div className="relative aspect-[4/5] w-28 shrink-0 overflow-hidden sm:w-auto">
           {p.photo ? (
-            <Img name={p.photo} alt={p.name} sizes="(min-width:1024px) 22vw, (min-width:640px) 45vw, 100vw" className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
+            <Img name={p.photo} alt={p.name} sizes="(min-width:1024px) 22vw, (min-width:640px) 45vw, 112px" className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]" />
           ) : (
             <PortraitPlaceholder className="absolute inset-0 transition-transform duration-700 group-hover:scale-[1.03]" />
           )}
-          <span className="absolute left-4 top-4 grid h-9 w-9 place-items-center rounded-full bg-white/90 shadow-sm"><LogoMark className="h-5 w-auto" /></span>
+          <span className="absolute left-4 top-4 hidden h-9 w-9 place-items-center rounded-full bg-white/90 shadow-sm sm:grid"><LogoMark className="h-5 w-auto" /></span>
         </div>
-        <div className="flex flex-1 flex-col p-5 sm:p-6">
+        <div className="flex flex-1 flex-col justify-center p-5 sm:justify-start sm:p-6">
           <p className="text-[0.72rem] font-semibold uppercase tracking-[0.12em] text-accent-strong">{p.role}</p>
           <h3 className="mt-1.5 text-lg font-semibold leading-snug text-primary-ink">{p.name}</h3>
         </div>

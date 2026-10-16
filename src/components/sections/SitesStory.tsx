@@ -174,7 +174,7 @@ function SitesMap({ active, onSelect }: { active: string | null; onSelect: (id: 
               className={`map-label absolute z-10 cursor-pointer px-1 leading-tight ${s.leader.side === "left" ? "-translate-x-full text-right" : "-translate-y-full text-left"}`}
               style={pct(s.leader.x, s.leader.y)}
             >
-              <span className="map-label-tag map-halo block whitespace-nowrap text-[0.6rem] font-semibold uppercase tracking-[0.18em]">{s.name}</span>
+              <span className="map-label-tag map-halo block whitespace-nowrap text-[0.68rem] sm:text-[0.66rem] font-semibold uppercase tracking-[0.18em]">{s.name}</span>
               <span className="map-label-place map-halo hidden whitespace-nowrap text-[0.82rem] font-semibold sm:block">{s.place}</span>
             </button>
           ))}

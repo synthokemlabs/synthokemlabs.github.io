@@ -199,7 +199,7 @@ export default function HomePage() {
           <Reveal className="mt-20">
             <div className="flex flex-wrap items-baseline justify-between gap-4">
               <h3 className="font-sans text-[0.74rem] font-semibold uppercase tracking-[0.16em] text-muted">Inspections, approvals & certifications</h3>
-              <Link href="/quality/regulatory-affairs/" className="group inline-flex items-center gap-2 text-sm font-semibold text-primary">
+              <Link href="/quality/regulatory-affairs/" className="group inline-flex min-h-10 items-center gap-2 text-sm font-semibold text-primary">
                 <span className="link-u">View all approvals</span><Icon name="arrowRight" size={15} className="arrow-nudge" />
               </Link>
             </div>

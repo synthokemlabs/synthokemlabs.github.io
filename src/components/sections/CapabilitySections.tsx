@@ -52,7 +52,7 @@ export function ChemistryCloud() {
       </ul>
       <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-border pt-6">
         <p className="flex items-center gap-2.5 text-sm text-muted"><span className="h-3 w-3 rounded-full bg-primary" />Core specialisations</p>
-        <Link href="/contact/?intent=partner" className="group inline-flex items-center gap-2 font-semibold text-primary">
+        <Link href="/contact/?intent=partner" className="group inline-flex min-h-10 items-center gap-2 font-semibold text-primary">
           <span className="link-u">Have a process in mind? Talk to us</span><Icon name="arrowRight" size={16} className="arrow-nudge" />
         </Link>
       </div>

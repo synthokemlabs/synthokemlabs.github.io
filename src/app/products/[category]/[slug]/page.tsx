@@ -11,7 +11,7 @@ import { Molecule3D } from "@/components/molecules/Molecule3D";
 import { StructureViewer } from "@/components/molecules/StructureViewer";
 import { getRepresentative, getStructure } from "@/data/structures";
 import { formatFormula, structureMaxSize } from "@/lib/chem";
-import { Badge, ButtonLink, Container, JsonLd, SpecRow } from "@/components/ui/primitives";
+import { Badge, ButtonLink, Container, EmailText, JsonLd, SpecRow } from "@/components/ui/primitives";
 import { CopyButton } from "@/components/ui/client";
 import { Icon } from "@/components/ui/Icon";
 import {
@@ -122,7 +122,7 @@ export default async function ProductPage({ params }: Params) {
               {casMatched && <SpecRow label="Molecular formula" mono>{formatFormula(structure!.formula)}</SpecRow>}
               {casMatched && <SpecRow label="Molecular weight" mono>{structure!.mw} g/mol</SpecRow>}
               {casMatched && structure!.iupac && <SpecRow label="IUPAC name"><span className="break-words text-[0.92rem]">{structure!.iupac}</span></SpecRow>}
-              <SpecRow label="Category"><Link href={`/products/${cat.slug}/`} className="text-primary underline-offset-4 hover:underline">{cat.name}</Link></SpecRow>
+              <SpecRow label="Category"><Link href={`/products/${cat.slug}/`} className="-my-2 inline-block py-2 text-primary underline-offset-4 hover:underline">{cat.name}</Link></SpecRow>
               {p.use && <SpecRow label="Use">{p.use === "human" ? "Human" : "Veterinary"}</SpecRow>}
               {p.status && <SpecRow label="Status">{STATUS_LABEL[p.status]}</SpecRow>}
               {p.grades?.length ? (
@@ -207,8 +207,8 @@ export default async function ProductPage({ params }: Params) {
               <div className="mt-4 space-y-1">
                 <a href={SITE.phone.href} className="flex min-h-11 items-center gap-3 text-primary-ink hover:text-primary"><Icon name="phone" size={17} className="text-accent-strong" />{SITE.phone.display}</a>
                 <div className="flex items-center justify-between">
-                  <a href={`mailto:${SITE.email}?subject=${encodeURIComponent(`Enquiry: ${p.name}`)}`} className="flex min-h-11 min-w-0 items-center gap-3 text-primary-ink [overflow-wrap:anywhere] hover:text-primary"><Icon name="mail" size={17} className="shrink-0 text-accent-strong" />{SITE.email}</a>
-                  <CopyButton text={SITE.email} label="Email address" />
+                  <a href={`mailto:${SITE.email}?subject=${encodeURIComponent(`Enquiry: ${p.name}`)}`} className="flex min-h-11 min-w-0 items-center gap-3 text-primary-ink hover:text-primary"><Icon name="mail" size={17} className="shrink-0 text-accent-strong" /><EmailText email={SITE.email} /></a>
+                  <CopyButton text={SITE.email} label="Email address" compact />
                 </div>
               </div>
             </div>
@@ -221,7 +221,7 @@ export default async function ProductPage({ params }: Params) {
           <Container>
             <div className="flex items-end justify-between gap-6">
               <h2 className="display-md text-primary-ink">Related {cat.shortName.toLowerCase() === "apis" ? "APIs" : cat.shortName.toLowerCase()}</h2>
-              <Link href={`/products/${cat.slug}/`} className="group hidden items-center gap-2 font-semibold text-primary sm:inline-flex">View all <Icon name="arrowRight" size={16} className="arrow-nudge" /></Link>
+              <Link href={`/products/${cat.slug}/`} className="group hidden min-h-10 items-center gap-2 font-semibold text-primary sm:inline-flex">View all <Icon name="arrowRight" size={16} className="arrow-nudge" /></Link>
             </div>
             <ul className="mt-8 grid grid-cols-1 gap-px overflow-hidden rounded-lg bg-border ring-1 ring-border sm:grid-cols-2 lg:grid-cols-4">
               {related.map((r) => (

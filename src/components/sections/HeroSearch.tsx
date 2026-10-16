@@ -106,7 +106,7 @@ export function HeroSearch() {
               onClick={() => { setScopeOpen((o) => !o); setOpen(false); }}
               className="flex h-full min-w-[9.5rem] cursor-pointer items-center justify-between gap-2 rounded-lg px-3.5 text-left text-[0.88rem] font-semibold text-primary-ink transition-colors hover:bg-surface"
             >
-              <span><span className="block text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-muted">Search in</span>{scopeLabel}</span>
+              <span><span className="block text-[0.66rem] font-semibold uppercase tracking-[0.12em] text-muted">Search in</span>{scopeLabel}</span>
               <Icon name="chevronDown" size={15} className={`text-muted transition-transform duration-300 ${scopeOpen ? "rotate-180" : ""}`} />
             </button>
             {scopeOpen && (
@@ -147,7 +147,7 @@ export function HeroSearch() {
               autoComplete="off"
               spellCheck={false}
               placeholder="Product name or CAS number"
-              className="min-h-[3.25rem] min-w-0 flex-1 bg-transparent text-[0.98rem] text-text outline-none placeholder:text-muted/80"
+              className="min-h-[3.25rem] min-w-0 flex-1 bg-transparent text-base text-text outline-none placeholder:text-muted/80"
             />
             {q ? (
               <button type="button" onClick={() => { setQ(""); setActive(-1); inputRef.current?.focus(); }} aria-label="Clear search" className="grid h-7 w-7 shrink-0 cursor-pointer place-items-center rounded-full text-muted transition-colors hover:bg-surface hover:text-primary-ink">
@@ -253,7 +253,7 @@ export function HeroSearch() {
       <p className="mt-4 flex flex-wrap items-center gap-x-2.5 gap-y-2 text-[0.8rem] text-on-dark-muted">
         <span className="mr-0.5">Popular:</span>
         {POPULAR.slice(0, 4).map((t) => (
-          <button key={t} type="button" onClick={() => pick(t)} className="cursor-pointer rounded-full px-3 py-1 font-medium text-white ring-1 ring-inset ring-white/25 transition-colors hover:bg-white hover:text-primary-ink">{t}</button>
+          <button key={t} type="button" onClick={() => pick(t)} className="inline-flex min-h-9 cursor-pointer items-center rounded-full px-3.5 font-medium text-white ring-1 ring-inset ring-white/25 transition-colors hover:bg-white hover:text-primary-ink">{t}</button>
         ))}
       </p>
     </form>

@@ -59,7 +59,8 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="flex flex-col gap-4 border-t border-white/10 py-8 pb-24 text-[0.82rem] text-on-dark-muted lg:flex-row lg:items-center lg:justify-between lg:pb-8">
+        {/* Extra room on phones so the floating back-to-top button never covers these links */}
+        <div className="flex flex-col gap-4 border-t border-white/10 py-8 pb-36 text-[0.82rem] text-on-dark-muted lg:flex-row lg:items-center lg:justify-between lg:pb-8">
           <p>© {new Date().getFullYear()} {SITE.legalName}. All rights reserved.</p>
           <ul className="flex flex-wrap gap-x-6 gap-y-1">
             {LEGAL_NAV.map((l) => (

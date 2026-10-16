@@ -95,8 +95,9 @@ body {
     line-height: 1.1;
     text-wrap: balance;
   }
+  /* In the base layer so utilities such as whitespace-nowrap still win */
+  p { text-wrap: pretty; }
 }
-p { text-wrap: pretty; }
 ::selection { background: var(--primary); color: #fff; }
 
 :focus-visible {
@@ -722,7 +723,7 @@ html.lenis-on body { overscroll-behavior: none; }
 /* Home search: a solid bar that lifts and takes a ring when in use; panels drop in quickly; rows follow */
 .hs-bar { box-shadow: 0 22px 50px -26px rgb(3 25 50 / 0.75), 0 0 0 1px rgb(255 255 255 / 0.35); transition: box-shadow 0.3s ease, transform 0.3s var(--ease-out); }
 .hs-bar:focus-within, .hs-bar.is-open { box-shadow: 0 26px 60px -24px rgb(3 25 50 / 0.8), 0 0 0 4px rgb(63 168 238 / 0.45); }
-.hs-bar input:focus-visible { outline: none; }
+.hs-bar input:focus-visible, #site-search:focus-visible { outline: none; }
 .hs-pop { --hs-from: -6px; animation: hs-pop 0.18s var(--ease-out) both; transform-origin: top center; }
 .hs-pop.is-up { --hs-from: 6px; transform-origin: bottom center; }
 @keyframes hs-pop { from { opacity: 0; transform: translateY(var(--hs-from)) scale(0.99); } to { opacity: 1; transform: none; } }

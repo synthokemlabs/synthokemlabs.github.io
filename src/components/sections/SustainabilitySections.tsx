@@ -148,7 +148,7 @@ export function SafeguardsHub() {
         </svg>
         <div className="node-pop absolute left-1/2 top-1/2 grid aspect-square w-[34%] -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-white text-center shadow-[0_24px_50px_-20px_rgb(0_0_0/0.45)]" style={nd(0.15)}>
           <span className="px-3">
-            <span className="block text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-muted">Driven by</span>
+            <span className="block text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-muted">Driven by</span>
             <span className="mt-1 block font-display text-[clamp(0.95rem,1.6vw,1.25rem)] font-semibold leading-tight text-primary-ink">Leadership &amp; commitment</span>
           </span>
         </div>
@@ -163,7 +163,7 @@ export function SafeguardsHub() {
       {/* Phones */}
       <div className="sm:hidden">
         <div className="node-pop rounded-xl bg-white px-5 py-4 text-center" style={nd(0.1)}>
-          <span className="block text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-muted">Driven by</span>
+          <span className="block text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-muted">Driven by</span>
           <span className="mt-1 block font-display text-lg font-semibold text-primary-ink">Leadership &amp; commitment</span>
         </div>
         <span aria-hidden="true" className="mx-auto block h-6 w-px bg-white/30" />
@@ -204,13 +204,13 @@ export function ShePolicy() {
             </li>
           ))}
         </ol>
-        <div className="mt-6 flex items-end justify-between gap-6 border-t border-border pt-6">
+        <div className="mt-6 flex flex-wrap items-end justify-between gap-x-6 gap-y-3 border-t border-border pt-6">
           <div>
             <span aria-hidden="true" className="sign-line block h-px w-44 origin-left bg-primary-ink" style={nd(0.9)} />
             <p className="mt-2 text-sm font-semibold text-primary-ink">{EHS.shePolicy.signedBy}</p>
             <p className="text-xs text-muted">Synthokem Labs Private Limited</p>
           </div>
-          <p className="max-w-[12rem] text-right text-xs leading-snug text-muted">Reviewed periodically in line with regulatory requirements.</p>
+          <p className="max-w-[12rem] text-xs leading-snug text-muted sm:text-right">Reviewed periodically in line with regulatory requirements.</p>
         </div>
       </div>
     </Reveal>
