@@ -81,7 +81,7 @@ export function Counter({ value, suffix = "" }: { value: number; suffix?: string
 }
 
 /** Copies text to the clipboard with visible + announced feedback. */
-/** `compact` shows just the icon on phones, where the copied text needs the room. */
+/** `compact` shows just the icon on phones and small laptops (where three columns share a row), so the copied text keeps the room. */
 export function CopyButton({ text, label, className = "", tone = "dark", compact = false }: { text: string; label: string; className?: string; tone?: "dark" | "light"; compact?: boolean }) {
   const [copied, setCopied] = useState(false);
   async function copy() {
@@ -102,7 +102,7 @@ export function CopyButton({ text, label, className = "", tone = "dark", compact
       aria-label={copied ? `${label} copied` : `Copy ${label}`}
     >
       <Icon name={copied ? "check" : "copy"} size={16} />
-      <span className={compact ? "hidden sm:inline" : ""}>{copied ? "Copied" : "Copy"}</span>
+      <span className={compact ? "hidden sm:inline lg:hidden xl:inline" : ""}>{copied ? "Copied" : "Copy"}</span>
       <span className="sr-only" role="status" aria-live="polite">{copied ? `${label} copied to clipboard` : ""}</span>
     </button>
   );

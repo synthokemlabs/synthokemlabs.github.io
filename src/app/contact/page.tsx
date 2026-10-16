@@ -21,7 +21,7 @@ export default function ContactPage() {
 
       {/* Quick actions */}
       <section aria-label="Quick contact" className="border-b border-border bg-surface">
-        <Container className="grid grid-cols-1 divide-y divide-border lg:grid-cols-3 lg:divide-x lg:divide-y-0">
+        <Container className="grid grid-cols-1 divide-y divide-border lg:grid-cols-[1fr_1.35fr_1fr] lg:divide-x lg:divide-y-0">
           <a href={SITE.phone.href} className="group flex min-h-24 items-center gap-4 py-5 lg:px-6 lg:first:pl-0">
             <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-primary text-white"><Icon name="phone" size={18} /></span>
             <span><span className="eyebrow block text-muted">Call</span><span className="mt-1 block font-semibold text-primary-ink group-hover:text-primary">{SITE.phone.display}</span></span>
@@ -29,7 +29,7 @@ export default function ContactPage() {
           <div className="flex min-h-24 items-center justify-between gap-4 py-5 lg:px-6">
             <a href={`mailto:${SITE.email}`} className="group flex min-w-0 items-center gap-4">
               <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-primary text-white"><Icon name="mail" size={18} /></span>
-              <span><span className="eyebrow block text-muted">Email</span><span className="mt-1 block font-semibold text-primary-ink [overflow-wrap:anywhere] group-hover:text-primary">{SITE.email}</span></span>
+              <span><span className="eyebrow block text-muted">Email</span><span className="mt-1 block font-semibold text-primary-ink [overflow-wrap:break-word] group-hover:text-primary">{SITE.email.split("@")[0]}<wbr />@{SITE.email.split("@")[1]}</span></span>
             </a>
             <CopyButton text={SITE.email} label="Email address" compact />
           </div>
