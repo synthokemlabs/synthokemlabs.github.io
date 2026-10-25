@@ -9,9 +9,11 @@ export interface NavItem {
   /** Dropdown entries — omit for a direct link */
   items?: NavLink[];
   footer?: NavLink;
+  /** Gets its own standout treatment in the header */
+  highlight?: boolean;
 }
 
-/** Deliberately small: three dropdowns, two direct links, one Contact button. */
+/** Deliberately small: three dropdowns, three direct links, one Contact button. */
 export const MAIN_NAV: NavItem[] = [
   {
     label: "About",
@@ -48,6 +50,7 @@ export const MAIN_NAV: NavItem[] = [
     ],
   },
   { label: "Sustainability", href: "/sustainability/" },
+  { label: "Employee Life", href: "/employee-life/", highlight: true },
   { label: "Careers", href: "/careers/" },
 ];
 
@@ -78,6 +81,7 @@ export const FOOTER_NAV: { heading: string; links: NavLink[] }[] = [
       { label: "Contact", href: "/contact/" },
       { label: "Request a quote", href: "/enquiry/" },
       { label: "Careers", href: "/careers/" },
+      { label: "Employee Life", href: "/employee-life/" },
       { label: "Resources", href: "/insights/" },
       { label: "Site map", href: "/sitemap/" },
     ],

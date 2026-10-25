@@ -52,6 +52,7 @@ export const PAGES: PageEntry[] = [
   { title: "Regulatory affairs", href: "/quality/regulatory-affairs/", section: "Quality", keywords: "usfda cep who-gmp dmf certificates approvals iso" },
   { title: "Sustainability", href: "/sustainability/", section: "Responsibility", keywords: "csr environment solar wastewater recycling community education" },
   { title: "Careers", href: "/careers/", section: "Work with us", keywords: "jobs vacancies resume apply work" },
+  { title: "Employee Life", href: "/employee-life/", section: "Work with us", keywords: "employee benefits perks life at synthokem gmc group medical claim gtli group term life insurance gpa group personal accident policy bus transport canteen food discount free dress uniform medical checkup health shift allowance yearly trip" },
   { title: "Contact", href: "/contact/", section: "Work with us", keywords: "address phone email location map sales support" },
   { title: "Product enquiry / request a quote", href: "/enquiry/", section: "Work with us", keywords: "rfq quote quotation sample price enquiry" },
   { title: "Insights & resources", href: "/insights/", section: "Resources", keywords: "news updates downloads product list pdf" },

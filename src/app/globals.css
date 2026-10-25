@@ -31,6 +31,7 @@
   --warning: #9a6200;
   --error: #b42318;
 
+
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
   --header-h: 76px;
@@ -738,3 +739,70 @@ html.lenis-on body { overscroll-behavior: none; }
 .reveal.is-visible:not(.reveal-image):not(.reveal-wipe) { filter: none; }
 .reveal.settled, .no-js .reveal { filter: none !important; }
 @media (prefers-reduced-motion: reduce) { .reveal { filter: none !important; } }
+
+/* ==========================================================================
+   Employee Life — sky-blue like the rest of the site; motion is purposeful and
+   tied to geometry (SVG paths and fixed angles), so nothing drifts off its line
+   ========================================================================== */
+/* Lines that draw in once their section is revealed */
+.el-draw { stroke-dasharray: 1; stroke-dashoffset: 1; }
+.is-visible .el-draw { animation: draw-path 1.6s var(--ease-out) 0.3s forwards; }
+.settled .el-draw, .no-js .el-draw { animation: none; stroke-dashoffset: 0; }
+
+/* Hero ring: the hand turns about the ring's exact centre; the active benefit lifts */
+.el-hand { transform-box: view-box; transform-origin: 50% 50%; transition: transform 0.9s cubic-bezier(0.65, 0, 0.35, 1); }
+.el-chip { position: relative; background: rgb(255 255 255 / 0.1); color: #fff; box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.3); transition: background-color 0.4s, color 0.4s, box-shadow 0.4s, transform 0.5s var(--ease-out); }
+.el-chip:hover, .el-chip.is-on { background: #fff; color: var(--primary); box-shadow: 0 0 0 6px rgb(169 220 251 / 0.18), 0 14px 30px -12px rgb(3 25 50 / 0.6); transform: scale(1.1); }
+
+/* Ribbon */
+.el-marquee-track { animation: el-marquee 50s linear infinite; }
+.el-marquee:hover .el-marquee-track { animation-play-state: paused; }
+@keyframes el-marquee { to { transform: translateX(-50%); } }
+
+/* Icon tiles */
+.el-icon { background: linear-gradient(140deg, var(--accent) 0%, var(--primary) 100%); color: #fff; box-shadow: 0 12px 24px -14px rgb(17 104 173 / 0.9); }
+.el-icon-light { background: #fff; color: var(--primary); box-shadow: 0 12px 24px -14px rgb(3 25 50 / 0.7); }
+.el-card-sky { --spot: rgb(255 255 255 / 0.22); background: linear-gradient(150deg, #3fa8ee 0%, #1168ad 100%); }
+
+/* Shield layers */
+.el-halo { background: radial-gradient(circle, rgb(63 168 238 / 0.28) 0%, rgb(63 168 238 / 0.08) 45%, transparent 70%); animation: el-breathe 6s ease-in-out infinite; }
+@keyframes el-breathe { 50% { transform: scale(1.06); opacity: 0.8; } }
+.el-layer-fill { fill: rgb(17 104 173 / 0.04); stroke: var(--border-strong); stroke-width: 1.5; vector-effect: non-scaling-stroke; transition: fill 0.5s ease, stroke 0.5s ease; }
+.el-layer-stroke { fill: none; stroke: var(--primary); stroke-width: 2.5; vector-effect: non-scaling-stroke; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; opacity: 0; }
+.el-layer.is-on .el-layer-fill { fill: rgb(63 168 238 / 0.16); stroke: transparent; }
+.el-layer.is-on .el-layer-stroke { opacity: 1; animation: draw-path 1.1s var(--ease-out) forwards; }
+.el-pin { background: #fff; color: var(--primary-ink); box-shadow: inset 0 0 0 1px var(--border), 0 8px 20px -12px rgb(10 45 80 / 0.4); transition: background-color 0.3s, color 0.3s, transform 0.4s var(--ease-out); }
+.el-pin.is-on { background: var(--primary); color: #fff; transform: scale(1.08); }
+.el-tab { color: var(--primary-ink); transition: background-color 0.3s, color 0.3s; }
+.el-tab:hover { background: var(--surface); }
+.el-tab.is-on { background: var(--primary); color: #fff; }
+.el-timer { position: absolute; inset: auto 0 0 0; height: 3px; background: #a9dcfb; transform-origin: 0 50%; animation: el-timer linear forwards; }
+@keyframes el-timer { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+/* Cards: a soft light follows the pointer, the card lifts */
+.el-spot { position: relative; isolation: isolate; overflow: hidden; transition: transform 0.5s var(--ease-out), box-shadow 0.5s var(--ease-out); }
+.el-spot::before { content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: 0; transition: opacity 0.4s; background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%), var(--spot, rgb(63 168 238 / 0.12)), transparent 60%); }
+.sky-band-deep.el-spot { --spot: rgb(169 220 251 / 0.16); }
+.el-spot:hover::before { opacity: 1; }
+.el-spot:hover { transform: translateY(-4px); box-shadow: 0 30px 56px -34px rgb(10 45 80 / 0.55); }
+.el-swatch { transition: transform 0.45s var(--ease-out); transition-delay: calc(var(--i) * 40ms); }
+.el-spot:hover .el-swatch { transform: translateY(-5px); }
+.el-row { transition: box-shadow 0.35s, transform 0.4s var(--ease-out); }
+.el-row:hover { transform: translateX(4px); box-shadow: inset 0 0 0 1px var(--border-strong), 0 16px 30px -24px rgb(17 104 173 / 0.6); }
+.el-road { animation: el-road 1.6s linear infinite; }
+@keyframes el-road { to { stroke-dashoffset: -44; } }
+
+/* Header: the Employee Life link wears a shimmering sky-blue border so it stands apart from the other menus */
+.nav-life { background: linear-gradient(var(--nav-life-bg, #0b4d8c), var(--nav-life-bg, #0b4d8c)) padding-box, linear-gradient(110deg, #a9dcfb, #3fa8ee, #ffffff, #22b8c9, #a9dcfb) border-box; background-size: 100% 100%, 300% 100%; border: 1.5px solid transparent; box-shadow: 0 6px 20px -8px rgb(63 168 238 / 0.65); animation: nav-life-shine 6s linear infinite; }
+.nav-life-solid { --nav-life-bg: var(--primary-tint); background-image: linear-gradient(var(--primary-tint), var(--primary-tint)), linear-gradient(110deg, #1168ad, #3fa8ee, #a9dcfb, #22b8c9, #1168ad); }
+@keyframes nav-life-shine { to { background-position: 0 0, 300% 0; } }
+.nav-life-dot { animation: nav-life-ping 1.8s ease-out infinite; }
+@keyframes nav-life-ping { 0% { transform: scale(1); opacity: 0.9; } 70%, 100% { transform: scale(2.6); opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-life, .nav-life-dot { animation: none !important; }
+  .el-marquee-track, .el-halo, .el-road, .el-timer { animation: none !important; }
+  .el-hand { transition: none; }
+  .el-mover { display: none; }
+  .el-draw, .el-layer.is-on .el-layer-stroke { animation: none; stroke-dashoffset: 0; }
+}

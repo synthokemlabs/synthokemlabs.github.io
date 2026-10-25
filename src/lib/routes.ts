@@ -16,6 +16,7 @@ export const STATIC_ROUTES: { path: string; title: string; group: string; priori
   { path: "/quality/regulatory-affairs/", title: "Regulatory affairs", group: "Quality", priority: 0.7 },
   { path: "/sustainability/", title: "Sustainability", group: "Responsibility", priority: 0.5 },
   { path: "/careers/", title: "Careers", group: "Work with us", priority: 0.6 },
+  { path: "/employee-life/", title: "Employee Life", group: "Work with us", priority: 0.6 },
   { path: "/contact/", title: "Contact", group: "Work with us", priority: 0.7 },
   { path: "/enquiry/", title: "Product enquiry", group: "Work with us", priority: 0.7 },
   { path: "/insights/", title: "Insights & resources", group: "Resources", priority: 0.4 },

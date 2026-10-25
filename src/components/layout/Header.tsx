@@ -116,10 +116,22 @@ export function Header() {
               />
               {MAIN_NAV.map((g) => {
                 const active = groupActive(g);
+                if (g.highlight) {
+                  return (
+                    <li key={g.label} data-nav={g.label} className="relative px-1" onMouseEnter={() => { scheduleClose(); setHovered(null); }}>
+                      {/* Stands apart from the other links: a shimmering gradient border, a pulsing dot and a sparkle */}
+                      <Link href={g.href} aria-current={active ? "page" : undefined} className={`nav-life group inline-flex min-h-10 items-center gap-1.5 whitespace-nowrap rounded-full px-3 text-[0.9rem] font-semibold transition-transform duration-300 hover:-translate-y-px xl:gap-2 xl:px-3.5 ${solid ? "nav-life-solid text-primary-ink" : "text-white"}`}>
+                        <span aria-hidden="true" className="relative grid h-2 w-2 place-items-center"><span className="nav-life-dot absolute inset-0 rounded-full bg-accent" /><span className="h-2 w-2 rounded-full bg-accent" /></span>
+                        {g.label}
+                        <Icon name="sparkle" size={14} className={`hidden transition-transform duration-500 group-hover:rotate-90 xl:block ${solid ? "text-primary" : "text-[#a9dcfb]"}`} />
+                      </Link>
+                    </li>
+                  );
+                }
                 if (!g.items) {
                   return (
                     <li key={g.label} data-nav={g.label} className="relative" onMouseEnter={() => { scheduleClose(); setHovered(g.label); }}>
-                      <Link href={g.href} aria-current={active ? "page" : undefined} className={`relative inline-flex min-h-11 items-center whitespace-nowrap rounded-full px-3 text-[0.92rem] font-medium xl:px-4 transition-colors ${active ? (solid ? "text-primary" : "text-white") : linkTone}`}>
+                      <Link href={g.href} aria-current={active ? "page" : undefined} className={`relative inline-flex min-h-11 items-center whitespace-nowrap rounded-full px-2.5 text-[0.92rem] font-medium xl:px-3.5 transition-colors ${active ? (solid ? "text-primary" : "text-white") : linkTone}`}>
                         {g.label}
                         {active && <span aria-hidden="true" className="absolute inset-x-4 bottom-1 h-[2px] rounded-full bg-accent" />}
                       </Link>
@@ -154,7 +166,7 @@ export function Header() {
                           requestAnimationFrame(focusFirst);
                         }
                       }}
-                      className={`relative inline-flex min-h-11 cursor-pointer items-center gap-1 whitespace-nowrap rounded-full px-3 text-[0.92rem] font-medium xl:px-4 transition-colors ${isOpen ? (solid ? "text-primary" : "text-white") : active ? (solid ? "text-primary" : "text-white") : linkTone}`}
+                      className={`relative inline-flex min-h-11 cursor-pointer items-center gap-1 whitespace-nowrap rounded-full px-2.5 text-[0.92rem] font-medium xl:px-3.5 transition-colors ${isOpen ? (solid ? "text-primary" : "text-white") : active ? (solid ? "text-primary" : "text-white") : linkTone}`}
                     >
                       {g.label}
                       <Icon name="chevronDown" size={15} className={`transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} />
@@ -179,7 +191,7 @@ export function Header() {
             </button>
             <Link
               href="/contact/"
-              className={`group hidden min-h-11 items-center gap-2 whitespace-nowrap rounded-md px-5 text-[0.88rem] font-semibold transition-colors sm:inline-flex ${
+              className={`group hidden min-h-11 items-center gap-2 whitespace-nowrap rounded-md px-5 text-[0.88rem] font-semibold transition-colors sm:inline-flex lg:hidden xl:inline-flex ${
                 solid ? "bg-primary text-white hover:bg-accent-strong" : "bg-white text-primary-ink hover:bg-primary-tint"
               }`}
             >
@@ -259,6 +271,16 @@ function MobileNav({ onSearch, isActive }: { onSearch: () => void; isActive: (h:
           <ul>
             {MAIN_NAV.map((g) => {
               const isOpen = expanded === g.label;
+              if (g.highlight) {
+                return (
+                  <li key={g.label} className="border-b border-border py-2">
+                    <Link href={g.href} className="nav-life flex min-h-14 items-center justify-between rounded-xl px-4 font-display text-lg font-semibold text-white">
+                      <span className="flex items-center gap-2.5"><Icon name="sparkle" size={18} className="text-[#a9dcfb]" />{g.label}</span>
+                      <Icon name="arrowRight" size={18} className="text-[#a9dcfb]" />
+                    </Link>
+                  </li>
+                );
+              }
               if (!g.items) {
                 return (
                   <li key={g.label} className="border-b border-border">

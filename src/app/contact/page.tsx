@@ -2,8 +2,8 @@ import { PageHero } from "@/components/layout/PageHero";
 import { ContactExperience } from "@/components/forms/ContactExperience";
 import { MapFacade } from "@/components/sections/MapFacade";
 import { Container, EmailText, JsonLd } from "@/components/ui/primitives";
-import { CopyButton } from "@/components/ui/client";
-import { Icon } from "@/components/ui/Icon";
+import { CopyButton, Reveal } from "@/components/ui/client";
+import { Icon, type IconName } from "@/components/ui/Icon";
 import { LOCATIONS, SITE } from "@/data/site";
 import { pageMetadata } from "@/lib/seo";
 
@@ -12,6 +12,12 @@ export const metadata = pageMetadata({
   description: `Contact Synthokem Labs in Pashamylaram, Hyderabad. Call ${SITE.phone.display}, email ${SITE.email}, or send a sales, product or partnership enquiry. ${SITE.hours}.`,
   path: "/contact/",
 });
+
+// Address cards in the order the company lists its sites
+const ADDRESS_CARDS: { id: string; office?: string; title: string; icon: IconName }[] = [
+  { id: "corporate-office", office: "Corporate Office", title: "R&D – Manufacturing Unit-II", icon: "flask" },
+  { id: "unit-iii", title: "Manufacturing Unit-III", icon: "factory" },
+];
 
 export default function ContactPage() {
   const hq = LOCATIONS[0];
@@ -52,25 +58,42 @@ export default function ContactPage() {
             <p className="mt-3 text-muted">Drop us a message and our team will contact you within 3 business days.</p>
             <div className="mt-10"><ContactExperience /></div>
           </div>
-          <aside className="space-y-10 lg:col-span-4" aria-label="Addresses">
-            {LOCATIONS.map((l) => (
-              <div key={l.id} className="border-t-2 border-primary pt-6">
-                <p className="eyebrow text-accent-strong">{l.role}</p>
-                <h3 className="mt-2 text-xl font-semibold text-primary-ink">{l.name}</h3>
-                <address className="mt-3 not-italic leading-relaxed text-text">{l.lines.map((x) => <span key={x} className="block">{x}</span>)}</address>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {l.phone && <a href={l.phone.href} className="inline-flex min-h-11 items-center gap-2 rounded-lg px-3 text-sm font-semibold text-primary ring-1 ring-inset ring-border-strong hover:ring-primary"><Icon name="phone" size={15} />{l.phone.display}</a>}
-                  <a href={l.directions} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-2 rounded-lg px-3 text-sm font-semibold text-primary ring-1 ring-inset ring-border-strong hover:ring-primary"><Icon name="pin" size={15} />Directions</a>
-                </div>
-              </div>
-            ))}
+          <aside className="space-y-5 lg:col-span-4" aria-label="Addresses">
+            {ADDRESS_CARDS.map((card, i) => {
+              const l = LOCATIONS.find((x) => x.id === card.id)!;
+              return (
+                <Reveal as="article" key={card.id} delay={i * 120} className="card-hover overflow-hidden rounded-2xl bg-white ring-1 ring-border">
+                  {/* The corporate office shares the Unit II site, so it heads that card */}
+                  {card.office && (
+                    <div className="sky-band flex items-center gap-3 px-6 py-4 text-white">
+                      <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-white/15 ring-1 ring-white/25"><Icon name="globe" size={17} /></span>
+                      <span><span className="block text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-accent-soft">Synthokem Labs</span><span className="block font-display text-lg font-semibold leading-tight">{card.office}</span></span>
+                    </div>
+                  )}
+                  <div className="p-6">
+                    <div className="flex items-start gap-3">
+                      <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-primary-tint text-primary"><Icon name={card.icon} size={18} /></span>
+                      <div>
+                        <p className="font-mono text-[0.7rem] text-muted">{String(i + 1).padStart(2, "0")} / {String(ADDRESS_CARDS.length).padStart(2, "0")}</p>
+                        <h3 className="text-xl font-semibold leading-tight text-primary-ink">{card.title}</h3>
+                      </div>
+                    </div>
+                    <address className="mt-4 border-t border-border pt-4 not-italic leading-relaxed text-text">{l.lines.map((x) => <span key={x} className="block">{x}</span>)}</address>
+                    <div className="mt-5 flex flex-wrap gap-2">
+                      {l.phone && <a href={l.phone.href} className="inline-flex min-h-11 items-center gap-2 rounded-lg px-3 text-sm font-semibold text-primary ring-1 ring-inset ring-border-strong hover:ring-primary"><Icon name="phone" size={15} />{l.phone.display}</a>}
+                      <a href={l.directions} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-2 rounded-lg bg-primary px-3 text-sm font-semibold text-white hover:bg-accent-strong"><Icon name="pin" size={15} />Directions</a>
+                    </div>
+                  </div>
+                </Reveal>
+              );
+            })}
           </aside>
         </Container>
       </section>
 
       <section id="map" className="pb-20 lg:pb-28" aria-labelledby="map-title">
         <Container>
-          <h2 id="map-title" className="eyebrow mb-5 text-muted">Corporate office, R&D unit & Unit II — Pashamylaram, Telangana</h2>
+          <h2 id="map-title" className="eyebrow mb-5 text-muted">Corporate Office · R&amp;D – Manufacturing Unit-II — Pashamylaram, Telangana</h2>
           <MapFacade src={hq.mapEmbed!} title="Map showing Synthokem Labs, Pashamylaram" directions={hq.directions} />
         </Container>
       </section>

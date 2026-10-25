@@ -29,6 +29,7 @@ export default function CareersPage() {
         <div className="flex flex-wrap gap-3">
           <ButtonLink href="#apply" variant="light">Submit your resume</ButtonLink>
           <ButtonLink href="#openings" variant="outline-light">Current opportunities</ButtonLink>
+          <ButtonLink href="/employee-life/" variant="outline-light">Employee life &amp; benefits</ButtonLink>
         </div>
       </PageHero>
 
