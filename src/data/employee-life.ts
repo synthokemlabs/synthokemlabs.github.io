@@ -35,6 +35,7 @@ export const COVERS: Cover[] = [
     tagline: "For your family",
     summary: "Life cover that gives your family financial support in the unfortunate event of your death while in service.",
     points: [
+      "Cover of 100 times your gross monthly salary, should the unfortunate happen",
       "A lump-sum benefit paid to your nominee",
       "Financial security for the people who depend on you",
       "Protection that stays in place throughout your service",
@@ -48,6 +49,7 @@ export const COVERS: Cover[] = [
     tagline: "For the unexpected",
     summary: "Accident insurance that compensates for accidental injury, disability or death — support when life takes an unexpected turn.",
     points: [
+      "Cover of 100 times your gross monthly salary in the event of an accident",
       "Cover for accidental death and permanent or partial disability",
       "Helps replace lost income while you recover",
       "An extra safety net on top of medical and life cover",
