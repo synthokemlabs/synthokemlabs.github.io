@@ -68,13 +68,13 @@ The endpoint receives `multipart/form-data`, including any attachment. See `src/
 
 ## 5. Items for the company to review before launch
 
-1. **Timolol Maleate:** the PDF gives CAS `68890-66-4`, which belongs to a different substance. The CAS is withheld on the site until it is confirmed.
-2. **Epoxirane (Oxirane):** CAS `75-21-8` is ethylene oxide. Confirm the intended Ranolazine intermediate and its CAS.
+1. **Timolol Maleate:** resolved. The 16 Oct 2026 Product List gives CAS `26921-17-5` (timolol maleate), which the site uses.
+2. **Ranolazine epoxide intermediate:** resolved. The 16 Oct 2026 Product List names it 2-[(2-methoxyphenoxy)methyl]oxirane, CAS `2210-74-4` (PubChem CID 98357). It replaces the earlier "Epoxirane (Oxirane)" / `75-21-8` entry, and its page is now `/products/intermediates/2-2-methoxyphenoxy-methyl-oxirane/`.
 3. **Calcium Glycerophosphate** and **Tetrahydro-1-(2-furoyl) piperazine** appear on the old website but not in the 2026 list. Confirm they are still available.
-4. **Calcium Polycarbophil / Maropitant Citrate:** the listed CAS numbers match the parent compounds. Confirm the salt forms.
+4. **Calcium polycarbophil:** the listed CAS number matches the parent polymer. Confirm the salt form. (Maropitant Citrate is resolved: the 16 Oct 2026 list gives `359875-09-5`, the citrate monohydrate, PubChem CID 204107.)
 5. **Unit I address:** it wasn't published on the old site, so the page currently says "available on request".
 6. **Chairperson portrait:** none was available, so a monogram is used for now.
-7. **Name spellings standardised:** Bisbentamin → Bisbentiamine, Pivolyl → Pivaloyl, Veratrol (kept), Frideral Crafts → Friedel–Crafts, Drazens → Darzens. The original spellings are kept as search synonyms.
+7. **Product names follow the 16 Oct 2026 Product List exactly**, including its spacing (e.g. "2-(Ethoxy methylene) malononitrile", "N-(2,6-Dimethyl phenyl)-1-piperazine acetamide", "5-Hydrazino isophthalic acid", "Sulfo butylether-β-cyclodextrin sodium"). The standard chemical spellings are kept as synonyms (shown as "Also known as" and searchable). Elsewhere: Bisbentamin → Bisbentiamine, Frideral Crafts → Friedel–Crafts, Drazens → Darzens.
 8. **Legal pages** are structured drafts and need approved wording.
 9. **Photography:** the facility aerial and several lab photos are low-resolution originals. Replace them with new professional shoots when available. `lab-precision` and `csr-environment` look like stock images.
 10. **Certification logos:** the home page "Inspections, approvals & certifications" section shows exactly the eight logos from the presentation's "Accolades" slide (US FDA, EDQM · Council of Europe, WHO-GMP, KFDA, ISO 9001:2015, ISO 45001:2018, ISO 14001:2015, MSME ZED Gold), in the slide's order. They are used at the company's request. FDA, WHO, EDQM and ISO restrict use of their marks, and the USFDA describes its role as inspecting API facilities, not approving them, so **the company should confirm it may display them.** The fuller approval tiles on Quality and Regulatory affairs give a designed seal to bodies not on that slide (EU WC, COFEPRIS, Kosher).
@@ -83,14 +83,15 @@ The endpoint receives `multipart/form-data`, including any attachment. See `src/
 13. **Distances (slides 13 and 16)** are shown as the company gave them. Please re-check "Rajiv Gandhi International Airport ~40 km" from Pashamylaram and "~750 km" from Unit III.
 14. **Leadership (slide 2):** only "Mrs. Aishwarya" (Managing Director) and "Mr. Aryaman" (Director) are given, with no surnames. No headshots were supplied, so the leadership cards and the Chairperson page show a portrait placeholder. Add each photo to `public/images` and set `photo` on its `LEADERSHIP` entry in `src/data/company.ts`.
 15. **Unit I:** the presentation lists only Units II and III. The Journey timeline and the approval tiles still describe Unit I's history (USFDA approval, KFDA, COFEPRIS, EU WC, Kosher). Please confirm these are still valid to show.
+16. **Silica scavenger structures:** TMT/DMT are drawn as trimercaptotriazine bonded through sulfur (PubChem files CAS 1226494-16-1 under that S-linked model), Thiourea as 3-(thioureido)propyl and Amine as 3-aminopropyl, which is how suppliers list them. Confirm that these match Synthokem's materials.
 
 ## 6. Chemical structures
 
-Synthokem's old site had structure images for 16 products, as low-resolution rasters. The new site shows structures for **38 of 46 products**:
+Synthokem's old site had structure images for 16 products, as low-resolution rasters. The site shows a structure for **every product (47 of 47)**, matching the 16 Oct 2026 Product List:
 
-- **34 crisp SVG structures** rendered with RDKit from PubChem records. Each record was matched by the **CAS number in the Product List**, or by product name where the CAS lookup failed (Potassium Guaiacol Sulphonate, Drotaverine/Prazosin/Terazosin HCl, Mebeverine HCl 3D model).
-- **4 original company drawings** are kept where no reliable record exists: Calcium Polycarbophil, Silica Thiol, Calcium Glycerophosphate and Tetrahydro-1-(2-furoyl) piperazine.
-- Products with a `reviewNote` (uncertain CAS) and silica-supported scavengers are deliberately excluded. The cyclodextrins have no reliable record, and a few large or salt records have no 3D model.
+- **39 crisp SVG structures** rendered with RDKit from PubChem records. Each record was matched by the **CAS number in the Product List**, or by product name where the CAS lookup failed (Potassium Guaiacol Sulphonate, Drotaverine/Prazosin/Terazosin HCl, Mebeverine HCl 3D model).
+- **1 original company drawing** is kept: Silica Thiol.
+- **Representative drawings** for products that are not a single molecule: Calcium polycarbophil (segment), the two cyclodextrins (repeat unit), and the silica scavengers TMT, DMT, Thiourea and Amine (bonded functional group, with a wavy bond for the silica support; `scripts/silica-scavengers.py`). A few large or salt records have no 3D model.
 - **Formula, molecular weight and IUPAC name** are shown only for CAS-matched records, each with a link to its PubChem CID. Name-matched records show the structure only, with waters of hydration removed.
 - **3D models** are PubChem 3D conformers, rendered by a dependency-free canvas viewer (`Molecule3D`). For salts, the parent molecule is shown and labelled as such.
 

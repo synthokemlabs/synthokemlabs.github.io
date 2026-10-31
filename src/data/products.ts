@@ -2,8 +2,10 @@
  * Product catalogue.
  *
  * Source of truth: the current Synthokem "Product List" PDF (public/documents,
- * document PRODUCTLIST2021005, October 2026) and the product table on the
+ * PRODUCT_LIST-2026-final, 16 October 2026) and the product table on the
  * previous synthokemlabs.com/our_products.html page.
+ * Names, CAS numbers and order follow the Product List exactly (section by section, S.No order);
+ * standard chemical spellings are kept as synonyms so search still finds them.
  * To add a product, append an entry below — every listing, filter, search,
  * category page, detail page, sitemap entry and enquiry dropdown updates
  * automatically. Leave a field out rather than guessing a value.
@@ -68,7 +70,7 @@ export const CATEGORIES: Category[] = [
       "Offering a range of intermediates to the pharmaceutical market, Synthokem Labs has created a name for itself through unwavering quality and consistency of products. Our inherent strength lies in producing cutting-edge intermediates for new as well as off-patent APIs within the requisite time frame stipulated by our customers.",
     seoTitle: "Pharmaceutical Intermediates Manufacturer — API Intermediates",
     seoDescription:
-      "Pharmaceutical and API intermediates from Synthokem Labs, including Tetrahydro-2-furoic acid, Veratrol, Guethol and Ranolazine intermediates, with CAS numbers and API applications.",
+      "Pharmaceutical and API intermediates from Synthokem Labs, including Tetrahydro-2-furoic acid, Veratrole, Guethol and Ranolazine intermediates, with CAS numbers and API applications.",
   },
   {
     slug: "fine-chemicals",
@@ -80,7 +82,7 @@ export const CATEGORIES: Category[] = [
       "Synthokem's commercial fine chemicals portfolio includes 5-hydrazinoisophthalic and 5-aminoisophthalic acid derivatives, manufactured under the same quality systems as our APIs and intermediates.",
     seoTitle: "Fine Chemicals — Isophthalic Acid Derivatives",
     seoDescription:
-      "Fine chemicals from Synthokem Labs: 5-Hydrazinoisophthalic acid, 5-HIP-HCl, 5-Aminoisophthalic acid and its hydrate, with CAS numbers.",
+      "Fine chemicals from Synthokem Labs: 5-Hydrazino isophthalic acid, 5-Hydrazinoisophthalic acid hydrochloride (5-HIP-HCl), 5-Aminoisophthalic acid and 5-Aminoisophthalic acid Hydrate, with CAS numbers.",
   },
   {
     slug: "excipients",
@@ -92,7 +94,7 @@ export const CATEGORIES: Category[] = [
       "Synthokem is developing a range of excipients, including injectable-grade, high-purity and low-endotoxin materials such as cyclodextrins, trehalose and D-galactose. All listed excipients are currently under development.",
     seoTitle: "Pharmaceutical Excipients — Injectable Grade (Under Development)",
     seoDescription:
-      "Excipients under development at Synthokem Labs: Trehalose Dihydrate, SBE-β-cyclodextrin sodium, HPBCD, Sodium Stearyl Fumarate and D-Galactose.",
+      "Excipients under development at Synthokem Labs: Trehalose Dihydrate, Sulfo butylether-β-cyclodextrin sodium, Sodium Stearyl Fumarate, D-Galactose and Hydroxypropyl Beta cyclodextrin (HPBCD).",
   },
   {
     slug: "metal-scavengers",
@@ -178,7 +180,7 @@ export const PRODUCTS: Product[] = [
   },
   // ---- APIs for human use — under development (p.2) ----
   {
-    slug: "calcium-polycarbophil", name: "Calcium Polycarbophil", category: "apis", use: "human", status: "under-development",
+    slug: "calcium-polycarbophil", name: "Calcium polycarbophil", synonyms: ["Calcium Polycarbophil"], category: "apis", use: "human", status: "under-development",
     cas: "9003-97-8", grades: ["USP"], therapeuticCategory: "Laxative",
     applications: ["Constipation management"], regulatoryStatus: ISO_SET, structureImage: s("calcium-polycarbophil"), source: "product-list",
   },
@@ -189,7 +191,7 @@ export const PRODUCTS: Product[] = [
   },
   {
     slug: "fursultiamine", name: "Fursultiamine Hydrochloride", synonyms: ["Fursultiamine", "Fursultiamine HCl"], category: "apis", use: "human", status: "under-development",
-    cas: "804-30-8", grades: ["JP", "KP"], therapeuticCategory: "Vitamins & nutritional supplements",
+    cas: "804-30-8", grades: ["JP", "KP"], therapeuticCategory: "Nutritional supplement",
     regulatoryStatus: ISO_SET, source: "product-list",
   },
   {
@@ -211,15 +213,15 @@ export const PRODUCTS: Product[] = [
   },
   {
     slug: "ketoprofen", name: "Ketoprofen", category: "apis", use: "veterinary", status: "under-development",
-    cas: "22071-15-4", grades: ["USP", "BP", "EP", "JP", "KP"], therapeuticCategory: "NSAID", regulatoryStatus: ISO_SET, source: "product-list",
+    cas: "22071-15-4", grades: ["USP", "BP", "EP", "JP", "KP", "IP"], therapeuticCategory: "NSAID", regulatoryStatus: ISO_SET, source: "product-list",
   },
   {
-    slug: "imidocarb-dipropionate", name: "Imidocarb Dipropionate", category: "apis", use: "veterinary", status: "under-development",
+    slug: "imidocarb-dipropionate", name: "Imidocarb dipropionate", synonyms: ["Imidocarb Dipropionate"], category: "apis", use: "veterinary", status: "under-development",
     cas: "55750-06-6", grades: ["IH"], therapeuticCategory: "Antiprotozoal", regulatoryStatus: ISO_SET, source: "product-list",
   },
   {
     slug: "maropitant-citrate", name: "Maropitant Citrate", category: "apis", use: "veterinary", status: "under-development",
-    cas: "147116-67-4", grades: ["IH"], therapeuticCategory: "Neurokinin-1 (NK-1) antagonist", regulatoryStatus: ISO_SET, source: "product-list",
+    cas: "359875-09-5", grades: ["IH"], therapeuticCategory: "Neurokinin-1 (NK-1) antagonist", regulatoryStatus: ISO_SET, source: "product-list",
   },
   {
     slug: "robenacoxib", name: "Robenacoxib", category: "apis", use: "veterinary", status: "under-development",
@@ -235,9 +237,9 @@ export const PRODUCTS: Product[] = [
 
   // ---- Intermediates for human API — commercial (p.3) ----
   {
-    slug: "epoxirane-oxirane", name: "Epoxirane (Oxirane)", category: "intermediates", status: "commercial",
-    cas: "75-21-8", usedIn: ["Ranolazine"], regulatoryStatus: ISO_SET, source: "product-list",
-    reviewNote: "CAS 75-21-8 is ethylene oxide; confirm the intended Ranolazine epoxide intermediate and CAS.",
+    slug: "2-2-methoxyphenoxy-methyl-oxirane", name: "2-[(2-methoxyphenoxy)methyl]oxirane",
+    synonyms: ["Glycidyl 2-methoxyphenyl ether", "Guaiacol glycidyl ether", "1,2-Epoxy-3-(2-methoxyphenoxy)propane"],
+    category: "intermediates", status: "commercial", cas: "2210-74-4", usedIn: ["Ranolazine"], regulatoryStatus: ISO_SET, source: "product-list",
   },
   {
     slug: "tetrahydro-2-furoic-acid", name: "Tetrahydro-2-furoic acid", category: "intermediates", status: "commercial",
@@ -260,12 +262,13 @@ export const PRODUCTS: Product[] = [
     applications: ["Ingredient for pharmaceuticals", "Agrochemicals"], regulatoryStatus: ISO_SET, source: "product-list",
   },
   {
-    slug: "2-ethoxymethylene-malononitrile", name: "2-(Ethoxymethylene)malononitrile", category: "intermediates", status: "commercial",
+    slug: "2-ethoxymethylene-malononitrile", name: "2-(Ethoxy methylene) malononitrile",
+    synonyms: ["2-(Ethoxymethylene)malononitrile", "Ethoxymethylenemalononitrile"], category: "intermediates", status: "commercial",
     cas: "123-06-8", usedIn: ["Milrinone", "Milnacipran"], regulatoryStatus: ISO_SET, source: "product-list",
   },
   {
-    slug: "n-2-6-dimethylphenyl-1-piperazine-acetamide", name: "N-(2,6-Dimethylphenyl)-1-piperazine acetamide",
-    category: "intermediates", status: "commercial", cas: "5294-61-1", usedIn: ["Ranolazine"], regulatoryStatus: ISO_SET, source: "product-list",
+    slug: "n-2-6-dimethylphenyl-1-piperazine-acetamide", name: "N-(2,6-Dimethyl phenyl)-1-piperazine acetamide",
+    synonyms: ["N-(2,6-Dimethylphenyl)-1-piperazine acetamide"], category: "intermediates", status: "commercial", cas: "5294-61-1", usedIn: ["Ranolazine"], regulatoryStatus: ISO_SET, source: "product-list",
   },
   {
     slug: "guethol", name: "Guethol", synonyms: ["2-Ethoxyphenol"], category: "intermediates", status: "commercial",
@@ -280,11 +283,11 @@ export const PRODUCTS: Product[] = [
 
   // ---- Fine chemicals — commercial (p.4) ----
   {
-    slug: "5-hydrazinoisophthalic-acid", name: "5-Hydrazinoisophthalic acid", category: "fine-chemicals", status: "commercial",
+    slug: "5-hydrazinoisophthalic-acid", name: "5-Hydrazino isophthalic acid", synonyms: ["5-Hydrazinoisophthalic acid"], category: "fine-chemicals", status: "commercial",
     cas: "121385-69-1", applications: ["Fine chemical"], regulatoryStatus: ISO_SET, source: "product-list",
   },
   {
-    slug: "5-hydrazinoisophthalic-acid-hcl", name: "5-Hydrazinoisophthalic acid HCl", synonyms: ["5-HIP-HCl"], category: "fine-chemicals",
+    slug: "5-hydrazinoisophthalic-acid-hcl", name: "5-Hydrazinoisophthalic acid hydrochloride (5-HIP-HCl)", synonyms: ["5-Hydrazinoisophthalic acid HCl", "5-HIP-HCl"], category: "fine-chemicals",
     status: "commercial", cas: "873773-66-1", applications: ["Fine chemical"], regulatoryStatus: ISO_SET, source: "product-list",
   },
   {
@@ -292,7 +295,7 @@ export const PRODUCTS: Product[] = [
     cas: "99-31-0", applications: ["Fine chemical"], regulatoryStatus: ISO_SET, source: "product-list",
   },
   {
-    slug: "5-aminoisophthalic-acid-hydrate", name: "5-Aminoisophthalic acid hydrate", category: "fine-chemicals", status: "commercial",
+    slug: "5-aminoisophthalic-acid-hydrate", name: "5-Aminoisophthalic acid Hydrate", category: "fine-chemicals", status: "commercial",
     cas: "1889779-77-4", applications: ["Fine chemical"], regulatoryStatus: ISO_SET, source: "product-list",
   },
 
@@ -303,7 +306,7 @@ export const PRODUCTS: Product[] = [
     regulatoryStatus: ISO_SET, source: "product-list",
   },
   {
-    slug: "sulfobutylether-beta-cyclodextrin-sodium", name: "Sulfobutylether β-cyclodextrin sodium", synonyms: ["SBE-β-CD", "SBECD"],
+    slug: "sulfobutylether-beta-cyclodextrin-sodium", name: "Sulfo butylether-β-cyclodextrin sodium", synonyms: ["Sulfobutylether β-cyclodextrin sodium", "SBE-β-CD", "SBECD"],
     category: "excipients", status: "under-development", cas: "182410-00-0",
     applications: ["Injectable grade, pyrogen-free excipient"], regulatoryStatus: ISO_SET, source: "product-list",
   },
@@ -317,7 +320,7 @@ export const PRODUCTS: Product[] = [
     regulatoryStatus: ISO_SET, source: "product-list",
   },
   {
-    slug: "hydroxypropyl-beta-cyclodextrin", name: "Hydroxypropyl β-cyclodextrin", synonyms: ["HPBCD", "HP-β-CD"],
+    slug: "hydroxypropyl-beta-cyclodextrin", name: "Hydroxypropyl Beta cyclodextrin (HPBCD)", synonyms: ["Hydroxypropyl β-cyclodextrin", "HPBCD", "HP-β-CD"],
     category: "excipients", status: "under-development", cas: "128446-35-5", grades: ["USP-NF", "EP"],
     applications: ["Injectable grade, pyrogen-free excipient"], regulatoryStatus: ISO_SET, source: "product-list",
   },

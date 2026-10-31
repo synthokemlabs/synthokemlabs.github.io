@@ -26,8 +26,8 @@ export const SITE = {
   facilitiesCount: 2,
   productListPdf: asset("/documents/synthokem-product-list.pdf"),
   productListName: "Synthokem Product List",
-  productListSize: "250 KB",
-  productListLabel: "Synthokem Product List (PDF, 250 KB)",
+  productListSize: "236 KB",
+  productListLabel: "Synthokem Product List (PDF, 236 KB)",
   /** The QR printed on the Product List cover, extracted unchanged from the PDF. Its destination is managed by the company on qrfy.io. */
   productListQr: asset("/images/product-list-qr.png"),
   productListQrLink: "https://qrfy.io/9E6LCQkppJ",

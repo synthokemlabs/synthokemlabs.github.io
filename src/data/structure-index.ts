@@ -57,12 +57,16 @@ export const STRUCTURE_INDEX: Record<string, { formula?: string; mw?: string }> 
   "mw": "496.6"
  },
  "maropitant-citrate": {
-  "formula": "C32H40N2O",
-  "mw": "468.7"
+  "formula": "C38H50N2O9",
+  "mw": "678.8"
  },
  "robenacoxib": {
   "formula": "C16H13F4NO2",
   "mw": "327.27"
+ },
+ "2-2-methoxyphenoxy-methyl-oxirane": {
+  "formula": "C10H12O3",
+  "mw": "180.20"
  },
  "tetrahydro-2-furoic-acid": {
   "formula": "C5H8O3",
@@ -139,5 +143,9 @@ export const STRUCTURE_INDEX: Record<string, { formula?: string; mw?: string }> 
  },
  "calcium-polycarbophil": {},
  "hydroxypropyl-beta-cyclodextrin": {},
- "sulfobutylether-beta-cyclodextrin-sodium": {}
+ "sulfobutylether-beta-cyclodextrin-sodium": {},
+ "silica-tmt": {},
+ "silica-dmt": {},
+ "silica-thiourea": {},
+ "silica-amine": {}
 };

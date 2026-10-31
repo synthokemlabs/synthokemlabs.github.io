@@ -80,8 +80,9 @@ export function ProductCatalogue({ lockedCategory }: { lockedCategory?: Category
     if (use !== "all") list = list.filter((p) => p.category === "apis");
     if (q.trim()) return searchProducts(q, list);
     const order = CATEGORIES.map((c) => c.slug);
+    // Default: the Product List's own arrangement — category by category, then S.No order (= order in data/products.ts)
     return [...list].sort((a, b) =>
-      sort === "az" ? a.name.localeCompare(b.name) : sort === "za" ? b.name.localeCompare(a.name) : order.indexOf(a.category) - order.indexOf(b.category) || a.name.localeCompare(b.name),
+      sort === "az" ? a.name.localeCompare(b.name) : sort === "za" ? b.name.localeCompare(a.name) : order.indexOf(a.category) - order.indexOf(b.category) || PRODUCTS.indexOf(a) - PRODUCTS.indexOf(b),
     );
   }, [scope, status, use, therapy, q, sort]);
 
@@ -224,7 +225,7 @@ export function ProductCatalogue({ lockedCategory }: { lockedCategory?: Category
             <label htmlFor="sort" className="sr-only">Sort products</label>
             <select id="sort" value={sort} onChange={(e) => setSort(e.target.value as Sort)} disabled={!!q.trim()}
               className="min-h-14 w-full cursor-pointer appearance-none rounded-lg bg-white pl-4 pr-10 text-base ring-1 sm:text-[0.95rem] ring-border-strong disabled:cursor-not-allowed disabled:opacity-60 sm:w-48">
-              <option value="category">Sort: by category</option>
+              <option value="category">Sort: Product List order</option>
               <option value="az">Sort: A → Z</option>
               <option value="za">Sort: Z → A</option>
             </select>
